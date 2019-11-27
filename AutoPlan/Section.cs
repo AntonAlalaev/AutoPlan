@@ -39,9 +39,7 @@ namespace AutoPlan
         public Coordinates XY
         {
             get
-            {
-                return Point;
-            }
+            { return Point; }
             set
             { Point = value; }
         }

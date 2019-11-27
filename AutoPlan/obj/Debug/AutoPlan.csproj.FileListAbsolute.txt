@@ -12,3 +12,6 @@ C:\Yandex\VSTUDIO\AutoPlan\SimplyAlgorithm\AutoPlan\AutoPlan\AutoPlan\obj\Debug\
 C:\Yandex\VSTUDIO\AutoPlan\SimplyAlgorithm\AutoPlan\AutoPlan\AutoPlan\obj\Debug\AutoPlan.csproj.GenerateResource.Cache
 C:\Yandex\VSTUDIO\AutoPlan\SimplyAlgorithm\AutoPlan\AutoPlan\AutoPlan\obj\Debug\AutoPlan.exe
 C:\Yandex\VSTUDIO\AutoPlan\SimplyAlgorithm\AutoPlan\AutoPlan\AutoPlan\obj\Debug\AutoPlan.pdb
+C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\bin\Debug\AutoPlan.exe.config
+C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\obj\Debug\AutoPlan.exe
+C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\obj\Debug\AutoPlan.pdb
