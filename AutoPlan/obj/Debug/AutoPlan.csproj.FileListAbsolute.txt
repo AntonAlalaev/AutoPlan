@@ -1,0 +1,14 @@
+C:\Yandex\VSTUDIO\AutoPlan\SimplyAlgorithm\AutoPlan\AutoPlan\AutoPlan\bin\Debug\AutoPlan.exe.config
+C:\Yandex\VSTUDIO\AutoPlan\SimplyAlgorithm\AutoPlan\AutoPlan\AutoPlan\bin\Debug\AutoPlan.exe
+C:\Yandex\VSTUDIO\AutoPlan\SimplyAlgorithm\AutoPlan\AutoPlan\AutoPlan\bin\Debug\AutoPlan.pdb
+C:\Yandex\VSTUDIO\AutoPlan\SimplyAlgorithm\AutoPlan\AutoPlan\AutoPlan\obj\Debug\AutoPlan.csprojResolveAssemblyReference.cache
+C:\Yandex\VSTUDIO\AutoPlan\SimplyAlgorithm\AutoPlan\AutoPlan\AutoPlan\obj\Debug\MainWindow.g.cs
+C:\Yandex\VSTUDIO\AutoPlan\SimplyAlgorithm\AutoPlan\AutoPlan\AutoPlan\obj\Debug\App.g.cs
+C:\Yandex\VSTUDIO\AutoPlan\SimplyAlgorithm\AutoPlan\AutoPlan\AutoPlan\obj\Debug\AutoPlan_MarkupCompile.cache
+C:\Yandex\VSTUDIO\AutoPlan\SimplyAlgorithm\AutoPlan\AutoPlan\AutoPlan\obj\Debug\AutoPlan_MarkupCompile.lref
+C:\Yandex\VSTUDIO\AutoPlan\SimplyAlgorithm\AutoPlan\AutoPlan\AutoPlan\obj\Debug\MainWindow.baml
+C:\Yandex\VSTUDIO\AutoPlan\SimplyAlgorithm\AutoPlan\AutoPlan\AutoPlan\obj\Debug\AutoPlan.g.resources
+C:\Yandex\VSTUDIO\AutoPlan\SimplyAlgorithm\AutoPlan\AutoPlan\AutoPlan\obj\Debug\AutoPlan.Properties.Resources.resources
+C:\Yandex\VSTUDIO\AutoPlan\SimplyAlgorithm\AutoPlan\AutoPlan\AutoPlan\obj\Debug\AutoPlan.csproj.GenerateResource.Cache
+C:\Yandex\VSTUDIO\AutoPlan\SimplyAlgorithm\AutoPlan\AutoPlan\AutoPlan\obj\Debug\AutoPlan.exe
+C:\Yandex\VSTUDIO\AutoPlan\SimplyAlgorithm\AutoPlan\AutoPlan\AutoPlan\obj\Debug\AutoPlan.pdb
