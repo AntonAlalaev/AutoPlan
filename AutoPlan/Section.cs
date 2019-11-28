@@ -11,7 +11,7 @@ namespace AutoPlan
         /// <summary>
         /// Координаты секции
         /// </summary>
-        protected Coordinates Point;
+        private Coordinates Point;
 
         /// <summary>
         /// Длина секции

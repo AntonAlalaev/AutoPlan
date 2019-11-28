@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutoPlan
 {
-    class Rectangle
+    public class Rectangle
     {
         /// <summary>
         /// Координаты нижнего левого угла
@@ -28,20 +28,6 @@ namespace AutoPlan
         /// </summary>
         public Point TopRight { get; set; }
 
-        /// <summary>
-        /// Базовый конструктор 4 точки
-        /// </summary>
-        /// <param name="BottomLeft">Нижний левый угол</param>
-        /// <param name="BottomRight">Нижний правый угол</param>
-        /// <param name="TopLeft">Верхний левый угол</param>
-        /// <param name="TopRight">Верхний правый угол</param>
-        public Rectangle(Point BottomLeft, Point BottomRight, Point TopLeft, Point TopRight)
-        {
-            this.BottomLeft = BottomLeft;
-            this.BottomRight = BottomRight;
-            this.TopLeft = TopLeft;
-            this.TopRight = TopRight;
-        }
 
         /// <summary>
         /// Базовый конструктор 2 точки
@@ -50,10 +36,40 @@ namespace AutoPlan
         /// <param name="TopRight">Верхний правый угол</param>
         public Rectangle(Point BottomLeft, Point TopRight)
         {
-            this.BottomLeft = BottomLeft;
-            BottomRight = new Point(TopRight.X, BottomLeft.Y);
-            this.TopRight = TopRight;
-            TopLeft = new Point(BottomLeft.X, TopRight.Y);
+            // необходимо сначала понять где самые крайние точки            
+            // минимальная по X
+            int MinX;
+            if (BottomLeft.X < TopRight.X)
+                MinX = BottomLeft.X;
+            else
+                MinX = TopRight.X;
+
+            // минимальная по Y
+            int MinY;
+            if (BottomLeft.Y < TopRight.Y)
+                MinY = BottomLeft.Y;
+            else
+                MinY = TopRight.Y;
+
+            // максимальная по Х
+            int MaxX;
+            if (BottomLeft.X > TopRight.X)
+                MaxX = BottomLeft.X;
+            else
+                MaxX = TopRight.X;
+
+            // максимальная по Y
+            int MaxY;
+            if (BottomLeft.Y > TopRight.Y)
+                MaxY = BottomLeft.Y;
+            else
+                MaxY = TopRight.Y;
+
+            this.BottomLeft = new Point(MinX, MinY);
+            this.TopRight = new Point(MaxX, MaxY);
+
+            BottomRight = new Point(this.TopRight.X, this.BottomLeft.Y);
+            TopLeft = new Point(this.BottomLeft.X, this.TopRight.Y);
         }
 
         /// <summary>
@@ -267,7 +283,7 @@ namespace AutoPlan
         /// <returns></returns>
         public override int GetHashCode()
         {
-            var hashCode = 352033288;
+            var hashCode = 352033281;
             hashCode = hashCode * -1521134295 + TopLeft.GetHashCode();
             hashCode = hashCode * -1521134295 + TopRight.GetHashCode();
             hashCode = hashCode * -1521134295 + BottomLeft.GetHashCode();

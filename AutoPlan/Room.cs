@@ -6,20 +6,8 @@ using System.Threading.Tasks;
 
 namespace AutoPlan
 {
-    class Room : Rectangle
+    public class Room : Rectangle
     {
-        /// <summary>
-        /// Базовый конструктор по четырем точкам
-        /// </summary>
-        /// <param name="BottomLeft"></param>
-        /// <param name="BottomRight"></param>
-        /// <param name="TopLeft"></param>
-        /// <param name="TopRight"></param>
-        public Room(Point BottomLeft, Point BottomRight, Point TopLeft, Point TopRight) : base(BottomLeft, BottomRight, TopLeft, TopRight)
-        {
-            Initialaize();
-        }
-
         /// <summary>
         /// Базовый конструктор по двум точкам
         /// </summary>

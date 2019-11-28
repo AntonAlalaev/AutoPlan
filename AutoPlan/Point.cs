@@ -9,7 +9,7 @@ namespace AutoPlan
     /// <summary>
     /// Точка геометрическая
     /// </summary>
-    class Point
+    public class Point
     {
         /// <summary>
         /// Координата X
