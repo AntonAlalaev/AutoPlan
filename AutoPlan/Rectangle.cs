@@ -213,6 +213,67 @@ namespace AutoPlan
             return new Rectangle(new Point(MinX, MinY), new Point(MaxX, MaxY));
         }
 
+        /// <summary>
+        /// проверка на идентичность элементов
+        /// </summary>
+        /// <param name="obj1"></param>
+        /// <param name="obj2"></param>
+        /// <returns></returns>
+        private static bool Equals(Rectangle obj1, Rectangle obj2)
+        {
+            if (obj1.BottomLeft == obj2.BottomLeft && obj1.BottomRight == obj2.BottomRight && obj1.TopLeft == obj2.TopLeft && obj1.TopRight == obj2.TopRight)
+                return true;
+            return false;
+        }
+        /// <summary>
+        /// Сравнение
+        /// </summary>
+        /// <param name="obj1"></param>
+        /// <param name="obj2"></param>
+        /// <returns></returns>
+        public static bool operator ==(Rectangle obj1, Rectangle obj2)
+        {
+            if (Equals(obj1, obj2))
+                return true;
+            return false;
+        }
+
+        /// <summary>
+        /// Сравнение
+        /// </summary>
+        /// <param name="obj1"></param>
+        /// <param name="obj2"></param>
+        /// <returns></returns>
+        public static bool operator !=(Rectangle obj1, Rectangle obj2)
+        {
+            if (Equals(obj1, obj2))
+                return false;
+            return true;
+        }
+
+        /// <summary>
+        /// Переопределение сравнителя
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Rectangle);
+        }
+
+        /// <summary>
+        /// Переопределение Хэш-кода
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            var hashCode = 352033288;
+            hashCode = hashCode * -1521134295 + TopLeft.GetHashCode();
+            hashCode = hashCode * -1521134295 + TopRight.GetHashCode();
+            hashCode = hashCode * -1521134295 + BottomLeft.GetHashCode();
+            hashCode = hashCode * -1521134295 + BottomRight.GetHashCode();
+            return hashCode;
+        }
 
     }
 }

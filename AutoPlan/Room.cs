@@ -48,8 +48,28 @@ namespace AutoPlan
         /// </summary>
         /// <param name="Obstacles"></param>
         public void AddObstacles(List<Rectangle> Obstacles)
-        {            
-            this.Obstacles.AddRange(IntersectWith(Obstacles));
+        {
+            List<Rectangle> tmp = IntersectWith(Obstacles);
+            if (tmp.Count!=0)
+                this.Obstacles.AddRange(tmp);
+        }
+
+        /// <summary>
+        /// Добавление препядствия в помещение
+        /// </summary>
+        /// <param name="Obstacle">Препядствие</param>
+        public void AddObstacle(Rectangle Obstacle)
+        {
+            if (IntersectWith(Obstacle))
+                Obstacles.Add(Obstacle);
+        }
+
+        /// <summary>
+        /// Проверка на дублирующиеся препядствия
+        /// </summary>
+        private void CheckDoubleObstacles()
+        {
+
         }
 
     }
