@@ -79,8 +79,8 @@ namespace AutoPlan
         /// <param name="obj"></param>
         /// <returns></returns>
         public override bool Equals(object obj)
-        {            
-            return Equals(obj as Point);
+        {
+            return Equals(this, obj as Point);
         }
 
         /// <summary>

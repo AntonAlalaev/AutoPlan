@@ -35,7 +35,7 @@ namespace AutoPlan
             Rectangle r2 = new Rectangle(new Point(-14, 53), new Point(24, 58));
             bool res = r1.IntersectWith(r2);
             bool res2 = r2.IntersectWith(r1);
-            Room Area1 = new Room(new Point(0, 0), new Point(57, 57));
+            RoomRectangle Area1 = new RoomRectangle(new Point(0, 0), new Point(57, 57));
             Area1.AddObstacle(r1);
             Area1.AddObstacle(r2);
 

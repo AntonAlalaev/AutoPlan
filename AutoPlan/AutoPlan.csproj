@@ -56,7 +56,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Point.cs" />
-    <Compile Include="Room.cs" />
+    <Compile Include="Polygon.cs" />
+    <Compile Include="RoomRectangle.cs" />
     <Compile Include="Rectangle.cs" />
     <Compile Include="Section.cs" />
     <Compile Include="Coordinates.cs" />

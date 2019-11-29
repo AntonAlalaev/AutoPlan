@@ -105,6 +105,12 @@ namespace AutoPlan
         { get { return Length * Height; } }
 
         /// <summary>
+        /// Периметр прямоугольника
+        /// </summary>
+        public int Perimetr
+        { get { return Length * 2 + Height * 2; } }
+
+        /// <summary>
         /// Пересекает ли текущий прямоугольник заданный
         /// </summary>
         /// <param name="obj">заданный прямоугольник</param>
@@ -274,7 +280,7 @@ namespace AutoPlan
         /// <returns></returns>
         public override bool Equals(object obj)
         {
-            return Equals(obj as Rectangle);
+            return Equals(this, obj as Rectangle);
         }
 
         /// <summary>
