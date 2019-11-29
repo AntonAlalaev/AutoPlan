@@ -120,6 +120,11 @@ namespace AutoPlan.Tests
             Assert.IsFalse(SmallestOne.IntersectWith(MiddleIntersect));
             Assert.IsFalse(SmallestOne.IntersectWith(SmallInternal));
 
+
+            // Проверка прямоугольников по границам
+            Assert.IsTrue(BigOne.IntersectWith(MiddleIntersect, 3));
+            Assert.IsTrue(BigOne.IntersectWith(MiddleIntersect, 2));
+            Assert.IsFalse(BigOne.IntersectWith(MiddleIntersect, 1));
         }
 
 

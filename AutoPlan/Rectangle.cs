@@ -38,28 +38,28 @@ namespace AutoPlan
         {
             // необходимо сначала понять где самые крайние точки            
             // минимальная по X
-            int MinX;
+            double MinX;
             if (BottomLeft.X < TopRight.X)
                 MinX = BottomLeft.X;
             else
                 MinX = TopRight.X;
 
             // минимальная по Y
-            int MinY;
+            double MinY;
             if (BottomLeft.Y < TopRight.Y)
                 MinY = BottomLeft.Y;
             else
                 MinY = TopRight.Y;
 
             // максимальная по Х
-            int MaxX;
+            double MaxX;
             if (BottomLeft.X > TopRight.X)
                 MaxX = BottomLeft.X;
             else
                 MaxX = TopRight.X;
 
             // максимальная по Y
-            int MaxY;
+            double MaxY;
             if (BottomLeft.Y > TopRight.Y)
                 MaxY = BottomLeft.Y;
             else
@@ -89,25 +89,25 @@ namespace AutoPlan
         /// <summary>
         /// Длина прямоугольника
         /// </summary>
-        public int Length
+        public double Length
         { get { return TopRight.X - BottomLeft.X; } }
 
         /// <summary>
         /// Высота прямоугольника
         /// </summary>
-        public int Height
+        public double Height
         { get { return TopRight.Y - BottomLeft.Y; } }
 
         /// <summary>
         /// Площадь прямоугольника
         /// </summary>
-        public int Square
+        public double Square
         { get { return Length * Height; } }
 
         /// <summary>
         /// Периметр прямоугольника
         /// </summary>
-        public int Perimetr
+        public double Perimetr
         { get { return Length * 2 + Height * 2; } }
 
         /// <summary>
@@ -223,12 +223,12 @@ namespace AutoPlan
         public static Rectangle RectangleByListPoint(List<Point> Points)
         {
             // сначала находим самую минимальную точку по X, Y
-            int MinX = Points.Min(n => n.X);
-            int MinY = Points.Min(n => n.Y);
+            double MinX = Points.Min(n => n.X);
+            double MinY = Points.Min(n => n.Y);
 
             // затем максимальную по X,Y
-            int MaxX = Points.Max(n => n.X);
-            int MaxY = Points.Max(n => n.Y);
+            double MaxX = Points.Max(n => n.X);
+            double MaxY = Points.Max(n => n.Y);
 
 
             // создаем прямоугольник для возврата по заданным граничным координатам

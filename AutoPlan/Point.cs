@@ -14,19 +14,19 @@ namespace AutoPlan
         /// <summary>
         /// Координата X
         /// </summary>
-        public int X;
+        public double X;
 
         /// <summary>
         /// Координата Y
         /// </summary>
-        public int Y;
+        public double Y;
 
         /// <summary>
         /// Базовый конструктор
         /// </summary>
         /// <param name="X"></param>
         /// <param name="Y"></param>
-        public Point(int X, int Y)
+        public Point(double X, double Y)
         {
             this.X = X;
             this.Y = Y;

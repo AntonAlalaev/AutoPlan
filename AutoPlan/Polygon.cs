@@ -53,7 +53,7 @@ namespace AutoPlan
         /// <summary>
         /// Находится ли точка внутри многоугольника
         /// </summary>
-        /// <param name="PointIn"></param>
+        /// <param name="PointIn">Искомая точка</param>
         /// <returns></returns>
         public bool isPointIn(Point PointIn)
         {            
@@ -73,6 +73,40 @@ namespace AutoPlan
             }
             return result;
         }
+
+        /// <summary>
+        /// Пересекает ли текущий полигон заданный
+        /// </summary>
+        /// <param name="obj">заданный полигон</param>
+        /// <returns></returns>
+        public bool isIntersect(Polygon obj)
+        {
+            foreach (Point Item in obj.VertexList)            
+                if (isPointIn(Item))
+                    return true;
+            return false;            
+        }
+
+        /// <summary>
+        /// Площадь многоугольника 
+        /// </summary>
+        public double Area
+        {
+            get
+            {
+                if (VertexList.Count < 3)
+                    return 0;
+                double result = 0;
+                int j = VertexList.Count - 1;
+                for (int i = 0; i < VertexList.Count; i++)
+                {
+                    result += (VertexList[j].X + VertexList[i].X) * (VertexList[j].Y - VertexList[i].Y);
+                    j = i;
+                }
+                return result / 2;
+            }
+        }
+
 
     }
 }

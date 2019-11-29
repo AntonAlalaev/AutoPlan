@@ -49,7 +49,7 @@ namespace AutoPlan
         /// </summary>
         /// <param name="X"></param>
         /// <param name="Y"></param>
-        public void setPoint(int X, int Y)
+        public void setPoint(double X, double Y)
         {
             Point.XY = new Point(X, Y);
             Point.BottomLeft = Point.XY;
