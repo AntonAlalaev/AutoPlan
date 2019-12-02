@@ -130,6 +130,30 @@ namespace AutoPlan.Tests
 
         }
 
+        [TestMethod]
+        public void Polygon_Outer_border_Outer_rectangle_Big()
+        {
+            // arrange
+            Polygon poly1 = new Polygon(new List<Point>()
+            {
+                new Point(-1004.28, -464.3), new Point(-404.28, 35.7), new Point(-704.28, 735.7), new Point(-199.37, 444.19),
+                new Point(195.72, 935.70), new Point(395.72, 335.7), new Point(895.72, 535.70),
+                new Point(560.92, -44.21), new Point(1487.23,-579.01), new Point(395.72,-664.30), new Point(104.22,-1169.21), new Point(-191.54,-656.95)
+            });
+
+
+            // act
+            poly1 = poly1.GetOffsetPolygon(5);
+            //double predictedSquare = 2015808.73;
+
+            Rectangle OuterR = poly1.OuterRectangle;
+            Rectangle Predicted = new Rectangle(new Point(-1015.16, -1179.21), new Point(1503.69, 945.97));
+            // assert
+
+            Assert.IsTrue(OuterR == Predicted);
+
+        }
+
 
     }
 }

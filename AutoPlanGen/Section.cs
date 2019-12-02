@@ -27,7 +27,6 @@ namespace AutoPlan
         /// <param name="Height"></param>
         public Section(Point BottomLeft, double Width, double Height) : base(BottomLeft, Width, Height)
         {
-
         }
 
 
@@ -40,19 +39,7 @@ namespace AutoPlan
         /// <summary>
         /// Геометрическая глубина секции
         /// </summary>
-        public double FakeWidth { get; set; }
-
-
-        /// <summary>
-        /// Изменение точки вставки
-        /// </summary>
-        /// <param name="X"></param>
-        /// <param name="Y"></param>
-        public void setPoint(double X, double Y)
-        {
-
-        }
-
+        public double FakeWidth { get; set; }       
 
     }
 }

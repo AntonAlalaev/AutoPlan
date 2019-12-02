@@ -56,8 +56,18 @@ namespace AutoPlan
         /// Проверка на дублирующиеся препядствия
         /// </summary>
         private void CheckDoubleObstacles()
-        {
-
+        {            
+            Dictionary<int, Rectangle> Dic = new Dictionary<int, Rectangle>();
+            int Index = 0;
+            foreach (Rectangle Item in Obstacles)
+            {
+                if (!Dic.ContainsValue(Item))
+                {
+                    Dic.Add(Index, Item);
+                        Index++;
+                }
+            }
+            Obstacles = Dic.Values.ToList();
         }
 
     }
