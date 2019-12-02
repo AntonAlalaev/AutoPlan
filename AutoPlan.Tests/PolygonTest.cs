@@ -68,7 +68,7 @@ namespace AutoPlan.Tests
         /// Проверка определения площади многоугольника
         /// </summary>
         [TestMethod]
-        public void Polygon_Test_Square()
+        public void Polygon_Test_Area()
         {
             // arrange
             double Area = 197.17; // Площадь в автокаде
@@ -82,10 +82,53 @@ namespace AutoPlan.Tests
             });
 
             // assert
-            Assert.IsTrue((poly1.Area - Area)/Area < Accuracy);
+            Assert.IsTrue((poly1.Area - Area) / Area < Accuracy);
         }
 
+        /// <summary>
+        /// Проверка описывающего прямоугольника
+        /// </summary>
+        [TestMethod]
+        public void Polygon_Outer_rectangle()
+        {
+            // arrange
+            Polygon poly1 = new Polygon(new List<Point>()
+            {
+                new Point(1, 14), new Point(3, 8), new Point(8, 10), new Point(4.65, 4.2),
+                new Point(13.92, -1.15), new Point(3, -2), new Point(0.08, -7.07),
+                new Point(-2.95, -1.97), new Point(-11,0), new Point(-5,5), new Point(-8,12), new Point(-2.95,9.08)
+            });
 
+            // act
+
+            Rectangle OuterR = poly1.OuterRectangle;
+            Rectangle Predicted = new Rectangle(new Point(-11, -7.05), new Point(13.92, 14));
+            // assert
+
+            Assert.IsTrue(OuterR == Predicted);
+        }
+
+        [TestMethod]
+        public void Polygon_Outer_border_Outer_rectangle()
+        {
+            // arrange
+            Polygon poly1 = new Polygon(new List<Point>()
+            {
+                new Point(1, 14), new Point(3, 8), new Point(8, 10), new Point(4.65, 4.2),
+                new Point(13.92, -1.15), new Point(3, -2), new Point(0.08, -7.07),
+                new Point(-2.95, -1.97), new Point(-11,0), new Point(-5,5), new Point(-8,12), new Point(-2.95,9.08)
+            });
+
+
+            // act
+            poly1 = poly1.GetOffsetPolygon(5);
+            Rectangle OuterR = poly1.OuterRectangle;
+            Rectangle Predicted = new Rectangle(new Point(-21.88, -17.05), new Point(30.37, 24.28));
+            // assert
+
+            Assert.IsTrue(OuterR == Predicted);
+
+        }
 
 
     }

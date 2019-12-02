@@ -72,6 +72,7 @@ namespace AutoPlan
         /// </summary>
         public int RoomDistRight { get; set; }
 
+
     }
 
 }

@@ -11,22 +11,22 @@ namespace AutoPlan
         /// <summary>
         /// Координаты нижнего левого угла
         /// </summary>
-        public Point BottomLeft { get; set; }
+        public Point BottomLeft { get; }
 
         /// <summary>
         /// Координаты нижнего правого угла
         /// </summary>
-        public Point BottomRight { get; set; }
+        public Point BottomRight { get; }
 
         /// <summary>
         /// Координаты верхнего левого угла
         /// </summary>
-        public Point TopLeft { get; set; }
+        public Point TopLeft { get; }
 
         /// <summary>
         /// Координаты верхнего правого угла
         /// </summary>
-        public Point TopRight { get; set; }
+        public Point TopRight { get; }
 
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace AutoPlan
         /// <param name="BottomLeft">Нижний левый угол</param>
         /// <param name="Length">Длина</param>
         /// <param name="Height">Высота</param>
-        public Rectangle(Point BottomLeft, int Length, int Height)
+        public Rectangle(Point BottomLeft, double Length, double Height)
         {
             this.BottomLeft = BottomLeft;
             BottomRight = new Point(BottomLeft.X + Length, BottomLeft.Y);
@@ -247,6 +247,7 @@ namespace AutoPlan
                 return true;
             return false;
         }
+
         /// <summary>
         /// Сравнение
         /// </summary>

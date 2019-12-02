@@ -112,6 +112,44 @@ namespace AutoPlan
 
 
         /// <summary>
+        /// Возвращает описанный прямоугольник вокруг заданного многоугольника
+        /// </summary>
+        /// <param name="Source">Заданный многоугольник</param>
+        /// <returns></returns>
+        public static Rectangle getOuterRectangle(Polygon Source)
+        {
+            double MinX = Source.VertexList.Min(n => n.X);
+            double MaxX = Source.VertexList.Max(n => n.X);
+            double MinY = Source.VertexList.Min(n => n.Y);
+            double MaxY = Source.VertexList.Max(n => n.Y);
+            Rectangle result = new Rectangle(new Point(MinX, MinY), new Point(MaxX, MaxY));
+            return result;
+        }
+
+        /// <summary>
+        /// Возвращает описанный прямоугольник
+        /// </summary>
+        public Rectangle OuterRectangle
+        {
+            get
+            { return getOuterRectangle(this); }
+        }
+
+        /// <summary>
+        /// Сдвиг полигона
+        /// </summary>
+        /// <param name="IncrementX">смещение по X</param>
+        /// <param name="IncrementY">смещение по Y</param>
+        public void Move(double IncrementX, double IncrementY)
+        {
+            for (int i = 0; i < VertexList.Count; i++)
+            {
+                VertexList[i].X += IncrementX;
+                VertexList[i].Y += IncrementY;
+            }
+        }
+
+        /// <summary>
         /// Возвращает полигон увеличенный на заданное смещение
         /// </summary>
         /// <param name="Source">Исходный полигон</param>

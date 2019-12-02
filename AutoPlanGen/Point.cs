@@ -41,7 +41,7 @@ namespace AutoPlan
         /// <returns></returns>
         private static bool Equals(Point obj1, Point obj2)
         {
-            if (obj1.X == obj2.X && obj1.Y == obj2.Y)
+            if (Math.Sqrt((obj1.X - obj2.X) * (obj1.X - obj2.X) + (obj1.Y - obj2.Y) * (obj1.Y - obj2.Y)) < 0.2)
                 return true;
             return false;
         }
