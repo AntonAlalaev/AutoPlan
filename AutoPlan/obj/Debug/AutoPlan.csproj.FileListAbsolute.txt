@@ -17,7 +17,6 @@ C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\obj\Debug\AutoPlan.ex
 C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\obj\Debug\AutoPlan.pdb
 C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\bin\Debug\AutoPlan.exe
 C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\bin\Debug\AutoPlan.pdb
-C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\obj\Debug\AutoPlan.csprojResolveAssemblyReference.cache
 C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\obj\Debug\MainWindow.g.cs
 C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\obj\Debug\App.g.cs
 C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\obj\Debug\AutoPlan_MarkupCompile.cache
@@ -26,3 +25,7 @@ C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\obj\Debug\MainWindow.
 C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\obj\Debug\AutoPlan.g.resources
 C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\obj\Debug\AutoPlan.Properties.Resources.resources
 C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\obj\Debug\AutoPlan.csproj.GenerateResource.Cache
+C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\obj\Debug\AutoPlan.csprojAssemblyReference.cache
+C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\bin\Debug\AutoPlanGen.dll
+C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\bin\Debug\AutoPlanGen.pdb
+C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\obj\Debug\AutoPlan.csproj.CopyComplete

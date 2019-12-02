@@ -27,7 +27,7 @@ namespace AutoPlan
 
         public void testc()
         {
-            Section test = new Section(1000, 600, new Point(0, 0));
+            //Section test = new Section(1000, 600, new Point(0, 0));
             Rect rect1 = new Rect();
             rect1.Location = new System.Windows.Point(10, 5);
             rect1.Size = new Size(200, 50);
@@ -39,6 +39,14 @@ namespace AutoPlan
             Area1.AddObstacle(r1);
             Area1.AddObstacle(r2);
 
+            Polygon poly1 = new Polygon(new List<Point>()
+            {
+                new Point(1, 14), new Point(3, 8), new Point(8, 10), new Point(4.65, 4.2),
+                new Point(13.92, -1.15), new Point(3, -2), new Point(0.08, -7.07),
+                new Point(-2.95, -1.97), new Point(-11,0), new Point(-5,5), new Point(-8,12), new Point(-2.95,9.08)
+            });
+
+            Polygon thick = poly1.GetOffsetPolygon(5);
 
         }
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace AutoPlan
 {
@@ -110,9 +111,39 @@ namespace AutoPlan
         }
 
 
+        /// <summary>
+        /// Возвращает полигон увеличенный на заданное смещение
+        /// </summary>
+        /// <param name="Source">Исходный полигон</param>
+        /// <param name="Offset">Смещение</param>
+        /// <returns></returns>
+        public static Polygon GetOffsetPolygon(Polygon Source, double Offset)
+        {
 
-        // Return points representing an enlarged polygon.
-        private List<Point> GetEnlargedPolygon(List<Point> old_points, double offset)
+            List<Point> old_points = Source.VertexList;
+            List<Point> new_points = GetEnlargedPolygon(old_points, Offset);
+            Polygon result = new Polygon(new_points);
+            return result;
+
+        }
+
+        /// <summary>
+        /// Возвращает текущий полигон увеличенный на заданное смещение
+        /// </summary>
+        /// <param name="Offset">Смещение</param>
+        /// <returns></returns>
+        public Polygon GetOffsetPolygon(double Offset)
+        {
+            return GetOffsetPolygon(this, Offset);
+        }
+
+        /// <summary>
+        /// Возвращает точки полигона увеличенного на соответствующее значение
+        /// </summary>
+        /// <param name="old_points"></param>
+        /// <param name="offset"></param>
+        /// <returns></returns>
+        private static List<Point> GetEnlargedPolygon(List<Point> old_points, double offset)
         {
             List<Point> enlarged_points = new List<Point>();
             int num_points = old_points.Count;
@@ -146,15 +177,27 @@ namespace AutoPlan
                 bool lines_intersect, segments_intersect;
                 Point poi, close1, close2;
                 FindIntersection(pij1, pij2, pjk1, pjk2, out lines_intersect, out segments_intersect, out poi, out close1, out close2);
-                //Debug.Assert(lines_intersect, "Edges " + i + "-->" + j + " and " + j + "-->" + k + " are parallel");
+                Debug.Assert(lines_intersect, "Edges " + i + "-->" + j + " and " + j + "-->" + k + " are parallel");
                 enlarged_points.Add(poi);
             }
             return enlarged_points;
         }
 
-        // Find the point of intersection between
-        // the lines p1 --> p2 and p3 --> p4.
-        private void FindIntersection(Point p1, Point p2, Point p3, Point p4, out bool lines_intersect, out bool segments_intersect, out Point intersection, out Point close_p1, out Point close_p2)
+
+        /// <summary>
+        /// Находит точку пересечения между длиниями
+        /// p1-->p2 и p3-->p4
+        /// </summary>
+        /// <param name="p1">Первая точка первой линии</param>
+        /// <param name="p2">Вторая точка первой линии</param>
+        /// <param name="p3">Первая точка второй линии</param>
+        /// <param name="p4">Вторая точка второй линии</param>
+        /// <param name="lines_intersect">Пересекаются ли линии?</param>
+        /// <param name="segments_intersect">Пересекаются ли заданные сегменеты</param>
+        /// <param name="intersection">точка пересечения</param>
+        /// <param name="close_p1">Ближайшая точка на линии 1</param>
+        /// <param name="close_p2">Ближайшая точка на линии 2</param>
+        private static void FindIntersection(Point p1, Point p2, Point p3, Point p4, out bool lines_intersect, out bool segments_intersect, out Point intersection, out Point close_p1, out Point close_p2)
         {
             // Get the segments' parameters.
             double dx12 = p2.X - p1.X;

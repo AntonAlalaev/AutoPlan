@@ -55,9 +55,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AutoPlan\AutoPlan.csproj">
-      <Project>{ba8957a0-10cc-496f-b25d-d7aa4bfdb6e4}</Project>
-      <Name>AutoPlan</Name>
+    <ProjectReference Include="..\AutoPlanGen\AutoPlanGen.csproj">
+      <Project>{b078a0f8-8659-4e06-b68f-23adea409457}</Project>
+      <Name>AutoPlanGen</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
