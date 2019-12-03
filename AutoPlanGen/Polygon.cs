@@ -91,6 +91,17 @@ namespace AutoPlan
         }
 
         /// <summary>
+        /// Пересекает ли текущий полигон заданный прямоугольник
+        /// </summary>
+        /// <param name="obj">заданный прямоугольник</param>
+        /// <returns></returns>
+        public bool isIntersect(Rectangle obj)
+        {
+            if (isPointIn(obj.BottomLeft) || isPointIn(obj.BottomRight) || isPointIn(obj.TopRight) || isPointIn(obj.TopLeft))
+                return true;
+            return false;
+        }
+        /// <summary>
         /// Площадь многоугольника 
         /// </summary>
         public double Area
@@ -138,14 +149,14 @@ namespace AutoPlan
         /// <summary>
         /// Сдвиг полигона
         /// </summary>
-        /// <param name="IncrementX">смещение по X</param>
-        /// <param name="IncrementY">смещение по Y</param>
-        public void Move(double IncrementX, double IncrementY)
+        /// <param name="IncX">смещение по X</param>
+        /// <param name="IncY">смещение по Y</param>
+        public void Move(double IncX, double IncY)
         {
             for (int i = 0; i < VertexList.Count; i++)
             {
-                VertexList[i].X += IncrementX;
-                VertexList[i].Y += IncrementY;
+                VertexList[i].X += IncX;
+                VertexList[i].Y += IncY;
             }
         }
 
@@ -200,27 +211,55 @@ namespace AutoPlan
                 v1 *= offset;
                 Vector n1 = new Vector(-v1.Y, v1.X);
 
-                Point pij1 = new Point((double)(old_points[i].X + n1.X), (double)(old_points[i].Y + n1.Y));
-                Point pij2 = new Point((double)(old_points[j].X + n1.X), (double)(old_points[j].Y + n1.Y));
+                Point pij1 = new Point(old_points[i].X + n1.X, old_points[i].Y + n1.Y);
+                Point pij2 = new Point(old_points[j].X + n1.X, old_points[j].Y + n1.Y);
 
                 Vector v2 = new Vector(old_points[k].X - old_points[j].X, old_points[k].Y - old_points[j].Y);
                 v2.Normalize();
                 v2 *= offset;
                 Vector n2 = new Vector(-v2.Y, v2.X);
 
-                Point pjk1 = new Point((double)(old_points[j].X + n2.X), (double)(old_points[j].Y + n2.Y));
-                Point pjk2 = new Point((double)(old_points[k].X + n2.X), (double)(old_points[k].Y + n2.Y));
+                Point pjk1 = new Point(old_points[j].X + n2.X, old_points[j].Y + n2.Y);
+                Point pjk2 = new Point(old_points[k].X + n2.X, old_points[k].Y + n2.Y);
 
                 // See where the shifted lines ij and jk intersect.
-                bool lines_intersect, segments_intersect;
-                Point poi, close1, close2;
-                FindIntersection(pij1, pij2, pjk1, pjk2, out lines_intersect, out segments_intersect, out poi, out close1, out close2);
+                FindIntersection(pij1, pij2, pjk1, pjk2, out bool lines_intersect, out _, out Point poi, out _, out _);
                 Debug.Assert(lines_intersect, "Edges " + i + "-->" + j + " and " + j + "-->" + k + " are parallel");
                 enlarged_points.Add(poi);
             }
             return enlarged_points;
         }
 
+        /// <summary>
+        /// Возвращает периметр многоугольника
+        /// </summary>
+        public double Perimetr
+        {
+            get
+            {
+                double length = 0;
+                for (int i = 0; i < VertexList.Count; i++)
+                {
+                    if (i == 0)
+                        continue;
+                    length += LineLength(VertexList[i - 1], VertexList[i]);
+                }
+                if (VertexList.Count > 0)
+                    length += LineLength(VertexList[VertexList.Count - 1], VertexList[0]);
+                return length;
+            }
+        }
+
+        /// <summary>
+        /// Длина прямой
+        /// </summary>
+        /// <param name="One">Первая точка</param>
+        /// <param name="Two">Вторая точка</param>
+        /// <returns></returns>
+        private static double LineLength(Point One, Point Two)
+        {
+            return Math.Sqrt((Two.X - One.X) * (Two.X - One.X) + (Two.Y - One.Y) * (Two.Y - One.Y));
+        }
 
         /// <summary>
         /// Находит точку пересечения между длиниями

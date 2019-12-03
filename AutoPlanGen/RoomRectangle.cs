@@ -30,7 +30,7 @@ namespace AutoPlan
         /// Препядствия в виде прямоугольников
         /// </summary>
         protected List<Rectangle> Obstacles;
-        
+
         /// <summary>
         /// Добавление препядствий в помещение
         /// </summary>
@@ -38,7 +38,7 @@ namespace AutoPlan
         public void AddObstacles(List<Rectangle> Obstacles)
         {
             List<Rectangle> tmp = IntersectWith(Obstacles);
-            if (tmp.Count!=0)
+            if (tmp.Count != 0)
                 this.Obstacles.AddRange(tmp);
         }
 
@@ -56,18 +56,20 @@ namespace AutoPlan
         /// Проверка на дублирующиеся препядствия
         /// </summary>
         private void CheckDoubleObstacles()
-        {            
-            Dictionary<int, Rectangle> Dic = new Dictionary<int, Rectangle>();
-            int Index = 0;
-            foreach (Rectangle Item in Obstacles)
-            {
-                if (!Dic.ContainsValue(Item))
-                {
-                    Dic.Add(Index, Item);
-                        Index++;
-                }
-            }
-            Obstacles = Dic.Values.ToList();
+        {
+            List<Rectangle> result = Obstacles.Distinct().ToList();
+            Obstacles = result;
+            //Dictionary<int, Rectangle> Dic = new Dictionary<int, Rectangle>();
+            //int Index = 0;
+            //foreach (Rectangle Item in Obstacles)
+            //{
+            //    if (!Dic.ContainsValue(Item))
+            //    {
+            //        Dic.Add(Index, Item);
+            //        Index++;
+            //    }
+            //}
+            //Obstacles = Dic.Values.ToList();
         }
 
     }

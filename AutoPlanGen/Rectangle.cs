@@ -243,7 +243,7 @@ namespace AutoPlan
         /// <returns></returns>
         private static bool Equals(Rectangle obj1, Rectangle obj2)
         {
-            if (obj1.BottomLeft == obj2.BottomLeft && obj1.BottomRight == obj2.BottomRight && obj1.TopLeft == obj2.TopLeft && obj1.TopRight == obj2.TopRight)
+            if (obj1.BottomLeft == obj2.BottomLeft && obj1.TopRight == obj2.TopRight)
                 return true;
             return false;
         }
@@ -291,10 +291,8 @@ namespace AutoPlan
         public override int GetHashCode()
         {
             var hashCode = 352033281;
-            hashCode = hashCode * -1521134295 + TopLeft.GetHashCode();
             hashCode = hashCode * -1521134295 + TopRight.GetHashCode();
             hashCode = hashCode * -1521134295 + BottomLeft.GetHashCode();
-            hashCode = hashCode * -1521134295 + BottomRight.GetHashCode();
             return hashCode;
         }
 

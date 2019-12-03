@@ -140,17 +140,20 @@ namespace AutoPlan.Tests
                 new Point(195.72, 935.70), new Point(395.72, 335.7), new Point(895.72, 535.70),
                 new Point(560.92, -44.21), new Point(1487.23,-579.01), new Point(395.72,-664.30), new Point(104.22,-1169.21), new Point(-191.54,-656.95)
             });
-
+            Rectangle Predicted = new Rectangle(new Point(-1015.16, -1179.21), new Point(1503.69, 945.97));
+            double PredictedPerimetr = 8771.05;
+            double PredictedArea = 1971701.95;
 
             // act
-            poly1 = poly1.GetOffsetPolygon(5);
-            //double predictedSquare = 2015808.73;
+            Polygon poly2 = poly1.GetOffsetPolygon(5);
+            Rectangle OuterR = poly2.OuterRectangle;
 
-            Rectangle OuterR = poly1.OuterRectangle;
-            Rectangle Predicted = new Rectangle(new Point(-1015.16, -1179.21), new Point(1503.69, 945.97));
             // assert
 
             Assert.IsTrue(OuterR == Predicted);
+            Assert.IsTrue(Math.Abs(poly1.Area - PredictedArea) / poly1.Area < 0.1);
+            Assert.IsTrue(Math.Abs(poly1.Perimetr - PredictedPerimetr) / poly1.Perimetr < 0.1);
+
 
         }
 
