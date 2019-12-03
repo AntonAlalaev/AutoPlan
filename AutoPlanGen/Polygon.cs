@@ -101,6 +101,75 @@ namespace AutoPlan
                 return true;
             return false;
         }
+
+        /// <summary>
+        /// Выпуклый ли полигон
+        /// </summary>
+        public bool isConvex
+        {
+            get
+            {
+                bool got_negative = false;
+                bool got_positive = false;
+                int num_points = VertexList.Count;
+                int B, C;
+                for (int A = 0; A < num_points; A++)
+                {
+                    B = (A + 1) % num_points;
+                    C = (B + 1) % num_points;
+
+                    double cross_product =
+                        CrossProductLength(
+                            VertexList[A].X, VertexList[A].Y,
+                            VertexList[B].X, VertexList[B].Y,
+                            VertexList[C].X, VertexList[C].Y);
+                    if (cross_product < 0)
+                    {
+                        got_negative = true;
+                    }
+                    else if (cross_product > 0)
+                    {
+                        got_positive = true;
+                    }
+                    if (got_negative && got_positive) return false;
+                }
+
+                // If we got this far, the polygon is convex.
+                return true;
+
+            }
+        }
+       
+        /// <summary>
+        /// Return the cross product AB x BC.
+        /// The cross product is a vector perpendicular to AB
+        /// and BC having length |AB| * |BC| * Sin(theta) and
+        /// with direction given by the right-hand rule.
+        /// For two vectors in the X-Y plane, the result is a
+        /// vector with X and Y components 0 so the Z component
+        /// gives the vector's length and direction.
+        /// </summary>
+        /// <param name="Ax"></param>
+        /// <param name="Ay"></param>
+        /// <param name="Bx"></param>
+        /// <param name="By"></param>
+        /// <param name="Cx"></param>
+        /// <param name="Cy"></param>
+        /// <returns></returns>
+        public static double CrossProductLength(double Ax, double Ay,
+            double Bx, double By, double Cx, double Cy)
+        {
+            // Get the vectors' coordinates.
+            double BAx = Ax - Bx;
+            double BAy = Ay - By;
+            double BCx = Cx - Bx;
+            double BCy = Cy - By;
+
+            // Calculate the Z coordinate of the cross product.
+            return (BAx * BCy - BAy * BCx);
+        }
+
+
         /// <summary>
         /// Площадь многоугольника 
         /// </summary>
