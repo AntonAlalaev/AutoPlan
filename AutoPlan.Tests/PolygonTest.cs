@@ -147,13 +147,15 @@ namespace AutoPlan.Tests
             // act
             Polygon poly2 = poly1.GetOffsetPolygon(5);
             Rectangle OuterR = poly2.OuterRectangle;
+            Polygon poly3 = Polygon.GetOffsetPolygon(poly1, 5);
+
 
             // assert
 
             Assert.IsTrue(OuterR == Predicted);
-            Assert.IsTrue(Math.Abs(poly1.Area - PredictedArea) / poly1.Area < 0.1);
-            Assert.IsTrue(Math.Abs(poly1.Perimetr - PredictedPerimetr) / poly1.Perimetr < 0.1);
-
+            Assert.IsTrue(Math.Abs(poly1.Area - PredictedArea)/ poly1.Area < 0.01);
+            Assert.IsTrue(Math.Abs(poly1.Perimetr - PredictedPerimetr)/ poly1.Perimetr < 0.01);
+            Assert.IsTrue(poly2.Equals(poly3));
 
         }
 

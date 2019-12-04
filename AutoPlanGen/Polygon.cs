@@ -290,6 +290,29 @@ namespace AutoPlan
             }
         }
 
+        public override bool Equals(object obj)
+        {
+            Polygon Item = (Polygon)obj;
+            if (VertexList.Count != Item.VertexList.Count)
+                return false;
+            for (int i=0; i<VertexList.Count; i++)
+            {
+                if (VertexList[i] != Item.VertexList[i])
+                    return false;
+            }
+            return true;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = 352030201;
+            foreach (Point Item in VertexList)
+            {
+                hashCode *= -1521104295;
+                hashCode += Item.GetHashCode();
+            }
+            return hashCode;
+        }
 
 
 
