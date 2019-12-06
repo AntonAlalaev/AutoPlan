@@ -290,6 +290,11 @@ namespace AutoPlan
             }
         }
 
+        /// <summary>
+        /// Equals objects
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(object obj)
         {
             Polygon Item = (Polygon)obj;
@@ -302,7 +307,10 @@ namespace AutoPlan
             }
             return true;
         }
-
+        /// <summary>
+        /// Hash Code
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
             var hashCode = 352030201;

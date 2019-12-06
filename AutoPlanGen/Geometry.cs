@@ -87,7 +87,7 @@ namespace AutoPlan
         }
 
         /// <summary>
-        /// Возвращает угол между линиями заданными тремя точками
+        /// Возвращает длину вектора между линиями заданными тремя точками
         /// </summary>
         /// <param name="A">Точка А</param>
         /// <param name="B">Точка В</param>
@@ -127,5 +127,40 @@ namespace AutoPlan
             return (BAx * BCy - BAy * BCx);
         }
 
+        /// <summary>
+        /// Return the dot product of AB*BC
+        /// Note that AB*BC = |AB|*|BC| *Cos (theta)
+        /// </summary>
+        /// <param name="A"></param>
+        /// <param name="B"></param>
+        /// <param name="C"></param>
+        /// <returns></returns>
+        public static double DotProduct(Point A, Point B, Point C)
+        {
+            // get the vectors components
+            double ABx = A.X - B.X;
+            double ABy = A.Y - B.Y;
+            double BCx = C.X - B.X;
+            double BCy = C.Y - B.Y;
+
+            // Calculate the dot product
+            return (ABx * BCx + ABy * BCy);
+        }
+
+        /// <summary>
+        /// Return the Angle between Pi - Pi
+        /// Note than the value is the opposite of what you might
+        /// Except because Y coodrinates increase downward
+        /// </summary>
+        /// <param name="A"></param>
+        /// <param name="B"></param>
+        /// <param name="C"></param>
+        /// <returns></returns>
+        public static double getAngle(Point A, Point B, Point C)
+        {
+            double DotProduct = Geometry.DotProduct(A, B, C);
+            double crossProduct = Geometry.CrossProductLength(A, B, C);
+            return (double)Math.Atan2(crossProduct, DotProduct);
+        }
     }
 }

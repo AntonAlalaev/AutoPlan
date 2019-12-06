@@ -11,7 +11,7 @@ namespace AutoPlan.Tests
         /// Проверка на стандартное создание прямоугольника
         /// </summary>
         [TestMethod]
-        public void Rectangle_Square_Standart()
+        public void RectangleSquareStandart()
         {
             // arrange
             Point BottomLeft = new Point(0, 0);
@@ -27,7 +27,7 @@ namespace AutoPlan.Tests
         /// Проверка на создание прямоугольника по точкам в обратной последовательности
         /// </summary>
         [TestMethod]
-        public void Rectangle_Square_Negative()
+        public void RectangleSquareNegative()
         {
             // arrange
             Point BottomLeft = new Point(100, -50);
@@ -43,7 +43,7 @@ namespace AutoPlan.Tests
         /// Проверка на создание прямоугольника по инвертированным точкам
         /// </summary>
         [TestMethod]
-        public void Rectangle_Negative_Base_Point_1()
+        public void RectangleNegativeBasePoint1()
         {
             // arrange
             Point One = new Point(20, 23);
@@ -79,7 +79,7 @@ namespace AutoPlan.Tests
         /// с разными границами
         /// </summary>
         [TestMethod]
-        public void Rectangle_Intersection_Single()
+        public void RectangleIntersectionSingle()
         {
             // arrange
             // act
@@ -126,7 +126,6 @@ namespace AutoPlan.Tests
             Assert.IsTrue(BigOne.IntersectWith(MiddleIntersect, 2));
             Assert.IsFalse(BigOne.IntersectWith(MiddleIntersect, 1));
         }
-
 
 
     }
