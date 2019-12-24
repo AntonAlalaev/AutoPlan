@@ -12,7 +12,7 @@ namespace AutoPlan.Tests
     public class PolygonTest
     {
         [TestMethod]
-        public void PolygonPointsInBySimple()
+        public void Polygon_Points_in_bySimple()
         {
             // arrange
             Point One = new Point(0, 0); // no
@@ -40,7 +40,7 @@ namespace AutoPlan.Tests
         /// Тест на принадлежность точек полигональному многоугольнику - звезде
         /// </summary>
         [TestMethod]
-        public void PolygonTestByDrawingStar()
+        public void Polygon_Test_by_Drawing_Star()
         {
             // arrange
             Point One = new Point(-6, 5); // no
@@ -68,7 +68,7 @@ namespace AutoPlan.Tests
         /// Проверка определения площади многоугольника
         /// </summary>
         [TestMethod]
-        public void PolygonTestArea()
+        public void Polygon_Test_Area()
         {
             // arrange
             double Area = 197.17; // Площадь в автокаде
@@ -89,7 +89,7 @@ namespace AutoPlan.Tests
         /// Проверка описывающего прямоугольника
         /// </summary>
         [TestMethod]
-        public void PolygonOuterRectangle()
+        public void Polygon_Outer_rectangle()
         {
             // arrange
             Polygon poly1 = new Polygon(new List<Point>()
@@ -109,7 +109,7 @@ namespace AutoPlan.Tests
         }
 
         [TestMethod]
-        public void PolygonOuterBorderOuterRectangle()
+        public void Polygon_Outer_border_Outer_rectangle()
         {
             // arrange
             Polygon poly1 = new Polygon(new List<Point>()
@@ -131,7 +131,7 @@ namespace AutoPlan.Tests
         }
 
         [TestMethod]
-        public void PolygonOuterBorderOuterRectangleBig()
+        public void Polygon_Outer_border_Outer_rectangle_Big()
         {
             // arrange
             Polygon poly1 = new Polygon(new List<Point>()
