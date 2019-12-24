@@ -263,7 +263,12 @@ namespace AutoPlan
                 Point pjk2 = new Point(old_points[k].X + n2.X, old_points[k].Y + n2.Y);
 
                 // See where the shifted lines ij and jk intersect.
-                Geometry.FindIntersection(pij1, pij2, pjk1, pjk2, out bool lines_intersect, out _, out Point poi, out _, out _);
+                bool lines_intersect;
+                bool segments_intersect;
+                Point poi;
+                Point close_p1;
+                Point close_p2;
+                Geometry.FindIntersection(pij1, pij2, pjk1, pjk2, out lines_intersect, out segments_intersect, out poi, out close_p1, out close_p2);
                 Debug.Assert(lines_intersect, "Edges " + i + "-->" + j + " and " + j + "-->" + k + " are parallel");
                 enlarged_points.Add(poi);
             }
