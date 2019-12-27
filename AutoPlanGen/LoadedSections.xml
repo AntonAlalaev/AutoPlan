@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Sections>
+  <Section>
+    <Name>ПО 2065х1250х300</Name>
+    <ShelfLength>1250</ShelfLength>
+    <ShelfWidth>300</ShelfWidth>
+    <SectionLength>1342</SectionLength>
+    <SectionWidth>640</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+  </Section>
+  <Section>
+    <Name>ПД 2065х1250х300</Name>
+    <ShelfLength>1250</ShelfLength>
+    <ShelfWidth>300</ShelfWidth>
+    <SectionLength>1260</SectionLength>
+    <SectionWidth>640</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+  </Section>
+
+</Sections>

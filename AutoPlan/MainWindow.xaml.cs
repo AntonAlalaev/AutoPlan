@@ -58,6 +58,7 @@ namespace AutoPlan
                 new Point(195.72, 935.70), new Point(395.72, 335.7), new Point(895.72, 535.70),
                 new Point(560.92, -44.21), new Point(1487.23,-579.01), new Point(395.72,-664.30), new Point(104.22,-1169.21), new Point(-191.54,-656.95)
             });
+            List<double> res1 = Calculation.getRowByDistance(7000, new List<double> { 1250, 1000, 750 });
 
         }
 

@@ -55,5 +55,8 @@
     <Compile Include="RoomRectangle.cs" />
     <Compile Include="Section.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="LoadedSections.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
