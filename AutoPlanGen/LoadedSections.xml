@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Sections>
+  <!--1250х300-->
   <Section>
     <Name>ПО 2065х1250х300</Name>
     <ShelfLength>1250</ShelfLength>
@@ -15,6 +16,48 @@
     <ShelfLength>1250</ShelfLength>
     <ShelfWidth>300</ShelfWidth>
     <SectionLength>1260</SectionLength>
+    <SectionWidth>640</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+  </Section>
+  <!--1000х300-->
+  <Section>
+    <Name>ПО 2065х1000х300</Name>
+    <ShelfLength>1000</ShelfLength>
+    <ShelfWidth>300</ShelfWidth>
+    <SectionLength>1092</SectionLength>
+    <SectionWidth>640</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+  </Section>
+  <Section>
+    <Name>ПД 2065х1000х300</Name>
+    <ShelfLength>1000</ShelfLength>
+    <ShelfWidth>300</ShelfWidth>
+    <SectionLength>1010</SectionLength>
+    <SectionWidth>640</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+  </Section>
+  <!--750х300-->
+  <Section>
+    <Name>ПО 2065х750х300</Name>
+    <ShelfLength>750</ShelfLength>
+    <ShelfWidth>300</ShelfWidth>
+    <SectionLength>842</SectionLength>
+    <SectionWidth>640</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+  </Section>
+  <Section>
+    <Name>ПД 2065х1000х300</Name>
+    <ShelfLength>750</ShelfLength>
+    <ShelfWidth>300</ShelfWidth>
+    <SectionLength>760</SectionLength>
     <SectionWidth>640</SectionWidth>
     <SectionHeight>2065</SectionHeight>
     <Floor>false</Floor>

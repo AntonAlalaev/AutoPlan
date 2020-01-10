@@ -54,9 +54,12 @@
     <Compile Include="Rectangle.cs" />
     <Compile Include="RoomRectangle.cs" />
     <Compile Include="Section.cs" />
+    <Compile Include="XMLParName.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="LoadedSections.xml" />
+    <Content Include="LoadedSections.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

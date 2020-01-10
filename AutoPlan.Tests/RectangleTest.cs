@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AutoPlan;
+using System.Collections.Generic;
 
 namespace AutoPlan.Tests
 {
@@ -88,6 +89,9 @@ namespace AutoPlan.Tests
             Rectangle MiddleIntersect = new Rectangle(new Point(-13, -17), new Point(18, -44));
             Rectangle SmallInternal = new Rectangle(new Point(-2, -23), new Point(14, -37));
             Rectangle SmallestOne = new Rectangle(new Point(-5, -45), new Point(7, -59));
+
+            
+            
             // assert
 
             // Большой прямоугольник
@@ -127,6 +131,14 @@ namespace AutoPlan.Tests
             Assert.IsFalse(BigOne.IntersectWith(MiddleIntersect, 1));
         }
 
+        [TestMethod]
+        public void TestSection()
+        {
+            // arrange
+            string FileName = "LoadedSections.xml";
+            List<Section> test = Parametrs.LoadSection(FileName);
+
+        }
 
     }
 }

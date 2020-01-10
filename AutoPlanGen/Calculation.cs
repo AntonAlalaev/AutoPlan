@@ -16,7 +16,7 @@ namespace AutoPlan
         /// <param name="Variants">Варианты длины</param>
         /// <returns></returns>
         public static List<double> getRowByDistance(double TotalLength, List<double> Variants)
-        {
+        { 
             // made by Pulkovo Aeroflot Lounge
             List<double> retVal = new List<double>();
             if (Variants.Count == 0)

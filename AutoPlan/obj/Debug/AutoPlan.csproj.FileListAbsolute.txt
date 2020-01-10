@@ -29,3 +29,4 @@ C:\Users\anton\source\repos\AntonAlalaev\AutoPlan\AutoPlan\obj\Debug\AutoPlan.ex
 C:\Users\anton\source\repos\AntonAlalaev\AutoPlan\AutoPlan\obj\Debug\AutoPlan.pdb
 C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\obj\Debug\AutoPlan.csprojAssemblyReference.cache
 C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\obj\Debug\AutoPlan.csproj.CopyComplete
+C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\bin\Debug\LoadedSections.xml
