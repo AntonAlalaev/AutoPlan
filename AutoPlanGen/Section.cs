@@ -38,15 +38,19 @@ namespace AutoPlan
         /// <param name="FormalLength"></param>
         /// <param name="FormalWidth"></param>
         /// <param name="SectionHeight"></param>
-        public Section(string Name, int RealLength, int RealWidth, int FormalLength, int FormalWidth, int SectionHeight, bool Main = false) : base(new Point(0, 0), RealWidth, RealLength)
+        public Section(string Name, int RealLength, int RealWidth, int FormalLength, int FormalWidth, int SectionHeight, bool Double, bool Main) : base(new Point(0, 0), RealWidth, RealLength)
         {
             this.Name = Name;
             this.Main = Main;
+            this.Double = Double;
             FakeLength = FormalLength;
             FakeWidth = FormalWidth;
             SecHeight = SectionHeight;
+
             
         }
+
+        public bool Double { get; set; }
 
         /// <summary>
         /// Наименование секции

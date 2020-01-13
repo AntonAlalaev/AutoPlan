@@ -59,7 +59,8 @@ namespace AutoPlan
                 new Point(560.92, -44.21), new Point(1487.23,-579.01), new Point(395.72,-664.30), new Point(104.22,-1169.21), new Point(-191.54,-656.95)
             });
             List<double> res1 = Calculation.getRowByDistance(7000, new List<double> { 1250, 1000, 750 });
-
+            string FileName = "LoadedSections.xml";
+            List<Section> test = Parametrs.LoadSection(FileName);
         }
 
         private void testpress_Click(object sender, RoutedEventArgs e)

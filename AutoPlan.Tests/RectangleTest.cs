@@ -56,7 +56,7 @@ namespace AutoPlan.Tests
             int Height = 97;
             int Length = 90;
 
-            int ExpectedSquare = Height*Length;
+            int ExpectedSquare = Height * Length;
             int ExpectedPerimetr = Height * 2 + Length * 2;
             // act
             Rectangle rec1 = new Rectangle(One, Two);
@@ -90,8 +90,8 @@ namespace AutoPlan.Tests
             Rectangle SmallInternal = new Rectangle(new Point(-2, -23), new Point(14, -37));
             Rectangle SmallestOne = new Rectangle(new Point(-5, -45), new Point(7, -59));
 
-            
-            
+
+
             // assert
 
             // Большой прямоугольник
@@ -137,6 +137,27 @@ namespace AutoPlan.Tests
             // arrange
             string FileName = "LoadedSections.xml";
             List<Section> test = Parametrs.LoadSection(FileName);
+            double testLength = 0;
+            bool testMain = true;
+            foreach (Section Item in test)
+            {
+                if (Item.Name == "ПО 2065х1250х300")
+                {
+                    testLength = Item.FakeLength;
+                }
+                if (Item.Name == "ПД 2065х1000х300")
+                {
+                    testMain = Item.Main;
+                }
+            }
+
+
+
+            // assert
+            Assert.IsTrue(test.Count > 0);
+            Assert.IsTrue(testLength == 1250);
+            Assert.IsFalse(testMain);
+
 
         }
 

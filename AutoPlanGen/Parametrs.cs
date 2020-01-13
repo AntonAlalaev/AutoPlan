@@ -96,10 +96,11 @@ namespace AutoPlan
             foreach (XmlNode xnode in xRoot)
             {
                 // название секции
-                string StellarName = xnode.Name;
+
                 // параметры секции
                 if (xnode.HasChildNodes)
                 {
+                    string StellarName = "";
                     // длина полки
                     int FormalLength = 0;
                     // глубина полки
@@ -118,6 +119,8 @@ namespace AutoPlan
                     bool DoubleSided = false;
                     foreach (XmlNode cnode in xnode)
                     {
+                        if (cnode.Name == "Name")
+                            StellarName = cnode.InnerText;
                         if (cnode.Name == XMLParName.SectionRealLength)
                             realLength = ParseToInt(cnode.InnerText);
                         if (cnode.Name == XMLParName.SectionRealWidth)
@@ -144,7 +147,7 @@ namespace AutoPlan
                     }
 
                     // добавляем секцию в список
-                    retValue.Add(new Section(StellarName, realLength, RealWidth, FormalLength, ShelfWidth, Height, DoubleSided));
+                    retValue.Add(new Section(StellarName, realLength, RealWidth, FormalLength, ShelfWidth, Height, DoubleSided, MainSection));
 
                 }
 
