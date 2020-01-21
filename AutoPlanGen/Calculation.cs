@@ -16,7 +16,7 @@ namespace AutoPlan
         /// <param name="Variants">Варианты длины</param>
         /// <returns></returns>
         public static List<double> getRowByDistance(double TotalLength, List<double> Variants)
-        { 
+        {
             // made by Pulkovo Aeroflot Lounge
             List<double> retVal = new List<double>();
             if (Variants.Count == 0)
@@ -62,5 +62,26 @@ namespace AutoPlan
 
             return retVal;
         }
+
+        /// <summary>
+        /// Возвращает полную длину элементов массива
+        /// </summary>
+        /// <param name="ItemList"></param>
+        /// <param name="Absolute"></param>
+        /// <returns></returns>
+        public static double TotalLength(List<double> ItemList, bool Absolute = true)
+        {
+            double resultat = 0;
+            foreach (double Item in ItemList)
+            {
+                if (Absolute)
+                    resultat += Math.Abs(Item);
+                else
+                    resultat += Item;
+            }
+            return resultat;
+        }
+
+
     }
 }

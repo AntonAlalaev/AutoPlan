@@ -20,47 +20,120 @@ namespace AutoPlan
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        List<Section> TotalSectionList;
         public MainWindow()
         {
             InitializeComponent();
+            // загрузка данных секций
+            string FileName = "LoadedSections.xml";
+            TotalSectionList = Parametrs.LoadSection(FileName);
+
+            // длины полок
+            List<double> ShelfLength = TotalSectionList.Select(n => n.FakeLength).Distinct().OrderBy(n => n).ToList();
+
+
+            foreach (double Item in ShelfLength)
+            {
+                ShelfLengthMin.Items.Add(Item);
+                ShelfLengthMax.Items.Add(Item);
+            }
+
+            // глубины полок
+            List<double> ShelfWidth = TotalSectionList.Select(n => n.FakeWidth).Distinct().OrderBy(n => n).ToList();
+            foreach (double Item in ShelfWidth)
+            {
+                StellarWidth.Items.Add(Item);
+            }
+
+            // высоты стеллажей
+            List<int> StellarHeights = TotalSectionList.Select(n => n.SecHeight).Distinct().OrderBy(n => n).ToList();
+            foreach (int Item in StellarHeights)
+            {
+                StellarHeight.Items.Add(Item);
+            }
         }
+
+
 
         public void testc()
         {
-            //Section test = new Section(1000, 600, new Point(0, 0));
-            Rectangle r1 = new Rectangle(new Point(24, 16), new Point(56, 57));
-            Rectangle r2 = new Rectangle(new Point(-14, 53), new Point(24, 58));
-            RoomRectangle Area1 = new RoomRectangle(new Point(0, 0), new Point(57, 57));
-            Area1.AddObstacle(r1);
-            Area1.AddObstacle(r2);
+            GetAllowedSelection(out double SelectedShelfLengthMin, out double SelectedShelfLengthMax, out int SelectedHeight, out double SelectedShelfWidth, out bool OK);
+            if (!OK)
+                return;
 
-            Polygon poly1 = new Polygon(new List<Point>()
+            // перечень допустимых секций
+            IEnumerable<Section> AllowedItems = TotalSectionList.Where(t => t.FakeLength >= SelectedShelfLengthMin
+                && t.FakeLength <= SelectedShelfLengthMax && t.SecHeight == SelectedHeight && t.FakeWidth == SelectedShelfWidth);
+            // допустимая длина основных секций
+            List<double> AllowedMainLength = AllowedItems.Where(n => n.Main).Select(n => n.Height).Distinct().OrderBy(n=>n).ToList();
+
+            // допустимая длина дополнительных секций
+            List<double> AllowedSecondLength = AllowedItems.Where(n => !n.Main).Select(n => n.Height).Distinct().ToList();
+
+            // параметры помещения
+            RoomRectangle six_twelve = new RoomRectangle(new Point(0, 0), new Point(12000, 6000));
+            
+            // распределение по длинам секций
+            List<double> finalLength = new List<double>();
+            foreach (double MainLength in AllowedMainLength)
             {
-                new Point(1, 14), new Point(3, 8), new Point(8, 10), new Point(4.65, 4.2),
-                new Point(13.92, -1.15), new Point(3, -2), new Point(0.08, -7.07),
-                new Point(-2.95, -1.97), new Point(-11,0), new Point(-5,5), new Point(-8,12), new Point(-2.95,9.08)
-            });
+                List<double> temp = Calculation.getRowByDistance(six_twelve.Height - MainLength, AllowedSecondLength);
+                List<double> WithMain = new List<double>();
+                WithMain.Add(MainLength);
+                WithMain.AddRange(temp);
+                if (Calculation.TotalLength(WithMain) >= Calculation.TotalLength(finalLength))
+                    finalLength = WithMain;
+            }
 
-            Polygon thick = poly1.GetOffsetPolygon(5);
+            // формирование реальных секций
+            List<Section> VerticalLine = new List<Section>();
 
-            poly1 = new Polygon(new List<Point>()
+
+        }
+
+        /// <summary>
+        /// Возвращает коректные значения выбранных элементов
+        /// </summary>
+        /// <param name="SelectedShelfLengthMin"></param>
+        /// <param name="SelectedShelfLengthMax"></param>
+        /// <param name="SelectedHeight"></param>
+        /// <param name="SelectedShelfWidth"></param>
+        private void GetAllowedSelection(out double SelectedShelfLengthMin, out double SelectedShelfLengthMax, out int SelectedHeight, out double SelectedShelfWidth, out bool OK)
+        {
+            // проверим на выбор глубины полки
+            if (StellarWidth.SelectedItem == null)
             {
-                new Point(-1004.28, -464.3), new Point(-404.28, 35.7), new Point(-704.28, 735.7), new Point(-199.37, 444.19),
-                new Point(195.72, 935.70), new Point(395.72, 335.7), new Point(895.72, 535.70),
-                new Point(560.92, -44.21), new Point(1487.23,-579.01), new Point(395.72,-664.30), new Point(104.22,-1169.21), new Point(-191.54,-656.95)
-            });
 
-            Polygon poly2 = poly1.GetOffsetPolygon(5);
-
-            Polygon poly3 = new Polygon(new List<Point>()
+                string MessageError = "Глубина стеллажа должна быть обязательно выбрана!";
+                MessageBoxResult result = MessageBox.Show(MessageError, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                OK = false;
+                SelectedShelfLengthMin = 0;
+                SelectedShelfLengthMax = 0;
+                SelectedHeight = 0;
+                SelectedShelfWidth = 0;
+            }
+            else
             {
-                new Point(-1004.28, -464.3), new Point(-404.28, 35.7), new Point(-704.28, 735.7), new Point(-199.37, 444.19),
-                new Point(195.72, 935.70), new Point(395.72, 335.7), new Point(895.72, 535.70),
-                new Point(560.92, -44.21), new Point(1487.23,-579.01), new Point(395.72,-664.30), new Point(104.22,-1169.21), new Point(-191.54,-656.95)
-            });
-            List<double> res1 = Calculation.getRowByDistance(7000, new List<double> { 1250, 1000, 750 });
-            string FileName = "LoadedSections.xml";
-            List<Section> test = Parametrs.LoadSection(FileName);
+                SelectedShelfWidth = (double)StellarWidth.SelectedItem;
+                if (ShelfLengthMin.SelectedItem == null)
+                    SelectedShelfLengthMin = TotalSectionList.Select(n => n.FakeLength).Min();
+                else
+                    SelectedShelfLengthMin = (double)ShelfLengthMin.SelectedItem;
+                if (ShelfLengthMax.SelectedItem == null)
+                    SelectedShelfLengthMax = TotalSectionList.Select(n => n.FakeLength).Max();
+                else
+                    SelectedShelfLengthMax = (double)ShelfLengthMax.SelectedItem;
+                if (StellarHeight.SelectedItem == null)
+                {
+                    SelectedHeight = TotalSectionList.Select(n => n.SecHeight).Min();
+                    string MessageError = "Высота стеллажа не выбрана, по умолчанию будет выбрана минимальная " + SelectedHeight + " мм";
+                    MessageBoxResult result = MessageBox.Show(MessageError, "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
+                else
+                    SelectedHeight = (int)StellarHeight.SelectedItem;
+                OK = true;
+            }
         }
 
         private void testpress_Click(object sender, RoutedEventArgs e)

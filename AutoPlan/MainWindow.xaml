@@ -14,11 +14,13 @@
         <!--Левая сторона параметры стеллажей-->
             <StackPanel Grid.Column="0">
             <Label>Глубина стеллажа</Label>
-            <TextBox Name="StellarWidth"></TextBox>
+            <ComboBox Name="StellarWidth"></ComboBox>
             <Label>Минимальная длина полки</Label>
             <ComboBox Name="ShelfLengthMin"></ComboBox>
             <Label>Максимальная длина полки</Label>
             <ComboBox Name="ShelfLengthMax"></ComboBox>
+            <Label>Высота стеллажа</Label>
+            <ComboBox Name="StellarHeight"></ComboBox>
             <Button Name="testpress" Click="testpress_Click">test press</Button>
         </StackPanel>
         <!--Правая сторона параметры помещения-->
