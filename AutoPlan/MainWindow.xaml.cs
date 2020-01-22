@@ -62,6 +62,9 @@ namespace AutoPlan
             if (!OK)
                 return;
 
+            // параметры помещения
+            RoomRectangle RoomData = new RoomRectangle(new Point(0, 0), new Point(12000, 6000));
+
             // перечень допустимых секций
             IEnumerable<Section> AllowedItems = TotalSectionList.Where(t => t.FakeLength >= SelectedShelfLengthMin
                 && t.FakeLength <= SelectedShelfLengthMax && t.SecHeight == SelectedHeight && t.FakeWidth == SelectedShelfWidth);
@@ -71,16 +74,15 @@ namespace AutoPlan
             // допустимая длина дополнительных секций
             List<double> AllowedSecondLength = AllowedItems.Where(n => !n.Main).Select(n => n.Height).Distinct().ToList();
 
-            // параметры помещения
-            RoomRectangle six_twelve = new RoomRectangle(new Point(0, 0), new Point(12000, 6000));
+            
             
             // распределение по длинам секций
             List<double> finalLength = new List<double>();
-            foreach (double MainLength in AllowedMainLength)
+            foreach (double MainLen in AllowedMainLength)
             {
-                List<double> temp = Calculation.getRowByDistance(six_twelve.Height - MainLength, AllowedSecondLength);
+                List<double> temp = Calculation.getRowByDistance(RoomData.Height - MainLen, AllowedSecondLength);
                 List<double> WithMain = new List<double>();
-                WithMain.Add(MainLength);
+                WithMain.Add(MainLen);
                 WithMain.AddRange(temp);
                 if (Calculation.TotalLength(WithMain) >= Calculation.TotalLength(finalLength))
                     finalLength = WithMain;
@@ -88,6 +90,36 @@ namespace AutoPlan
 
             // формирование реальных секций
             List<Section> VerticalLine = new List<Section>();
+            // проверка на существование секций
+            if (finalLength.Count == 0)
+                return;
+
+            // поиск  секций
+            for (int i = 0; i < finalLength.Count; i++)
+            {
+                // поиск основной секции
+                if (i == 0)
+                {
+                    Section readyMain = AllowedItems.Where(n => n.Main
+                        && n.SecHeight == SelectedHeight && n.FakeWidth == SelectedShelfWidth
+                        && n.Length == finalLength[i]).Select(n => n).FirstOrDefault();
+                    if (readyMain == null)
+                        return;
+                    VerticalLine.Add(readyMain);
+                }
+                // поиск дополнительных секций
+                else
+                { 
+                    Section readyDop = AllowedItems.Where(n => !n.Main
+                       && n.SecHeight == SelectedHeight && n.FakeWidth == SelectedShelfWidth
+                       && n.Length == finalLength[i]).Select(n => n).FirstOrDefault();
+                    if (readyDop == null)
+                        return;
+                    VerticalLine.Add(readyDop);
+                }
+            }
+
+
 
 
         }
