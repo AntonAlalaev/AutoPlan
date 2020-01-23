@@ -66,8 +66,8 @@ namespace AutoPlan
             RoomRectangle RoomData = new RoomRectangle(new Point(0, 0), new Point(12000, 6000));
 
             // перечень допустимых секций
-            IEnumerable<Section> AllowedItems = TotalSectionList.Where(t => t.FakeLength >= SelectedShelfLengthMin
-                && t.FakeLength <= SelectedShelfLengthMax && t.SecHeight == SelectedHeight && t.FakeWidth == SelectedShelfWidth);
+            List<Section> AllowedItems = TotalSectionList.Where(t => t.FakeLength >= SelectedShelfLengthMin
+                && t.FakeLength <= SelectedShelfLengthMax && t.SecHeight == SelectedHeight && t.FakeWidth == SelectedShelfWidth).ToList();
             // допустимая длина основных секций
             List<double> AllowedMainLength = AllowedItems.Where(n => n.Main).Select(n => n.Height).Distinct().OrderBy(n=>n).ToList();
 
@@ -102,7 +102,7 @@ namespace AutoPlan
                 {
                     Section readyMain = AllowedItems.Where(n => n.Main
                         && n.SecHeight == SelectedHeight && n.FakeWidth == SelectedShelfWidth
-                        && n.Length == finalLength[i]).Select(n => n).FirstOrDefault();
+                        && n.Height == finalLength[i]).Select(n => n).FirstOrDefault();
                     if (readyMain == null)
                         return;
                     VerticalLine.Add(readyMain);
@@ -112,7 +112,7 @@ namespace AutoPlan
                 { 
                     Section readyDop = AllowedItems.Where(n => !n.Main
                        && n.SecHeight == SelectedHeight && n.FakeWidth == SelectedShelfWidth
-                       && n.Length == finalLength[i]).Select(n => n).FirstOrDefault();
+                       && n.Height == finalLength[i]).Select(n => n).FirstOrDefault();
                     if (readyDop == null)
                         return;
                     VerticalLine.Add(readyDop);

@@ -256,6 +256,10 @@ namespace AutoPlan
         /// <returns></returns>
         public static bool operator ==(Rectangle obj1, Rectangle obj2)
         {
+            if (ReferenceEquals(obj1, null) && ReferenceEquals(obj2, null))
+                return true;
+            else if (ReferenceEquals(obj1, null) || ReferenceEquals(obj2, null))
+                return false;
             if (Equals(obj1, obj2))
                 return true;
             return false;

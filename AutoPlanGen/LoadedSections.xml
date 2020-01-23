@@ -54,7 +54,7 @@
     <Main>true</Main>
   </Section>
   <Section>
-    <Name>ПД 2065х1000х300</Name>
+    <Name>ПД 2065х750х300</Name>
     <ShelfLength>750</ShelfLength>
     <ShelfWidth>300</ShelfWidth>
     <SectionLength>760</SectionLength>
