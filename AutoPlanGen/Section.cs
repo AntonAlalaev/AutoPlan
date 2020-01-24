@@ -45,11 +45,27 @@ namespace AutoPlan
             this.Double = Double;
             FakeLength = FormalLength;
             FakeWidth = FormalWidth;
-            SecHeight = SectionHeight;
-
-            
+            SecHeight = SectionHeight;            
         }
 
+        /// <summary>
+        /// Конструктор на базе существующей секции
+        /// </summary>
+        /// <param name="BaseSection">Исходная секция</param>
+        /// <param name="BottomLeft">Нижняя левая точка привязки новой секции</param>
+        public Section(Section BaseSection, Point BottomLeft): base (BottomLeft, BaseSection.Length, BaseSection.Height)
+        {
+            Name = BaseSection.Name;
+            Main = BaseSection.Main;
+            Double = BaseSection.Double;
+            FakeLength = BaseSection.Length;
+            FakeWidth = BaseSection.FakeWidth;
+            SecHeight = BaseSection.SecHeight;
+        }
+
+        /// <summary>
+        /// Признак двухсторонней секции
+        /// </summary>
         public bool Double { get; set; }
 
         /// <summary>
@@ -77,6 +93,15 @@ namespace AutoPlan
         /// Основная секция
         /// </summary>
         public bool Main { get; set; }
+
+        /// <summary>
+        /// Текстовое представление
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return Name + " (" + BottomLeft.ToString() + ")";
+        }
 
 
 
