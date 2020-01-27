@@ -10,6 +10,19 @@ namespace AutoPlan
     {
 
 
+
+
+        /// <summary>
+        /// Возвращает прямоугольник за вычетом рабочего прохода
+        /// </summary>
+        /// <param name="Space">Исходный прямоугольник</param>
+        /// <param name="PassageLength">Ширина рабочего прохода (по X)</param>
+        /// <returns></returns>
+        public static Rectangle getAreaWithoutWorkPassage(Rectangle Space, double PassageLength)
+        {
+            return new Rectangle(Space.BottomLeft, new Point(Space.TopRight.X - PassageLength, Space.TopRight.Y));
+        }
+
         /// <summary>
         /// Заполняет секциями заданную площадь
         /// </summary>
@@ -105,8 +118,7 @@ namespace AutoPlan
                 Xposition += RealWidth;
                 RemainedWidth -= RealWidth;
 
-
-            } while (RemainedWidth > RealWidth);
+            } while (RemainedWidth >= RealWidth);
             return VerticalLine;
         }
 

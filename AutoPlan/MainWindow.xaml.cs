@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Globalization;
 
 namespace AutoPlan
 {
@@ -64,16 +65,16 @@ namespace AutoPlan
 
             // параметры помещения
             RoomRectangle RoomData = new RoomRectangle(new Point(0, 0), new Point(12000, 6000));
-
             List<Section> AllowedItems = new List<Section>();
             // перечень допустимых секций
             //if (DoubleSection) // если двухсторонние
             //{
             AllowedItems = TotalSectionList.Where(t => t.FakeLength >= SelectedShelfLengthMin
                 && t.FakeLength <= SelectedShelfLengthMax && t.SecHeight == SelectedHeight && t.FakeWidth == SelectedShelfWidth && t.Double == true).ToList();
-            //}
+            //}            
+            Rectangle WithoutWorkPass = Calculation.getAreaWithoutWorkPassage(RoomData, Convert.ToDouble(WorkPass.Text,  CultureInfo.CurrentCulture));
 
-            List<Section> Vert = Calculation.SectionPack(RoomData, AllowedItems);
+            List<Section> Vert = Calculation.SectionPack(WithoutWorkPass, AllowedItems);
 
         }
 

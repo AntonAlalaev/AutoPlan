@@ -14,6 +14,8 @@
         </Grid.ColumnDefinitions>
         <!--Левая сторона параметры стеллажей-->
             <StackPanel Grid.Column="0">
+            <Label>Рабочий проход</Label>
+            <TextBox Name="WorkPass">750</TextBox>
             <Label>Глубина стеллажа</Label>
             <ComboBox Name="StellarWidth"></ComboBox>
             <Label>Минимальная длина полки</Label>
@@ -22,7 +24,8 @@
             <ComboBox Name="ShelfLengthMax"></ComboBox>
             <Label>Высота стеллажа</Label>
             <ComboBox Name="StellarHeight"></ComboBox>
-            <Button Name="testpress" Click="testpress_Click">test press</Button>
+            <Rectangle Width="10" Height="10"></Rectangle>
+            <Button Name="testpress" Click="testpress_Click">Расставить стеллажи</Button>
         </StackPanel>
         <!--Правая сторона параметры помещения-->
         <StackPanel Grid.Column="1">
