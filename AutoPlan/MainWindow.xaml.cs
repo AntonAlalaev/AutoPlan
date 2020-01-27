@@ -20,7 +20,7 @@ namespace AutoPlan
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        //#pragma warning disable CA1303 // Не передавать литералы в качестве локализованных параметров
         List<Section> TotalSectionList;
         public MainWindow()
         {
@@ -65,128 +65,32 @@ namespace AutoPlan
             // параметры помещения
             RoomRectangle RoomData = new RoomRectangle(new Point(0, 0), new Point(12000, 6000));
 
-            List<Section> Vert = Vertical(RoomData, SelectedShelfLengthMin, SelectedShelfLengthMax, SelectedShelfWidth, SelectedHeight);
-
-        }
-
-        public List<Section> Vertical(RoomRectangle freeSpace, double ShelfLengthMin, double ShelfLengthMax, double ShelfWidth, int StellarHeight, bool DoubleSection = true)
-        {
-            // формирование реальных секций
-            List<Section> VerticalLine = new List<Section>();
-
-            // если помещение null
-            if (freeSpace == null)
-            {
-                return VerticalLine;
-            }
-
             List<Section> AllowedItems = new List<Section>();
             // перечень допустимых секций
-            if (DoubleSection) // если двухсторонние
-            {
-                AllowedItems = TotalSectionList.Where(t => t.FakeLength >= ShelfLengthMin
-                    && t.FakeLength <= ShelfLengthMax && t.SecHeight == StellarHeight && t.FakeWidth == ShelfWidth && t.Double == true).ToList();
-            }
-            else // если односторонние
-            {
-                AllowedItems = TotalSectionList.Where(t => t.FakeLength >= ShelfLengthMin
-                    && t.FakeLength <= ShelfLengthMax && t.SecHeight == StellarHeight && t.FakeWidth == ShelfWidth && t.Double == false).ToList();
-            }
-            // если допустимых секций нет, то и вмещать в площадь нечего
-            if (AllowedItems.Count == 0)
-                return VerticalLine;
+            //if (DoubleSection) // если двухсторонние
+            //{
+            AllowedItems = TotalSectionList.Where(t => t.FakeLength >= SelectedShelfLengthMin
+                && t.FakeLength <= SelectedShelfLengthMax && t.SecHeight == SelectedHeight && t.FakeWidth == SelectedShelfWidth && t.Double == true).ToList();
+            //}
 
-            // реальная глубина секции
-            double RealWidth = AllowedItems.Select(t => t.Length).FirstOrDefault();
+            List<Section> Vert = Calculation.SectionPack(RoomData, AllowedItems);
 
-            // если глубина помещения меньше чем глубина одной секции
-            // ни один стеллаж в заданное помещение не поместится
-            if (freeSpace.Length < RealWidth)
-                return VerticalLine;
-
-            // допустимая длина основных секций
-            List<double> AllowedMainLength = AllowedItems.Where(n => n.Main).Select(n => n.Height).Distinct().OrderBy(n => n).ToList();
-
-            // допустимая длина дополнительных секций
-            List<double> AllowedSecondLength = AllowedItems.Where(n => !n.Main).Select(n => n.Height).Distinct().ToList();
-
-
-            // распределение по длинам секций
-            List<double> finalLength = new List<double>();
-            foreach (double MainLen in AllowedMainLength)
-            {
-                List<double> temp = Calculation.getRowByDistance(freeSpace.Height - MainLen, AllowedSecondLength);
-                List<double> WithMain = new List<double>();
-                WithMain.Add(MainLen);
-                WithMain.AddRange(temp);
-                if (Calculation.TotalLength(WithMain) >= Calculation.TotalLength(finalLength))
-                    finalLength = WithMain;
-            }
-
-            // проверка на существование секций в заданную длину помещения
-            if (finalLength.Count == 0)
-                return VerticalLine;
-
-
-            //Point Yposition = RoomData.BottomLeft;
-            double Yposition = freeSpace.BottomLeft.Y;
-            double Xposition = freeSpace.BottomLeft.X;
-
-            // оставшаяся глбуина помещения
-            double RemainedWidth = freeSpace.Length;
-
-            do
-            {
-                // поиск  секций
-                for (int i = 0; i < finalLength.Count; i++)
-                {
-                    // поиск основной секции
-                    if (i == 0)
-                    {
-                        Section readyMain = AllowedItems.Where(n => n.Main
-                            && n.SecHeight == StellarHeight && n.FakeWidth == ShelfWidth
-                            && n.Height == finalLength[i]).Select(n => n).FirstOrDefault();
-                        if (readyMain == null)
-                            return VerticalLine;
-                        VerticalLine.Add(new Section(readyMain, new Point(Xposition, Yposition)));
-                        Yposition += readyMain.Height;
-                    }
-                    // поиск дополнительных секций
-                    else
-                    {
-                        Section readyDop = AllowedItems.Where(n => !n.Main
-                           && n.SecHeight == StellarHeight && n.FakeWidth == ShelfWidth
-                           && n.Height == finalLength[i]).Select(n => n).FirstOrDefault();
-                        if (readyDop == null)
-                            return VerticalLine;
-                        VerticalLine.Add(new Section(readyDop, new Point(Xposition, Yposition)));
-                        Yposition += readyDop.Height;
-                    }
-                }
-                Yposition = freeSpace.BottomLeft.Y;
-                Xposition += RealWidth;
-                RemainedWidth -= RealWidth;
-
-
-            } while (RemainedWidth > RealWidth);
-            return VerticalLine;
         }
+
 
         /// <summary>
         /// Возвращает коректные значения выбранных элементов
         /// </summary>
-        /// <param name="SelectedShelfLengthMin"></param>
-        /// <param name="SelectedShelfLengthMax"></param>
-        /// <param name="SelectedHeight"></param>
-        /// <param name="SelectedShelfWidth"></param>
+        /// <param name="SelectedShelfLengthMin"> минимальная длина секций</param>
+        /// <param name="SelectedShelfLengthMax"> максимальная длина секций</param>
+        /// <param name="SelectedHeight">Заданная высота секций</param>
+        /// <param name="SelectedShelfWidth">Заданная глубина полки</param>
         private void GetAllowedSelection(out double SelectedShelfLengthMin, out double SelectedShelfLengthMax, out int SelectedHeight, out double SelectedShelfWidth, out bool OK)
         {
             // проверим на выбор глубины полки
             if (StellarWidth.SelectedItem == null)
             {
-
-                string MessageError = "Глубина стеллажа должна быть обязательно выбрана!";
-                MessageBoxResult result = MessageBox.Show(MessageError, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBoxResult result = MessageBox.Show(FindResource("SelectStellarDepth").ToString(), FindResource("ErrorCaption").ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
                 OK = false;
                 SelectedShelfLengthMin = 0;
                 SelectedShelfLengthMax = 0;
@@ -207,8 +111,7 @@ namespace AutoPlan
                 if (StellarHeight.SelectedItem == null)
                 {
                     SelectedHeight = TotalSectionList.Select(n => n.SecHeight).Min();
-                    string MessageError = "Высота стеллажа не выбрана, по умолчанию будет выбрана минимальная " + SelectedHeight + " мм";
-                    MessageBoxResult result = MessageBox.Show(MessageError, "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    MessageBoxResult result = MessageBox.Show(FindResource("SelectStellarHeight").ToString() + " " + SelectedHeight + " мм", FindResource("WarningCaption").ToString(), MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
                 else
                     SelectedHeight = (int)StellarHeight.SelectedItem;

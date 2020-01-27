@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutoPlan"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
@@ -28,4 +29,10 @@
             
         </StackPanel>
     </Grid>
+    <Window.Resources>
+        <sys:String x:Key="ErrorCaption">Ошибка</sys:String>
+        <sys:String x:Key="WarningCaption">Предупреждение</sys:String>
+        <sys:String x:Key="SelectStellarDepth">Глубина стеллажа должна быть обязательно выбрана!</sys:String>
+        <sys:String x:Key="SelectStellarHeight">Высота стеллажа не выбрана, по умолчанию будет выбрана минимальная</sys:String>
+    </Window.Resources>
 </Window>
