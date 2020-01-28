@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AutoPlan"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="380" Width="525">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -24,6 +24,8 @@
             <ComboBox Name="ShelfLengthMax"></ComboBox>
             <Label>Высота стеллажа</Label>
             <ComboBox Name="StellarHeight"></ComboBox>
+            <Label>Стационарные по краям</Label>
+            <ComboBox Name="Stationary"></ComboBox>
             <Rectangle Width="10" Height="10"></Rectangle>
             <Button Name="testpress" Click="testpress_Click">Расставить стеллажи</Button>
         </StackPanel>

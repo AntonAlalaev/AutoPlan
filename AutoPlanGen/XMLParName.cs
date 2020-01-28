@@ -16,6 +16,6 @@ namespace AutoPlan
         public static string ShelfLength = "ShelfLength";
         public static string FalseFloor = "Floor";
         public static string MainSection = "Main";
-
+        public static string Stationary = "Stationary";
     }
 }

@@ -33,6 +33,14 @@ namespace AutoPlan
             // длины полок
             List<double> ShelfLength = TotalSectionList.Select(n => n.FakeLength).Distinct().OrderBy(n => n).ToList();
 
+            Stationary.Items.Add("Нет");
+            Stationary.Items.Add("Справа двухсторонний");
+            Stationary.Items.Add("Слева двухсторонний");
+            Stationary.Items.Add("Справа и слева двухсторонний");
+            Stationary.Items.Add("Справа односторонний");
+            Stationary.Items.Add("Слева односторонний");
+            Stationary.Items.Add("Справа и слева односторонний");
+            Stationary.SelectedIndex = 0;
 
             foreach (double Item in ShelfLength)
             {
@@ -63,18 +71,34 @@ namespace AutoPlan
             if (!OK)
                 return;
 
+
             // параметры помещения
             RoomRectangle RoomData = new RoomRectangle(new Point(0, 0), new Point(12000, 6000));
             List<Section> AllowedItems = new List<Section>();
-            // перечень допустимых секций
-            //if (DoubleSection) // если двухсторонние
-            //{
-            AllowedItems = TotalSectionList.Where(t => t.FakeLength >= SelectedShelfLengthMin
-                && t.FakeLength <= SelectedShelfLengthMax && t.SecHeight == SelectedHeight && t.FakeWidth == SelectedShelfWidth && t.Double == true).ToList();
-            //}            
-            Rectangle WithoutWorkPass = Calculation.getAreaWithoutWorkPassage(RoomData, Convert.ToDouble(WorkPass.Text,  CultureInfo.CurrentCulture));
+            // если выбраны стационары
 
-            List<Section> Vert = Calculation.SectionPack(WithoutWorkPass, AllowedItems);
+            AskStationary(out bool LeftStat, out bool RightStat, out bool DoubleSidedStat);
+            Rectangle roomForDoubleSided = new Rectangle(RoomData.BottomLeft, RoomData.BottomRight);
+            
+            // если нет стационаров по краям
+            if (!LeftStat && !RightStat)
+            {
+                roomForDoubleSided = Calculation.getAreaWithoutWorkPassage(RoomData, Convert.ToDouble(WorkPass.Text, CultureInfo.CurrentCulture));
+            }
+
+            // если стационары слева двухстороние
+            if (LeftStat && !RightStat && DoubleSidedStat)
+            {
+
+            }
+
+            // Основные стеллажи
+            AllowedItems = TotalSectionList.Where(t => t.FakeLength >= SelectedShelfLengthMin
+                && t.FakeLength <= SelectedShelfLengthMax && t.SecHeight == SelectedHeight && t.FakeWidth == SelectedShelfWidth && t.Double && !t.Stationary).ToList();
+            //}            
+
+
+            List<Section> Vert = Calculation.SectionPack(roomForDoubleSided, AllowedItems);
 
         }
 
@@ -91,6 +115,7 @@ namespace AutoPlan
             // проверим на выбор глубины полки
             if (StellarWidth.SelectedItem == null)
             {
+
                 MessageBoxResult result = MessageBox.Show(FindResource("SelectStellarDepth").ToString(), FindResource("ErrorCaption").ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
                 OK = false;
                 SelectedShelfLengthMin = 0;
@@ -118,6 +143,79 @@ namespace AutoPlan
                     SelectedHeight = (int)StellarHeight.SelectedItem;
                 OK = true;
             }
+        }
+
+        /// <summary>
+        /// Возвращает корректные значения выбранных элементов в стационарах по краям
+        /// </summary>
+        /// <param name="Left">Наличие стационаров слева</param>
+        /// <param name="Right">Наличие стационаров справа</param>
+        /// <param name="DoubleSided">Двухсторонние или односторонние</param>
+        private void AskStationary(out bool Left, out bool Right, out bool DoubleSided)
+        {
+            if (!Stationary.HasItems)
+            {
+                Left = false;
+                Right = false;
+                DoubleSided = false;
+                return;
+            }
+
+            if (Stationary.SelectedIndex == 0)
+            {
+                Left = false;
+                Right = false;
+                DoubleSided = false;
+                return;
+            }
+            if (Stationary.SelectedIndex == 1)
+            {
+                Left = false;
+                Right = true;
+                DoubleSided = true;
+                return;
+            }
+            if (Stationary.SelectedIndex == 2)
+            {
+                Left = true;
+                Right = false;
+                DoubleSided = true;
+                return;
+            }
+            if (Stationary.SelectedIndex == 3)
+            {
+                Left = true;
+                Right = true;
+                DoubleSided = true;
+                return;
+            }
+
+            if (Stationary.SelectedIndex == 4)
+            {
+                Left = false;
+                Right = true;
+                DoubleSided = false;
+                return;
+            }
+            if (Stationary.SelectedIndex == 5)
+            {
+                Left = true;
+                Right = false;
+                DoubleSided = false;
+                return;
+            }
+            if (Stationary.SelectedIndex == 6)
+            {
+                Left = true;
+                Right = true;
+                DoubleSided = false;
+                return;
+            }
+            Left = false;
+            Right = false;
+            DoubleSided = false;
+            return;
+
         }
 
         private void testpress_Click(object sender, RoutedEventArgs e)

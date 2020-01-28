@@ -1,5 +1,70 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Sections>
+  <!--2065-->
+  <!--1250х250-->
+  <Section>
+    <Name>ПО 2065х1250х250</Name>
+    <ShelfLength>1250</ShelfLength>
+    <ShelfWidth>250</ShelfWidth>
+    <SectionLength>1342</SectionLength>
+    <SectionWidth>540</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+  </Section>
+  <Section>
+    <Name>ПД 2065х1250х250</Name>
+    <ShelfLength>1250</ShelfLength>
+    <ShelfWidth>250</ShelfWidth>
+    <SectionLength>1260</SectionLength>
+    <SectionWidth>540</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+  </Section>
+  <!--1000х250-->
+  <Section>
+    <Name>ПО 2065х1000х250</Name>
+    <ShelfLength>1000</ShelfLength>
+    <ShelfWidth>250</ShelfWidth>
+    <SectionLength>1092</SectionLength>
+    <SectionWidth>540</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+  </Section>
+  <Section>
+    <Name>ПД 2065х1000х250</Name>
+    <ShelfLength>1000</ShelfLength>
+    <ShelfWidth>250</ShelfWidth>
+    <SectionLength>1010</SectionLength>
+    <SectionWidth>540</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+  </Section>
+  <!--750х250-->
+  <Section>
+    <Name>ПО 2065х750х250</Name>
+    <ShelfLength>750</ShelfLength>
+    <ShelfWidth>250</ShelfWidth>
+    <SectionLength>842</SectionLength>
+    <SectionWidth>540</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+  </Section>
+  <Section>
+    <Name>ПД 2065х750х250</Name>
+    <ShelfLength>750</ShelfLength>
+    <ShelfWidth>250</ShelfWidth>
+    <SectionLength>760</SectionLength>
+    <SectionWidth>540</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+  </Section>
+
   <!--1250х300-->
   <Section>
     <Name>ПО 2065х1250х300</Name>
@@ -64,4 +129,491 @@
     <Main>false</Main>
   </Section>
 
+  <!--1250х400-->
+  <Section>
+    <Name>ПО 2065х1250х400</Name>
+    <ShelfLength>1250</ShelfLength>
+    <ShelfWidth>400</ShelfWidth>
+    <SectionLength>1342</SectionLength>
+    <SectionWidth>840</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+  </Section>
+  <Section>
+    <Name>ПД 2065х1250х400</Name>
+    <ShelfLength>1250</ShelfLength>
+    <ShelfWidth>400</ShelfWidth>
+    <SectionLength>1260</SectionLength>
+    <SectionWidth>840</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+  </Section>
+  <!--1000х300-->
+  <Section>
+    <Name>ПО 2065х1000х400</Name>
+    <ShelfLength>1000</ShelfLength>
+    <ShelfWidth>400</ShelfWidth>
+    <SectionLength>1092</SectionLength>
+    <SectionWidth>840</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+  </Section>
+  <Section>
+    <Name>ПД 2065х1000х400</Name>
+    <ShelfLength>1000</ShelfLength>
+    <ShelfWidth>400</ShelfWidth>
+    <SectionLength>1010</SectionLength>
+    <SectionWidth>840</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+  </Section>
+  <!--750х300-->
+  <Section>
+    <Name>ПО 2065х750х400</Name>
+    <ShelfLength>750</ShelfLength>
+    <ShelfWidth>400</ShelfWidth>
+    <SectionLength>842</SectionLength>
+    <SectionWidth>840</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+  </Section>
+  <Section>
+    <Name>ПД 2065х750х400</Name>
+    <ShelfLength>750</ShelfLength>
+    <ShelfWidth>400</ShelfWidth>
+    <SectionLength>760</SectionLength>
+    <SectionWidth>840</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+  </Section>
+  
+  <!--+++++++++++++++++++++++++++-->
+  <!--2065 stationary 2 sided-->
+  <!--+++++++++++++++++++++++++++-->
+
+  <!--1250х250-->
+  <Section>
+    <Name>СП2О 2065х1250х250</Name>
+    <ShelfLength>1250</ShelfLength>
+    <ShelfWidth>250</ShelfWidth>
+    <SectionLength>1342</SectionLength>
+    <SectionWidth>540</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <Section>
+    <Name>СП2Д 2065х1250х250</Name>
+    <ShelfLength>1250</ShelfLength>
+    <ShelfWidth>250</ShelfWidth>
+    <SectionLength>1260</SectionLength>
+    <SectionWidth>540</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+    <Stationary>true</Stationary>
+      <!--1250х250-->
+  <Section>
+    <Name>СП2О 2065х1250х250</Name>
+    <ShelfLength>1250</ShelfLength>
+    <ShelfWidth>250</ShelfWidth>
+    <SectionLength>1342</SectionLength>
+    <SectionWidth>540</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <Section>
+    <Name>СП2Д 2065х1250х250</Name>
+    <ShelfLength>1250</ShelfLength>
+    <ShelfWidth>250</ShelfWidth>
+    <SectionLength>1260</SectionLength>
+    <SectionWidth>540</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <!--1000х250-->
+  <Section>
+    <Name>СП2О 2065х1000х250</Name>
+    <ShelfLength>1000</ShelfLength>
+    <ShelfWidth>250</ShelfWidth>
+    <SectionLength>1092</SectionLength>
+    <SectionWidth>540</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <Section>
+    <Name>СП2Д 2065х1000х250</Name>
+    <ShelfLength>1000</ShelfLength>
+    <ShelfWidth>250</ShelfWidth>
+    <SectionLength>1010</SectionLength>
+    <SectionWidth>540</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <!--750х250-->
+  <Section>
+    <Name>СП2О 2065х750х250</Name>
+    <ShelfLength>750</ShelfLength>
+    <ShelfWidth>250</ShelfWidth>
+    <SectionLength>842</SectionLength>
+    <SectionWidth>540</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <Section>
+    <Name>СП2Д 2065х750х250</Name>
+    <ShelfLength>750</ShelfLength>
+    <ShelfWidth>250</ShelfWidth>
+    <SectionLength>760</SectionLength>
+    <SectionWidth>540</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+    <Stationary>true</Stationary>
+  </Section>
+
+  <!--1250х300-->
+  <Section>
+    <Name>СП2О 2065х1250х300</Name>
+    <ShelfLength>1250</ShelfLength>
+    <ShelfWidth>300</ShelfWidth>
+    <SectionLength>1342</SectionLength>
+    <SectionWidth>640</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <Section>
+    <Name>СП2Д 2065х1250х300</Name>
+    <ShelfLength>1250</ShelfLength>
+    <ShelfWidth>300</ShelfWidth>
+    <SectionLength>1260</SectionLength>
+    <SectionWidth>640</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <!--1000х300-->
+  <Section>
+    <Name>СП2О 2065х1000х300</Name>
+    <ShelfLength>1000</ShelfLength>
+    <ShelfWidth>300</ShelfWidth>
+    <SectionLength>1092</SectionLength>
+    <SectionWidth>640</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <Section>
+    <Name>СП2Д 2065х1000х300</Name>
+    <ShelfLength>1000</ShelfLength>
+    <ShelfWidth>300</ShelfWidth>
+    <SectionLength>1010</SectionLength>
+    <SectionWidth>640</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <!--750х300-->
+  <Section>
+    <Name>СП2О 2065х750х300</Name>
+    <ShelfLength>750</ShelfLength>
+    <ShelfWidth>300</ShelfWidth>
+    <SectionLength>842</SectionLength>
+    <SectionWidth>640</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <Section>
+    <Name>СП2Д 2065х750х300</Name>
+    <ShelfLength>750</ShelfLength>
+    <ShelfWidth>300</ShelfWidth>
+    <SectionLength>760</SectionLength>
+    <SectionWidth>640</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+    <Stationary>true</Stationary>
+  </Section>
+
+  <!--1250х400-->
+  <Section>
+    <Name>СП2О 2065х1250х400</Name>
+    <ShelfLength>1250</ShelfLength>
+    <ShelfWidth>400</ShelfWidth>
+    <SectionLength>1342</SectionLength>
+    <SectionWidth>840</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <Section>
+    <Name>СП2Д 2065х1250х400</Name>
+    <ShelfLength>1250</ShelfLength>
+    <ShelfWidth>400</ShelfWidth>
+    <SectionLength>1260</SectionLength>
+    <SectionWidth>840</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <!--1000х300-->
+  <Section>
+    <Name>СП2О 2065х1000х400</Name>
+    <ShelfLength>1000</ShelfLength>
+    <ShelfWidth>400</ShelfWidth>
+    <SectionLength>1092</SectionLength>
+    <SectionWidth>840</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <Section>
+    <Name>СП2Д 2065х1000х400</Name>
+    <ShelfLength>1000</ShelfLength>
+    <ShelfWidth>400</ShelfWidth>
+    <SectionLength>1010</SectionLength>
+    <SectionWidth>840</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <!--750х300-->
+  <Section>
+    <Name>СП2О 2065х750х400</Name>
+    <ShelfLength>750</ShelfLength>
+    <ShelfWidth>400</ShelfWidth>
+    <SectionLength>842</SectionLength>
+    <SectionWidth>840</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <Section>
+    <Name>СП2Д 2065х750х400</Name>
+    <ShelfLength>750</ShelfLength>
+    <ShelfWidth>400</ShelfWidth>
+    <SectionLength>760</SectionLength>
+    <SectionWidth>840</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  </Section>
+  <!--1000х250-->
+  <Section>
+    <Name>СП2О 2065х1000х250</Name>
+    <ShelfLength>1000</ShelfLength>
+    <ShelfWidth>250</ShelfWidth>
+    <SectionLength>1092</SectionLength>
+    <SectionWidth>540</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <Section>
+    <Name>СП2Д 2065х1000х250</Name>
+    <ShelfLength>1000</ShelfLength>
+    <ShelfWidth>250</ShelfWidth>
+    <SectionLength>1010</SectionLength>
+    <SectionWidth>540</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <!--750х250-->
+  <Section>
+    <Name>СП2О 2065х750х250</Name>
+    <ShelfLength>750</ShelfLength>
+    <ShelfWidth>250</ShelfWidth>
+    <SectionLength>842</SectionLength>
+    <SectionWidth>540</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <Section>
+    <Name>СП2Д 2065х750х250</Name>
+    <ShelfLength>750</ShelfLength>
+    <ShelfWidth>250</ShelfWidth>
+    <SectionLength>760</SectionLength>
+    <SectionWidth>540</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+    <Stationary>true</Stationary>
+  </Section>
+
+  <!--1250х300-->
+  <Section>
+    <Name>СП2О 2065х1250х300</Name>
+    <ShelfLength>1250</ShelfLength>
+    <ShelfWidth>300</ShelfWidth>
+    <SectionLength>1342</SectionLength>
+    <SectionWidth>640</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <Section>
+    <Name>СП2Д 2065х1250х300</Name>
+    <ShelfLength>1250</ShelfLength>
+    <ShelfWidth>300</ShelfWidth>
+    <SectionLength>1260</SectionLength>
+    <SectionWidth>640</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <!--1000х300-->
+  <Section>
+    <Name>СП2О 2065х1000х300</Name>
+    <ShelfLength>1000</ShelfLength>
+    <ShelfWidth>300</ShelfWidth>
+    <SectionLength>1092</SectionLength>
+    <SectionWidth>640</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <Section>
+    <Name>СП2Д 2065х1000х300</Name>
+    <ShelfLength>1000</ShelfLength>
+    <ShelfWidth>300</ShelfWidth>
+    <SectionLength>1010</SectionLength>
+    <SectionWidth>640</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <!--750х300-->
+  <Section>
+    <Name>СП2О 2065х750х300</Name>
+    <ShelfLength>750</ShelfLength>
+    <ShelfWidth>300</ShelfWidth>
+    <SectionLength>842</SectionLength>
+    <SectionWidth>640</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <Section>
+    <Name>СП2Д 2065х750х300</Name>
+    <ShelfLength>750</ShelfLength>
+    <ShelfWidth>300</ShelfWidth>
+    <SectionLength>760</SectionLength>
+    <SectionWidth>640</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+    <Stationary>true</Stationary>
+  </Section>
+
+  <!--1250х400-->
+  <Section>
+    <Name>СП2О 2065х1250х400</Name>
+    <ShelfLength>1250</ShelfLength>
+    <ShelfWidth>400</ShelfWidth>
+    <SectionLength>1342</SectionLength>
+    <SectionWidth>840</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <Section>
+    <Name>СП2Д 2065х1250х400</Name>
+    <ShelfLength>1250</ShelfLength>
+    <ShelfWidth>400</ShelfWidth>
+    <SectionLength>1260</SectionLength>
+    <SectionWidth>840</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <!--1000х300-->
+  <Section>
+    <Name>СП2О 2065х1000х400</Name>
+    <ShelfLength>1000</ShelfLength>
+    <ShelfWidth>400</ShelfWidth>
+    <SectionLength>1092</SectionLength>
+    <SectionWidth>840</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <Section>
+    <Name>СП2Д 2065х1000х400</Name>
+    <ShelfLength>1000</ShelfLength>
+    <ShelfWidth>400</ShelfWidth>
+    <SectionLength>1010</SectionLength>
+    <SectionWidth>840</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <!--750х300-->
+  <Section>
+    <Name>СП2О 2065х750х400</Name>
+    <ShelfLength>750</ShelfLength>
+    <ShelfWidth>400</ShelfWidth>
+    <SectionLength>842</SectionLength>
+    <SectionWidth>840</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>true</Main>
+    <Stationary>true</Stationary>
+  </Section>
+  <Section>
+    <Name>СП2Д 2065х750х400</Name>
+    <ShelfLength>750</ShelfLength>
+    <ShelfWidth>400</ShelfWidth>
+    <SectionLength>760</SectionLength>
+    <SectionWidth>840</SectionWidth>
+    <SectionHeight>2065</SectionHeight>
+    <Floor>false</Floor>
+    <Main>false</Main>
+    <Stationary>true</Stationary>
+  </Section>
+   
 </Sections>

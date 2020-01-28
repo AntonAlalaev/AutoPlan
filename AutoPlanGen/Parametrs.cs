@@ -117,6 +117,8 @@ namespace AutoPlan
                     bool MainSection = false;
                     // двухсторонняя
                     bool DoubleSided = false;
+                    // стационарная
+                    bool Stationary = false;
                     foreach (XmlNode cnode in xnode)
                     {
                         if (cnode.Name == "Name")
@@ -135,6 +137,9 @@ namespace AutoPlan
                             falseFloor = ParseToBool(cnode.InnerText);
                         if (cnode.Name == XMLParName.MainSection)
                             MainSection = ParseToBool(cnode.InnerText);
+                        if (cnode.Name == XMLParName.Stationary)
+                            Stationary = ParseToBool(cnode.InnerText);
+
                     }
 
                     // Двухсторонний стеллаж или нет
@@ -147,7 +152,7 @@ namespace AutoPlan
                     }
 
                     // добавляем секцию в список
-                    retValue.Add(new Section(StellarName, realLength, RealWidth, FormalLength, ShelfWidth, Height, DoubleSided, MainSection));
+                    retValue.Add(new Section(StellarName, realLength, RealWidth, FormalLength, ShelfWidth, Height, DoubleSided, MainSection, Stationary));
 
                 }
 
