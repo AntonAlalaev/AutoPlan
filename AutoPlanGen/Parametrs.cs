@@ -139,17 +139,19 @@ namespace AutoPlan
                             MainSection = ParseToBool(cnode.InnerText);
                         if (cnode.Name == XMLParName.Stationary)
                             Stationary = ParseToBool(cnode.InnerText);
+                        if (cnode.Name == XMLParName.DoubleSided)
+                            DoubleSided = ParseToBool(cnode.InnerText);
 
                     }
 
-                    // Двухсторонний стеллаж или нет
-                    if (StellarName.Length > 2)
-                    {
-                        if (StellarName[1] == '1')
-                            DoubleSided = false;
-                        else
-                            DoubleSided = true;
-                    }
+                    //// Двухсторонний стеллаж или нет
+                    //if (StellarName.Length > 2)
+                    //{
+                    //    if (StellarName[1] == '1')
+                    //        DoubleSided = false;
+                    //    else
+                    //        DoubleSided = true;
+                    //}
 
                     // добавляем секцию в список
                     retValue.Add(new Section(StellarName, realLength, RealWidth, FormalLength, ShelfWidth, Height, DoubleSided, MainSection, Stationary));

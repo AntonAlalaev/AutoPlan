@@ -17,5 +17,6 @@ namespace AutoPlan
         public static string FalseFloor = "Floor";
         public static string MainSection = "Main";
         public static string Stationary = "Stationary";
+        public static string DoubleSided = "Double";
     }
 }
