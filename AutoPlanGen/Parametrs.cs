@@ -121,46 +121,41 @@ namespace AutoPlan
                     bool Stationary = false;
                     foreach (XmlNode cnode in xnode)
                     {
+                        // имя секции
                         if (cnode.Name == "Name")
                             StellarName = cnode.InnerText;
+                        // Действительная длина секции
                         if (cnode.Name == XMLParName.SectionRealLength)
                             realLength = ParseToInt(cnode.InnerText);
+                        // Действительная глубина секции
                         if (cnode.Name == XMLParName.SectionRealWidth)
                             RealWidth = ParseToInt(cnode.InnerText);
+                        // Высота секции
                         if (cnode.Name == XMLParName.SectionHeigh)
                             Height = ParseToInt(cnode.InnerText);
+                        // Глубина полки
                         if (cnode.Name == XMLParName.ShelfWidth)
                             ShelfWidth = ParseToInt(cnode.InnerText);
+                        // Длина полки
                         if (cnode.Name == XMLParName.ShelfLength)
                             FormalLength = ParseToInt(cnode.InnerText);
+                        // Фальшпол
                         if (cnode.Name == XMLParName.FalseFloor)
                             falseFloor = ParseToBool(cnode.InnerText);
+                        // Основная секция
                         if (cnode.Name == XMLParName.MainSection)
                             MainSection = ParseToBool(cnode.InnerText);
+                        // Стационарная
                         if (cnode.Name == XMLParName.Stationary)
                             Stationary = ParseToBool(cnode.InnerText);
+                        // Двухсторонняя
                         if (cnode.Name == XMLParName.DoubleSided)
                             DoubleSided = ParseToBool(cnode.InnerText);
-
                     }
-
-                    //// Двухсторонний стеллаж или нет
-                    //if (StellarName.Length > 2)
-                    //{
-                    //    if (StellarName[1] == '1')
-                    //        DoubleSided = false;
-                    //    else
-                    //        DoubleSided = true;
-                    //}
-
                     // добавляем секцию в список
                     retValue.Add(new Section(StellarName, realLength, RealWidth, FormalLength, ShelfWidth, Height, DoubleSided, MainSection, Stationary));
-
                 }
-
             }
-
-
             return retValue;
         }
 
