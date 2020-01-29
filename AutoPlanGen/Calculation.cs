@@ -127,6 +127,14 @@ namespace AutoPlan
 
 
 
+
+
+
+
+
+
+
+
         /// <summary>
         /// Возвращает линейный раскрой из элементов
         /// по максимальной длине спереди
@@ -200,6 +208,127 @@ namespace AutoPlan
             }
             return resultat;
         }
+
+
+        /// <summary>
+        /// Формирует список секций на основе перечня стеллажей и выбранных данных
+        /// </summary>
+        /// <param name="FullSectionList">Перечень секций полный</param>
+        /// <param name="RoomArea">Прямоугольник в который необходимо вписать стеллажи</param>
+        /// <param name="ShelfLengthMin">минимальная длина полки</param>
+        /// <param name="ShelfLengthMax">Максимальная длина полки</param>
+        /// <param name="StellarHeight">Высота стеллажа</param>
+        /// <param name="ShelfWidth">Глубина полки</param>
+        /// <param name="WorkPass">Рабочий проход</param>
+        /// <param name="LeftStat">Стационар слева в системе передвижных</param>
+        /// <param name="RightStat">Стационар справа в системе передвижных</param>
+        /// <param name="DoubleSidedStat">Стационары двухсторонние или односторонние</param>
+        /// <returns></returns>
+        public static List<Section> GetStellar(List<Section> FullSectionList, Rectangle RoomArea, double ShelfLengthMin, double ShelfLengthMax, int StellarHeight,
+    double ShelfWidth, double WorkPass, bool LeftStat, bool RightStat, bool DoubleSidedStat)
+        {
+            // финальный перечень стеллажей
+            List<Section> Complete = new List<Section>();
+
+            if (RoomArea == null)
+            {
+                return Complete;
+            }
+            // перечень допустимых стационаров
+            List<Section> AllowedStat = new List<Section>();
+
+            Rectangle roomForDoubleSided = new Rectangle(RoomArea.BottomLeft, RoomArea.TopRight);
+            double WorkPassLength = WorkPass;
+
+            // если нет стационаров по краям
+            if (!LeftStat && !RightStat)
+            {
+                roomForDoubleSided = Calculation.getAreaWithoutWorkPassage(RoomArea, WorkPassLength);
+            }
+            // если есть стационары по краям
+            else
+            {
+                if (DoubleSidedStat)
+                {
+                    // если стационары двухсторонние
+                    AllowedStat = FullSectionList.Where(t => t.FakeLength >= ShelfLengthMin
+                        && t.FakeLength <= ShelfLengthMax && t.SecHeight == StellarHeight && t.FakeWidth == ShelfWidth && t.Double && t.Stationary).ToList();
+                }
+                else
+                {
+                    // если стационары односторонние
+                    AllowedStat = FullSectionList.Where(t => t.FakeLength >= ShelfLengthMin
+                        && t.FakeLength <= ShelfLengthMax && t.SecHeight == StellarHeight && t.FakeWidth == ShelfWidth && !t.Double && t.Stationary).ToList();
+                }
+
+                // определяем глубину стационара двухстороннего для заданных параметров
+                double StatWidth = 0;
+                // если в выборке есть стационары
+                if (AllowedStat.Count > 0)
+                {
+                    StatWidth = AllowedStat.Select(t => t.Length).Max();
+                }
+
+                // проверяем на допустимость размеров помещения
+                if ((RoomArea.Length < StatWidth && !DoubleSidedStat) || ((RoomArea.Length < (StatWidth * 2 + WorkPassLength) && DoubleSidedStat)))
+                {
+                    return Complete;
+                }
+
+                // если стационары слева
+                if (LeftStat && !RightStat)
+                {
+                    // задаем рамки для помещения под стационары
+                    Rectangle forLeftStat = new Rectangle(RoomArea.BottomLeft, new Point(RoomArea.BottomLeft.X + StatWidth, RoomArea.TopRight.Y));
+                    // добавляем стационары в массив
+                    Complete.AddRange(Calculation.SectionPack(forLeftStat, AllowedStat));
+
+                    // вычисляем оставшееся помещения для передвижных стеллажей
+                    Rectangle RemainedRoom = new Rectangle(new Point(RoomArea.BottomLeft.X + StatWidth, RoomArea.BottomLeft.Y), RoomArea.TopRight);
+                    roomForDoubleSided = Calculation.getAreaWithoutWorkPassage(RemainedRoom, WorkPassLength);
+                }
+
+                // если стационары справа
+                if (RightStat && !LeftStat)
+                {
+                    // задаем рамки для помещения под стационары
+                    Rectangle forRightStat = new Rectangle(new Point(RoomArea.BottomRight.X - StatWidth, RoomArea.BottomLeft.Y), RoomArea.TopRight);
+                    // добавляем стационары в массив
+                    Complete.AddRange(Calculation.SectionPack(forRightStat, AllowedStat));
+                    // вычисляем оставшееся помещения для передвижных стеллажей
+                    Rectangle RemainedRoom = new Rectangle(RoomArea.BottomLeft, new Point(RoomArea.TopRight.X - StatWidth, RoomArea.TopRight.Y));
+                    roomForDoubleSided = Calculation.getAreaWithoutWorkPassage(RemainedRoom, WorkPassLength);
+                }
+
+                // если стационары слева и справа
+                if (RightStat && LeftStat)
+                {
+                    // задаем рамки для левого помещения под стационары
+                    Rectangle forLeftStat = new Rectangle(RoomArea.BottomLeft, new Point(RoomArea.BottomLeft.X + StatWidth, RoomArea.TopRight.Y));
+                    // добавляем стационары в массив
+                    Complete.AddRange(Calculation.SectionPack(forLeftStat, AllowedStat));
+                    // задаем рамки для правого помещения под стационары
+                    Rectangle forRightStat = new Rectangle(new Point(RoomArea.BottomRight.X - StatWidth, RoomArea.BottomLeft.Y), RoomArea.TopRight);
+                    // добавляем стационары в массив
+                    Complete.AddRange(Calculation.SectionPack(forRightStat, AllowedStat));
+                    // вычисляем оставшееся помещения для передвижных стеллажей
+                    Rectangle RemainedRoom = new Rectangle(new Point(RoomArea.BottomLeft.X + StatWidth, RoomArea.BottomLeft.Y),
+                        new Point(RoomArea.TopRight.X - StatWidth, RoomArea.TopRight.Y));
+                    roomForDoubleSided = Calculation.getAreaWithoutWorkPassage(RemainedRoom, WorkPassLength);
+                }
+            }
+
+            // Основные передвижные стеллажи
+            List<Section> AllowedItems = FullSectionList.Where(t => t.FakeLength >= ShelfLengthMin
+                && t.FakeLength <= ShelfLengthMax && t.SecHeight == StellarHeight && t.FakeWidth == ShelfWidth && t.Double && !t.Stationary).ToList();
+
+            Complete.AddRange(Calculation.SectionPack(roomForDoubleSided, AllowedItems));
+            return Complete;
+            //List<Section> Vert = Calculation.SectionPack(roomForDoubleSided, AllowedItems);
+        }
+
+
+
 
 
     }
