@@ -32,9 +32,42 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="accoremgd">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2013\accoremgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="acdbmgd">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2013\acdbmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="acmgd">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2013\acmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AecArchMgd">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2013\ACA\AecArchMgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AecBaseMgd">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2013\ACA\AecBaseMgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AecPropDataMgd">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2013\ACA\AecPropDataMgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AecUIBaseMgd">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2013\ACA\AecUIBaseMgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,7 +79,12 @@
   <ItemGroup>
     <Compile Include="Calculation.cs" />
     <Compile Include="Coordinates.cs" />
+    <Compile Include="DialogWindow.xaml.cs">
+      <DependentUpon>DialogWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Geometry.cs" />
+    <Compile Include="MvBlockOps.cs" />
+    <Compile Include="MvBlockPlacer.cs" />
     <Compile Include="Parametrs.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Polygon.cs" />
@@ -59,6 +97,7 @@
     </Compile>
     <Compile Include="RoomRectangle.cs" />
     <Compile Include="Section.cs" />
+    <Compile Include="StellarEnvironment.cs" />
     <Compile Include="XMLParName.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +110,12 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ExceptionMessages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="DialogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,0 +1,297 @@
+﻿// 
+// Copyright (c) 2014 by Anton Alalaev
+// 
+// Permission to use, copy, modify, and distribute this software
+// for any purpose and without fee is hereby granted, provided
+// that the above copyright notice appears in all copies and
+// that both that copyright notice and the limited warranty and
+// restricted rights notice below appear in all supporting
+// documentation.
+// 
+// ANTON ALALAEV PROVIDES THIS PROGRAM "AS IS" AND WITH ALL FAULTS.
+// ANTON ALALAEV SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF
+// MERCHANTABILITY OR FITNESS FOR A PARTICULAR USE.  ANTON ALALAEV
+// DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
+// UNINTERRUPTED OR ERROR FREE.
+// 
+// Use, duplication, or disclosure by the U.S. Government is subject to
+// restrictions set forth in FAR 52.227-19 (Commercial Computer
+// Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
+// (Rights in Technical Data and Computer Software), as applicable.
+// 
+
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Security;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.VisualBasic;
+using System.Collections;
+using System.Runtime.InteropServices;
+using Autodesk.AutoCAD.GraphicsInterface;
+using Autodesk.AutoCAD.DatabaseServices;
+using Autodesk.AutoCAD.Runtime;
+using Autodesk.AutoCAD.Geometry;
+using Autodesk.AutoCAD.ApplicationServices;
+using Autodesk.AutoCAD.EditorInput;
+using Autodesk.AutoCAD.GraphicsSystem;
+using Autodesk.Aec.DatabaseServices;
+using Autodesk.Aec.ApplicationServices;
+using Autodesk.Aec.Arch.DatabaseServices;
+using Autodesk.Aec.Arch.ApplicationServices;
+using Autodesk.Aec.PropertyData;
+using Autodesk.Aec.PropertyData.DatabaseServices;
+using Application = Autodesk.AutoCAD.ApplicationServices.Application;
+using System.Collections.Specialized;
+using ObjectId = Autodesk.AutoCAD.DatabaseServices.ObjectId;
+using ObjectIdCollection = Autodesk.AutoCAD.DatabaseServices.ObjectIdCollection;
+using AcadApplication = Autodesk.AutoCAD.ApplicationServices.Application;
+using Entity = Autodesk.AutoCAD.DatabaseServices.Entity;
+using AecDb = Autodesk.Aec.DatabaseServices;
+
+namespace AutoPlan
+{
+    public class MvBlockPlacer : DrawJig
+    {
+        private Point3d previousCurserPosition;
+        private Point3d currentCurserPosition;
+        private Entity entityToDrag;
+        private Database db = Application.DocumentManager.MdiActiveDocument.Database;
+        private Editor ed = Application.DocumentManager.MdiActiveDocument.Editor;
+        private int mPromptCounter;
+        private string sampstatus;
+        private double rotationadj;
+        private string jiginput;
+        private string jigmsg;
+        private ObjectId retObjID;
+
+        public void StartJig(string MvBlockName, double ScaleX, double ScaleY, double ScaleZ)
+        {
+            string blockname;
+            rotationadj = 0; // Double
+            mPromptCounter = 0; // integer
+            blockname = MvBlockName;
+
+            // Словарь стилей МВ Блоков
+            Autodesk.Aec.DatabaseServices.DictionaryMultiViewBlockDefinition mvbstyledict;
+
+            ObjectId bstyleID;
+            Autodesk.Aec.DatabaseServices.MultiViewBlockReference mvb;
+            mvb = new Autodesk.Aec.DatabaseServices.MultiViewBlockReference();
+            Autodesk.AutoCAD.DatabaseServices.TransactionManager tm = db.TransactionManager;
+            // Получаем словарь МВ Блоков
+            mvbstyledict = new Autodesk.Aec.DatabaseServices.DictionaryMultiViewBlockDefinition(db);
+            // Получаем ObjectID заданного стиля MVBlock
+            bstyleID = mvbstyledict.GetAt(blockname);
+            ed.WriteMessage("\n blockname " + blockname + "\n");
+            // Определяем вставляемый блок полученным ObjectID нужного нам стиля
+            mvb.BlockDefId = bstyleID;
+            // делаем масштаб
+            Scale3d NewScale;
+            NewScale = new Scale3d(ScaleX, ScaleY, ScaleZ);
+
+            mvb.Scale = NewScale;
+            // Даем команду ACAD'у что нужно таскать (drag) блок заданного стиля
+            entityToDrag = mvb;
+            // Определяем позицию курсора непонятно зачем)
+            previousCurserPosition = new Point3d(0, 0, 0);
+            sampstatus = "NoChange";
+            while (sampstatus == "NoChange")
+            {
+                Application.DocumentManager.MdiActiveDocument.Editor.Drag(this);
+                // SamplerStatus then World draw runs from here
+                mvb.Rotation = rotationadj;
+            }
+            // Таскаем пока статус sampstatus не изменится с NoChange
+            mPromptCounter = 1;
+            if (sampstatus == "OK")
+            {
+                using (Transaction myT = tm.StartTransaction())
+                {
+                    // Dim doc1 As Document = Application.DocumentManager.MdiActiveDocument
+                    // Dim dl As DocumentLock = doc1.LockDocument
+                    Document doc = Application.DocumentManager.MdiActiveDocument;
+                    using (DocumentLock acLckDoc = doc.LockDocument())
+                    {
+                        BlockTable bt = (BlockTable)tm.GetObject(db.BlockTableId, OpenMode.ForRead, false);
+                        BlockTableRecord btr = tm.GetObject(bt[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
+                            //(BlockTableRecord)tm.GetObject(bt(BlockTableRecord.ModelSpace), OpenMode.ForWrite, false);
+                        btr.AppendEntity(mvb);
+                        tm.AddNewlyCreatedDBObject(mvb, true);
+                        // Возвращаем значение нового ObjectID для блока
+                        retObjID = mvb.ObjectId;
+                        myT.Commit();
+                    }
+                }
+            }
+        }
+        protected override SamplerStatus Sampler(JigPrompts prompts)
+        {
+            JigPromptPointOptions jigOpts = new JigPromptPointOptions();
+            jigOpts.UserInputControls = (UserInputControls.Accept3dCoordinates | UserInputControls.AcceptOtherInputString);
+            if (mPromptCounter == 0)
+            {
+                jigOpts.Message = "\nУкажите точку вставки ...\n";
+                PromptPointResult dres = prompts.AcquirePoint(jigOpts);
+                currentCurserPosition = dres.Value;
+                if (dres.Status == PromptStatus.Cancel)
+                {
+                    sampstatus = "Cancel";
+                    return SamplerStatus.Cancel;
+                }
+                if (currentCurserPosition == previousCurserPosition)
+                {
+                    // If currentCurserPosition <> previousCurserPosition Then
+                    sampstatus = "OK";
+                    return SamplerStatus.OK;
+                }
+                if (dres.StringResult != null)
+                {
+                    // Here put switch case for keywords.
+                    jigmsg = dres.StringResult;
+                    switch (jigmsg)
+                    {
+                        case "NAme":
+                            {
+                                ed.WriteMessage("\nNAme");
+                                sampstatus = "NoChange";
+                                return SamplerStatus.NoChange;
+                            }
+
+                        case "Xscale":
+                            {
+                                ed.WriteMessage("\nXscale");
+                                sampstatus = "NoChange";
+                                return SamplerStatus.NoChange;
+                            }
+
+                        case "Yscale":
+                            {
+                                ed.WriteMessage("\nYscale");
+                                sampstatus = "NoChange";
+                                return SamplerStatus.NoChange;
+                            }
+
+                        case "Zscale":
+                            {
+                                ed.WriteMessage("\nZscale");
+                                sampstatus = "NoChange";
+                                return SamplerStatus.NoChange;
+                            }
+
+                        case "Rotation":
+                            {
+                                // Convert rad to degree  rotationadj = (jigdbl * 3.14159265358979) / 180;
+                                sampstatus = "NoChange";
+                                mPromptCounter = 1;
+                                return SamplerStatus.NoChange;
+                            }
+
+                        case "Match":
+                            {
+                                ed.WriteMessage("\nMatch");
+                                sampstatus = "NoChange";
+                                return SamplerStatus.NoChange;
+                            }
+
+                        case "Base":
+                            {
+                                ed.WriteMessage("\nBase");
+                                sampstatus = "NoChange";
+                                return SamplerStatus.NoChange;
+                            }
+
+                        default:
+                            {
+                                sampstatus = "NoChange";
+                                return SamplerStatus.NoChange;
+                            }
+                    }
+                }
+                sampstatus = "NoChange";
+                return SamplerStatus.NoChange;
+            }
+            else if (mPromptCounter == 1)
+            {
+                jigOpts.UserInputControls = (UserInputControls.Accept3dCoordinates | UserInputControls.AcceptOtherInputString);
+                jigOpts.Keywords.Clear();
+                jigOpts.Message = "\nRotation: ";
+                PromptPointResult rres = prompts.AcquirePoint(jigOpts);
+                currentCurserPosition = rres.Value;
+                if (rres.StringResult != null)
+                {
+                    jiginput = rres.StringResult.ToString();
+                    mPromptCounter = 0;
+                    sampstatus = "NoChange";
+                    return SamplerStatus.NoChange;
+                }
+                if (rres.Status == PromptStatus.Error)
+                {
+                    sampstatus = "Error";
+                    return SamplerStatus.NoChange;
+                }
+                if (rres.Status == PromptStatus.Cancel)
+                {
+                    sampstatus = "Cancel";
+                    return SamplerStatus.Cancel;
+                }
+                if (rres.Status == PromptStatus.Keyword)
+                {
+                    sampstatus = "Keyword";
+                    return SamplerStatus.NoChange;
+                }
+                if (rres.Status == PromptStatus.Modeless)
+                {
+                    sampstatus = "Modeless";
+                    return SamplerStatus.NoChange;
+                }
+                if (rres.Status == PromptStatus.None)
+                {
+                    sampstatus = "None";
+                    return SamplerStatus.NoChange;
+                }
+                if (rres.Status == PromptStatus.Other)
+                {
+                    sampstatus = "Other";
+                    return SamplerStatus.NoChange;
+                }
+                sampstatus = "NoChange";
+                return SamplerStatus.NoChange;
+            }
+            else
+            {
+                sampstatus = "NoChange";
+                return SamplerStatus.NoChange;
+            }
+        }
+        protected override bool WorldDraw(WorldDraw draw)
+        {
+            if (mPromptCounter == 1)
+            {
+                Vector3d displacementVector = previousCurserPosition.GetVectorTo(currentCurserPosition);
+                entityToDrag.TransformBy(Matrix3d.Displacement(displacementVector));
+                previousCurserPosition = currentCurserPosition;
+                draw.Geometry.Draw(entityToDrag);
+            }
+            else
+            {
+                Vector3d displacementVector = previousCurserPosition.GetVectorTo(currentCurserPosition);
+                entityToDrag.TransformBy(Matrix3d.Displacement(displacementVector));
+                previousCurserPosition = currentCurserPosition;
+                draw.Geometry.Draw(entityToDrag);
+            }
+
+            return true;
+        }
+        public ObjectId returnObjID()
+        {
+            return retObjID;
+        }
+    }
+}
