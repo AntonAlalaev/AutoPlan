@@ -31,7 +31,7 @@
         </StackPanel>
         <!--Правая сторона параметры помещения-->
         <StackPanel Grid.Column="1">
-            
+            <Label>Проверка вставки</Label>
         </StackPanel>
     </Grid>
     <Window.Resources>

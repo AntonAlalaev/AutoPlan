@@ -41,11 +41,17 @@ namespace AutoPlanGen
     /// </summary>
     public partial class DialogWindow : System.Windows.Window
     {
+        
+
         //#pragma warning disable CA1303 // Не передавать литералы в качестве локализованных параметров
         List<Section> TotalSectionList;
+
+        public static DialogWindow Current;
+
         public DialogWindow()
         {
             InitializeComponent();
+
             // загрузка данных секций
             string FileName = "LoadedSections.xml";
             TotalSectionList = Parametrs.LoadSection(FileName);
@@ -224,6 +230,20 @@ namespace AutoPlanGen
         private void testpress_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             testc();
+        }
+
+        private void InsertionButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            InsertSimple();
+        }
+
+        private void InsertSimple()
+        {
+            MvBlockOps MVBObject = new MvBlockOps();
+            MVBObject.DefineSourcePath("C:\\stellar\\Shapes\\");
+            Autodesk.AutoCAD.ApplicationServices.Document doc = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+
+
         }
     }
 }

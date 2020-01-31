@@ -31,7 +31,8 @@
         </StackPanel>
         <!--Правая сторона параметры помещения-->
         <StackPanel Grid.Column="1">
-
+            <Label>Проверка вставки</Label>
+            <Button Name="InsertionButton" Click="InsertionButton_Click">Вставка элемента</Button>
         </StackPanel>
     </Grid>
     <Window.Resources>
