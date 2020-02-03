@@ -180,6 +180,7 @@ namespace AutoPlan
                     tr.AddNewlyCreatedDBObject(mvb, true);
                     returnObjID = mvb.ObjectId;
                     tr.Commit();
+                    tr.Dispose();
                 }
             }
             return returnObjID;

@@ -56,10 +56,10 @@ namespace AutoPlan
             SourceDirectoryDWGPath = SourceDirectoryPath;
         }
 
-        public void PlaceMvBlock(string MvBlockName, string SourceFileName)
+        public void PlaceMvBlock(string MvBlockName, string SourceFileName, Document doc)
         {
             Scale3d Scale = new Scale3d();
-            CloneMvBlock(MvBlockName, SourceDirectoryDWGPath, SourceFileName, ref Scale);
+            CloneMvBlock(MvBlockName, SourceDirectoryDWGPath, SourceFileName, ref Scale, doc);
             // MsgBox(MvBlockName & " " & " " & SourceFileName & " " & Scale.X & " " & Scale.Y & " " & Scale.Z)
             // Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView()
             MvBlockPlacer Placer1 = new MvBlockPlacer();
@@ -71,7 +71,7 @@ namespace AutoPlan
         {
             return PlacedBlockObjID;
         }
-        public static void CloneMvBlock(string MVBlockName, string SourceDirectoryDWGPath, string SourceFileName, ref Scale3d scale)
+        public static void CloneMvBlock(string MVBlockName, string SourceDirectoryDWGPath, string SourceFileName, ref Scale3d scale, Document doc)
         {
             Editor ed = Application.DocumentManager.MdiActiveDocument.Editor;
             // MsgBox(SourceDirectoryDWGPath)
@@ -81,9 +81,12 @@ namespace AutoPlan
                 //Interaction.MsgBox("Source Directory DWG Path not defined!!!");
                 return;
             }
+            // сначала надо проверить есть ли такой блок уже или нет
+
+
             try
             {
-                Database dbDestination = Application.DocumentManager.MdiActiveDocument.Database;
+                Database dbDestination = doc.Database;
                 string SourcePath = SourceDirectoryDWGPath + @"\" + SourceFileName;
                 Autodesk.AutoCAD.DatabaseServices.Database dbSource = new Database(false, true);
                 ed.WriteMessage("\n Открываю файл с заданным блоком");
@@ -106,59 +109,66 @@ namespace AutoPlan
                 catch (Autodesk.AutoCAD.Runtime.Exception ex)
                 {
                     MessageBox.Show("Не могу открыть файл" + ex.Message);
-                    //MsgBox("Не могу открыть файл" + ex.Message);
                 }
-
-                // Dim MvBlockRef As MultiViewBlockReference
-                Transaction t = dbSource.TransactionManager.StartTransaction();
-                // MsgBox("Пока все нормуль1")
-                BlockTable bt = (BlockTable)dbSource.BlockTableId.GetObject(OpenMode.ForRead);
-                // MsgBox("Пока все нормуль2")
-                //BlockTableRecord btr = bt(BlockTableRecord.ModelSpace).GetObject(OpenMode.ForRead, false);
-                BlockTableRecord btr = t.GetObject(bt[BlockTableRecord.ModelSpace], OpenMode.ForRead) as BlockTableRecord;
-                
-                // MsgBox("Пока все нормуль3")
-                foreach (ObjectId id in btr)
+                using (DocumentLock acLocDoc = doc.LockDocument())
                 {
-                    try
+
+                    // Dim MvBlockRef As MultiViewBlockReference
+                    using (Transaction t = dbSource.TransactionManager.StartTransaction())
                     {
-                        Entity ent = (Entity)t.GetObject(id, OpenMode.ForRead);
-                        string entType = ent.GetType().ToString();
-                        if (entType == "Autodesk.Aec.DatabaseServices.MultiViewBlockReference")
+                        BlockTable bt = t.GetObject(dbSource.BlockTableId, OpenMode.ForRead) as BlockTable;
+                        //(BlockTable)dbSource.BlockTableId.GetObject(OpenMode.ForRead);
+                        //BlockTableRecord btr = bt(BlockTableRecord.ModelSpace).GetObject(OpenMode.ForRead, false);
+                        BlockTableRecord btr = t.GetObject(bt[BlockTableRecord.ModelSpace], OpenMode.ForRead, false) as BlockTableRecord;
+
+                        foreach (ObjectId id in btr)
                         {
-                            MultiViewBlockReference MvBlockRef = t.GetObject(id, OpenMode.ForRead) as MultiViewBlockReference;
-                            scale = MvBlockRef.Scale;
-                            ed.WriteMessage("Получил масштаб X:" + MvBlockRef.Scale.X + " Y:" + MvBlockRef.Scale.Y + " Z:" + MvBlockRef.Scale.Z + "\n");
+                            try
+                            {
+                                Entity ent = t.GetObject(id, OpenMode.ForRead) as Entity;
+                                string entType = ent.GetType().ToString();
+                                if (entType == "Autodesk.Aec.DatabaseServices.MultiViewBlockReference")
+                                {
+                                    MultiViewBlockReference MvBlockRef = t.GetObject(id, OpenMode.ForRead) as MultiViewBlockReference;
+                                    scale = MvBlockRef.Scale;
+                                    //ed.WriteMessage("Получил масштаб X:" + MvBlockRef.Scale.X + " Y:" + MvBlockRef.Scale.Y + " Z:" + MvBlockRef.Scale.Z + "\n");
+                                }
+                            }
+                            catch (Autodesk.AutoCAD.Runtime.Exception ex)
+                            {
+                                ed.WriteMessage("Не могу найти элемент!!!" + ex.Message);
+                            }
                         }
+                        t.Commit();
+                        t.Dispose();
                     }
-                    catch (Autodesk.AutoCAD.Runtime.Exception ex)
-                    {
-                        MessageBox.Show("Не могу найти элемент!!!" + ex.Message);
-                        //MsgBox("Не могу найти элемент!!!" + ex.Message);
-                    }
+                    // get the source dictionary
+                    DictionaryMultiViewBlockDefinition dictStyle = new DictionaryMultiViewBlockDefinition(dbSource);
+                    // MsgBox("Пока все нормуль")
+                    // get the list of style ids that you want to import
+                    // (1) if you want to import everything, use this.
+                    // the list of ids in the style dictionary.
+                    // ObjectIdCollection objCollectionSrc = dictStyle.Records
+                    // (2) if you want to import a specific style, use this.
+                    // we assume you know the name of style you want to import. 
+
+                    Autodesk.AutoCAD.DatabaseServices.ObjectIdCollection objCollectionSrc = new Autodesk.AutoCAD.DatabaseServices.ObjectIdCollection();                    
+                    objCollectionSrc.Add(dictStyle.GetAt(MVBlockName));
+
+                    //Autodesk.AutoCAD.DatabaseServices.ObjectIdCollection objCollectionSrc = dictStyle.Records;
+
+                    // now use CloningHelper class to import styles.  
+                    // there are four options for merge type:
+                    // Normal     = 0, // no overwrite
+                    // Overwrite  = 1, // this is default.
+                    // Unique     = 2, // rename it if the same name exists.
+                    // Merge      = 3  // no overwrite + add overlapping as anonymous
+                    Autodesk.Aec.ApplicationServices.Utility.CloningHelper helpme = new Autodesk.Aec.ApplicationServices.Utility.CloningHelper();
+                    helpme.MergeType = Autodesk.Aec.ApplicationServices.Utility.DictionaryRecordMergeBehavior.Normal;
+                    helpme.Clone(dbSource, dbDestination, objCollectionSrc, dictStyle.RecordType, true);
+                    helpme.Dispose();
+                    dbSource.Dispose();
                 }
-                t.Commit();
-                t.Dispose();
-                // get the source dictionary
-                DictionaryMultiViewBlockDefinition dictStyle = new DictionaryMultiViewBlockDefinition(dbSource);
-                // MsgBox("Пока все нормуль")
-                // get the list of style ids that you want to import
-                // (1) if you want to import everything, use this.
-                // the list of ids in the style dictionary.
-                // ObjectIdCollection objCollectionSrc = dictStyle.Records
-                // (2) if you want to import a specific style, use this.
-                // we assume you know the name of style you want to import. 
-                Autodesk.AutoCAD.DatabaseServices.ObjectIdCollection objCollectionSrc = new Autodesk.AutoCAD.DatabaseServices.ObjectIdCollection();
-                // MsgBox("Еще пока нормуль")
-                objCollectionSrc.Add(dictStyle.GetAt(MVBlockName));
-                // now use CloningHelper class to import styles.  
-                // there are four options for merge type:
-                // Normal     = 0, // no overwrite
-                // Overwrite  = 1, // this is default.
-                // Unique     = 2, // rename it if the same name exists.
-                // Merge      = 3  // no overwrite + add overlapping as anonymous
-                Autodesk.Aec.ApplicationServices.Utility.CloningHelper helpme = new Autodesk.Aec.ApplicationServices.Utility.CloningHelper();
-                helpme.Clone(dbSource, dbDestination, objCollectionSrc, dictStyle.RecordType, true);
             }
             catch (Autodesk.AutoCAD.Runtime.Exception ex)
             {

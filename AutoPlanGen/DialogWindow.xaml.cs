@@ -41,7 +41,7 @@ namespace AutoPlanGen
     /// </summary>
     public partial class DialogWindow : System.Windows.Window
     {
-        
+
 
         //#pragma warning disable CA1303 // Не передавать литералы в качестве локализованных параметров
         List<Section> TotalSectionList;
@@ -101,14 +101,23 @@ namespace AutoPlanGen
             AskStationary(out bool LeftStat, out bool RightStat, out bool DoubleSidedStat);
 
             // параметры помещения
-            RoomRectangle RoomData = new RoomRectangle(new Point(0, 0), new Point(12000, 6000));
+            RoomRectangle RoomData = new RoomRectangle(new Point(0, 0), new Point(8000, 6000));
+
+
 
             // если выбраны стационары
 
             double WorkPassLength = Convert.ToDouble(WorkPass.Text, CultureInfo.CurrentCulture);
 
             List<Section> ReturnSection = Calculation.GetStellar(TotalSectionList, RoomData, SelectedShelfLengthMin, SelectedShelfLengthMax, SelectedHeight, SelectedShelfWidth, WorkPassLength, LeftStat, RightStat, DoubleSidedStat);
-
+            try
+            {
+                GenerateDrawing(ReturnSection, Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument, "C:\\stellar\\Shapes");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error " + ex.Message);
+            }
 
         }
 
@@ -226,7 +235,7 @@ namespace AutoPlanGen
             return;
 
         }
-        
+
         private void testpress_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             testc();
@@ -235,18 +244,43 @@ namespace AutoPlanGen
         private void InsertionButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             InsertSimple();
-            Autodesk.AutoCAD.Geometry.Scale3d Scale = new Autodesk.AutoCAD.Geometry.Scale3d();
-            MvBlockOps.CloneMvBlock("ПО 2065х1250х300", "C:\\stellar\\Shapes", "ПО 2065х1250х300.dwg", ref Scale);
-            var activeDocument = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
-            MvBlockPlacer.MvBlockRefInsert(activeDocument, "ПО 2065х1250х250", new Autodesk.AutoCAD.Geometry.Point3d(0, 0, 0), Scale, 0);
         }
 
         private void InsertSimple()
         {
-            MvBlockOps MVBObject = new MvBlockOps();
-            MVBObject.DefineSourcePath("C:\\stellar\\Shapes\\");
-            Autodesk.AutoCAD.ApplicationServices.Document doc = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+            Autodesk.AutoCAD.Geometry.Scale3d Scale = new Autodesk.AutoCAD.Geometry.Scale3d();
+           // MvBlockOps.CloneMvBlock("ПО 2065х1250х300", "C:\\stellar\\Shapes", "ПО 2065х1250х300.dwg", ref Scale);
+            var activeDocument = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+            MvBlockPlacer.MvBlockRefInsert(activeDocument, "ПО 2065х1250х250", new Autodesk.AutoCAD.Geometry.Point3d(0, 0, 0), Scale, 0);
+        }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="SectionToPlace">Список секций для размещения</param>
+        /// <param name="doc">Документ AutoCAD</param>
+        /// <param name="PathToShapeFolder">Путь к папке с файлами</param>
+        private void GenerateDrawing(List<Section> SectionToPlace, Autodesk.AutoCAD.ApplicationServices.Document doc, string PathToShapeFolder)
+        {
+            // сначала клонирем объекты БД
+
+            List<string> UniqueName = SectionToPlace.Select(n => n.Name).Distinct().ToList();
+            Dictionary<string, Autodesk.AutoCAD.Geometry.Scale3d> Scales = new Dictionary<string, Autodesk.AutoCAD.Geometry.Scale3d>();
+            foreach (string Name in UniqueName)
+            {
+                Autodesk.AutoCAD.Geometry.Scale3d Scale = new Autodesk.AutoCAD.Geometry.Scale3d();
+                MvBlockOps.CloneMvBlock(Name, PathToShapeFolder, Name + ".DWG", ref Scale, doc);
+                Scales.Add(Name, Scale);
+            }
+
+            foreach (Section Item in SectionToPlace)
+            {
+                //Autodesk.AutoCAD.Geometry.Scale3d Scale = new Autodesk.AutoCAD.Geometry.Scale3d();
+                //MvBlockOps.CloneMvBlock(Item.Name, PathToShapeFolder, Item.Name + ".DWG", ref Scale, doc);
+                Autodesk.AutoCAD.Geometry.Scale3d Scale = Scales[Item.Name];
+                MvBlockPlacer.MvBlockRefInsert(doc, Item.Name, new Autodesk.AutoCAD.Geometry.Point3d(Item.BottomLeft.X, Item.BottomLeft.Y, 0), Scale, 0);
+
+            }
 
         }
     }
