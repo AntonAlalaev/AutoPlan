@@ -59,7 +59,7 @@ namespace AutoPlan
         public void PlaceMvBlock(string MvBlockName, string SourceFileName)
         {
             Scale3d Scale = new Scale3d();
-            CloneMvBlock(MvBlockName, SourceFileName, ref Scale);
+            CloneMvBlock(MvBlockName, SourceDirectoryDWGPath, SourceFileName, ref Scale);
             // MsgBox(MvBlockName & " " & " " & SourceFileName & " " & Scale.X & " " & Scale.Y & " " & Scale.Z)
             // Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView()
             MvBlockPlacer Placer1 = new MvBlockPlacer();
@@ -71,7 +71,7 @@ namespace AutoPlan
         {
             return PlacedBlockObjID;
         }
-        private void CloneMvBlock(string MVBlockName, string SourceFileName, ref Scale3d scale)
+        public static void CloneMvBlock(string MVBlockName, string SourceDirectoryDWGPath, string SourceFileName, ref Scale3d scale)
         {
             Editor ed = Application.DocumentManager.MdiActiveDocument.Editor;
             // MsgBox(SourceDirectoryDWGPath)
@@ -86,6 +86,7 @@ namespace AutoPlan
                 Database dbDestination = Application.DocumentManager.MdiActiveDocument.Database;
                 string SourcePath = SourceDirectoryDWGPath + @"\" + SourceFileName;
                 Autodesk.AutoCAD.DatabaseServices.Database dbSource = new Database(false, true);
+                ed.WriteMessage("\n Открываю файл с заданным блоком");
                 // MsgBox(SourcePath)
 
                 // Dim fWriter As New IO.StreamWriter("c:\stellar\txtpath.txt", False)
@@ -127,6 +128,7 @@ namespace AutoPlan
                         {
                             MultiViewBlockReference MvBlockRef = t.GetObject(id, OpenMode.ForRead) as MultiViewBlockReference;
                             scale = MvBlockRef.Scale;
+                            ed.WriteMessage("Получил масштаб X:" + MvBlockRef.Scale.X + " Y:" + MvBlockRef.Scale.Y + " Z:" + MvBlockRef.Scale.Z + "\n");
                         }
                     }
                     catch (Autodesk.AutoCAD.Runtime.Exception ex)

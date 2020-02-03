@@ -235,6 +235,10 @@ namespace AutoPlanGen
         private void InsertionButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             InsertSimple();
+            Autodesk.AutoCAD.Geometry.Scale3d Scale = new Autodesk.AutoCAD.Geometry.Scale3d();
+            MvBlockOps.CloneMvBlock("ПО 2065х1250х300", "C:\\stellar\\Shapes", "ПО 2065х1250х300.dwg", ref Scale);
+            var activeDocument = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+            MvBlockPlacer.MvBlockRefInsert(activeDocument, "ПО 2065х1250х250", new Autodesk.AutoCAD.Geometry.Point3d(0, 0, 0), Scale, 0);
         }
 
         private void InsertSimple()

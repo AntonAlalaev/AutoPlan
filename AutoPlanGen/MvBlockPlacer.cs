@@ -121,7 +121,7 @@ namespace AutoPlan
                     {
                         BlockTable bt = (BlockTable)tm.GetObject(db.BlockTableId, OpenMode.ForRead, false);
                         BlockTableRecord btr = tm.GetObject(bt[BlockTableRecord.ModelSpace], OpenMode.ForWrite) as BlockTableRecord;
-                            //(BlockTableRecord)tm.GetObject(bt(BlockTableRecord.ModelSpace), OpenMode.ForWrite, false);
+                        //(BlockTableRecord)tm.GetObject(bt(BlockTableRecord.ModelSpace), OpenMode.ForWrite, false);
                         btr.AppendEntity(mvb);
                         tm.AddNewlyCreatedDBObject(mvb, true);
                         // Возвращаем значение нового ObjectID для блока
@@ -131,6 +131,60 @@ namespace AutoPlan
                 }
             }
         }
+
+        /// <summary>
+        /// Вставляет МВ-блок в пространство модели и возвращает его ObjectId
+        /// </summary>
+        /// <param name="doc">Документ Автокада</param>
+        /// <param name="MvBlockName">Имя МВ-Блока</param>
+        /// <param name="InsertionPoint">Точка вставки</param>
+        /// <param name="InsertionScale">Масштаб</param>
+        /// <param name="Rotation">Угол поворота</param>
+        /// <returns></returns>
+        public static ObjectId MvBlockRefInsert(Document doc, string MvBlockName, Point3d InsertionPoint, Scale3d InsertionScale, double Rotation = 0)
+        {
+            ObjectId returnObjID = new ObjectId();
+            // словарь стилей MВ-блоков
+            Autodesk.Aec.DatabaseServices.DictionaryMultiViewBlockDefinition mvbstyledict;
+
+            ObjectId bstyleID;
+            Autodesk.Aec.DatabaseServices.MultiViewBlockReference mvb = new Autodesk.Aec.DatabaseServices.MultiViewBlockReference();
+
+            Database db = doc.Database;
+            using (DocumentLock acLckDoc = doc.LockDocument())
+            {
+                Transaction tr = db.TransactionManager.StartTransaction();
+                using (tr)
+                {
+                    // открываем таблицу MB блоков на чтение
+                    BlockTable bt = (BlockTable)tr.GetObject(db.BlockTableId, OpenMode.ForRead);
+                    // Получаем словарь МВ Блоков
+                    mvbstyledict = new Autodesk.Aec.DatabaseServices.DictionaryMultiViewBlockDefinition(db);
+                    // Получаем ObjectID заданного стиля MVBlock
+                    bstyleID = mvbstyledict.GetAt(MvBlockName);
+                    if (bstyleID == null)
+                    {
+                        doc.Editor.WriteMessage("\n MvBlockName is not avialable" + "\n");
+                        return returnObjID;
+                    }
+                    //doc.Editor.WriteMessage("\n MvBlockName is " + "");
+                    // Определяем вставляемый блок полученным ObjectID нужного нам стиля
+                    mvb.BlockDefId = bstyleID;
+                    mvb.Scale = InsertionScale;
+                    doc.Editor.WriteMessage("\n Приведенный масштаб вставляемого элемента X:" + mvb.Scale.X + " Y:" + mvb.Scale.Y + " Z:" + mvb.Scale.Z + "\n");
+                    mvb.Location = InsertionPoint;
+                    mvb.Rotation = Rotation;
+                    // открываем пространство модели на запись
+                    BlockTableRecord ms = (BlockTableRecord)tr.GetObject(bt[BlockTableRecord.ModelSpace], OpenMode.ForWrite);
+                    ms.AppendEntity(mvb);
+                    tr.AddNewlyCreatedDBObject(mvb, true);
+                    returnObjID = mvb.ObjectId;
+                    tr.Commit();
+                }
+            }
+            return returnObjID;
+        }
+
         protected override SamplerStatus Sampler(JigPrompts prompts)
         {
             JigPromptPointOptions jigOpts = new JigPromptPointOptions();
