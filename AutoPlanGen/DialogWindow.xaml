@@ -6,10 +6,9 @@
         xmlns:local="clr-namespace:AutoPlan"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="380" Width="525">
+        Title="АвтоРасстановка СТ" Height="410" Width="225">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <!--Левая сторона параметры стеллажей-->
@@ -26,14 +25,13 @@
             <ComboBox Name="StellarHeight"></ComboBox>
             <Label>Стационарные по краям</Label>
             <ComboBox Name="Stationary"></ComboBox>
-            <Rectangle Width="10" Height="10"></Rectangle>
-            <Button Name="testpress" Click="testpress_Click">Расставить стеллажи</Button>
+            <Label>Фальшпол</Label>
+            <ComboBox Name ="FalseFloor"></ComboBox>
+            <Rectangle Width="10" Height="20"></Rectangle>
+            <Button Name="testpress" Click="testpress_Click" Height="24">Выбрать область</Button>
         </StackPanel>
         <!--Правая сторона параметры помещения-->
-        <StackPanel Grid.Column="1">
-            <Label>Проверка вставки</Label>
-            <Button Name="InsertionButton" Click="InsertionButton_Click">Вставка элемента</Button>
-        </StackPanel>
+        
     </Grid>
     <Window.Resources>
         <sys:String x:Key="ErrorCaption">Ошибка</sys:String>

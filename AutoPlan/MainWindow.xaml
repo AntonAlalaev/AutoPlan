@@ -31,7 +31,9 @@
         </StackPanel>
         <!--Правая сторона параметры помещения-->
         <StackPanel Grid.Column="1">
-            <Label>Проверка вставки</Label>
+            <Label HorizontalAlignment="Center">Генерация XML файлов из XLST</Label>
+            <Button x:Name="GenerateXLS" Click="GenerateXLS_Click">Сгенерировать данные</Button>
+            <Label>Файл с данными</Label>
         </StackPanel>
     </Grid>
     <Window.Resources>

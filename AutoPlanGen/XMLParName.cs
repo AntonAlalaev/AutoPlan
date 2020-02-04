@@ -18,5 +18,6 @@ namespace AutoPlan
         public static string MainSection = "Main";
         public static string Stationary = "Stationary";
         public static string DoubleSided = "Double";
+        public static string Name = "Name";
     }
 }

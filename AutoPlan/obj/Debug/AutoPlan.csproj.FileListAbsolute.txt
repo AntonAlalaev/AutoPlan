@@ -30,3 +30,7 @@ C:\Users\anton\source\repos\AntonAlalaev\AutoPlan\AutoPlan\obj\Debug\AutoPlan.pd
 C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\obj\Debug\AutoPlan.csprojAssemblyReference.cache
 C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\obj\Debug\AutoPlan.csproj.CopyComplete
 C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\bin\Debug\LoadedSections.xml
+C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\bin\Debug\StellarToExportXML.xlsx
+C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\bin\Debug\EPPlus.dll
+C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\bin\Debug\EPPlus.pdb
+C:\Users\Anton\Source\Repos\AntonAlalaev\AutoPlan\AutoPlan\bin\Debug\EPPlus.xml

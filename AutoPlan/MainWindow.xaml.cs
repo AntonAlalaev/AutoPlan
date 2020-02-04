@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Globalization;
+using OfficeOpenXml;
+using System.IO;
 
 namespace AutoPlan
 {
@@ -204,6 +206,79 @@ namespace AutoPlan
         private void testpress_Click(object sender, RoutedEventArgs e)
         {
             testc();
+        }
+
+        private void GenerateXLS_Click(object sender, RoutedEventArgs e)
+        {
+            // загружаем файл
+            // StellarToExportXML.xlsx
+            List<Section> Resultat = LoadFromExcel("StellarToExportXML.xlsx", 2);
+
+        }
+
+        /// <summary>
+        /// Загружает секции из файла Excel
+        /// </summary>
+        /// <param name="FileName">Полный путь к файлу</param>
+        /// <returns></returns>
+        public static List<Section> LoadFromExcel(string FileName, int FirstRow = 1)
+        {
+            List<Section> retValue = new List<Section>();
+            using (ExcelPackage p = new ExcelPackage())
+            {
+                using (FileStream fstream = File.OpenRead(FileName))
+                {
+                    p.Load(fstream);
+                }
+                int Sheets = p.Workbook.Worksheets.Count;
+                ExcelWorksheet fsh = p.Workbook.Worksheets[1];
+                int row = FirstRow;
+                do
+                {
+                    ExcelRange Name = fsh.Cells[row, 1];
+                    if (Name.Value == null)
+                        break;
+                    ExcelRange SectionHeight = fsh.Cells[row, 2];
+                    if (SectionHeight.Value == null)
+                        break;
+                    ExcelRange ShelfLength = fsh.Cells[row, 3];
+                    if (ShelfLength.Value == null)
+                        break;
+                    ExcelRange ShelfWidth = fsh.Cells[row, 4];
+                    if (ShelfWidth.Value == null)
+                        break;
+                    ExcelRange SectionWidth = fsh.Cells[row, 5];
+                    if (SectionWidth.Value == null)
+                        break;
+                    ExcelRange SectionLength = fsh.Cells[row, 6];
+                    if (SectionLength.Value == null)
+                        break;
+                    ExcelRange Floor = fsh.Cells[row, 7];
+                    if (Floor.Value == null)
+                        break;
+                    ExcelRange MainSec = fsh.Cells[row, 8];
+                    if (MainSec.Value == null)
+                        break;
+                    ExcelRange DoubleSec = fsh.Cells[row, 9];
+                    if (DoubleSec.Value == null)
+                        break;
+                    ExcelRange Stationary = fsh.Cells[row, 10];
+                    if (Stationary == null)
+                        break;
+                    string strName = Name.Value.ToString();
+#pragma warning disable CA1305 // Укажите IFormatProvider
+                    Section toAdd = new Section(Name.Value.ToString(), Convert.ToInt32(SectionLength.Value.ToString()),
+                        Convert.ToInt32(SectionWidth.Value.ToString()), Convert.ToInt32(ShelfLength.Value.ToString()),
+                        Convert.ToInt32(ShelfWidth.Value.ToString()), Convert.ToInt32(SectionHeight.Value.ToString()),
+                        Convert.ToBoolean(DoubleSec.Value.ToString()), Convert.ToBoolean(MainSec.Value.ToString()), 
+                        Convert.ToBoolean(Stationary.Value.ToString()), Convert.ToBoolean(Floor.Value.ToString()));
+#pragma warning restore CA1305 // Укажите IFormatProvider
+                    retValue.Add(toAdd);
+                    row++;
+                }
+                while (true);
+            }
+            return retValue;
         }
     }
 }

@@ -38,7 +38,7 @@ namespace AutoPlan
         /// <param name="FormalLength"></param>
         /// <param name="FormalWidth"></param>
         /// <param name="SectionHeight"></param>
-        public Section(string Name, int RealLength, int RealWidth, int FormalLength, int FormalWidth, int SectionHeight, bool Double, bool Main, bool Stationary) : base(new Point(0, 0), RealWidth, RealLength)
+        public Section(string Name, int RealLength, int RealWidth, int FormalLength, int FormalWidth, int SectionHeight, bool Double, bool Main, bool Stationary, bool FalseFloor = false) : base(new Point(0, 0), RealWidth, RealLength)
         {
             this.Name = Name;
             this.Main = Main;
@@ -46,7 +46,8 @@ namespace AutoPlan
             this.Stationary = Stationary;
             FakeLength = FormalLength;
             FakeWidth = FormalWidth;
-            SecHeight = SectionHeight;            
+            SecHeight = SectionHeight;
+            this.FalseFloor = FalseFloor;
         }
 
         /// <summary>
@@ -95,6 +96,11 @@ namespace AutoPlan
         /// Признак стационарной секции
         /// </summary>
         public bool Stationary { get; set; }
+
+        /// <summary>
+        /// Признак фальшпола
+        /// </summary>
+        public bool FalseFloor { get; set; }
 
         /// <summary>
         /// Основная секция

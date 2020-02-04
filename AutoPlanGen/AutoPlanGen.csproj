@@ -60,6 +60,10 @@
       <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2013\ACA\AecUIBaseMgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="EPPlus">
+      <HintPath>..\..\..\..\..\Downloads\EPPlus-master\EPPlus-master\EPPlus\bin\Debug\EPPlus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -117,6 +121,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="StellarToExportXML.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

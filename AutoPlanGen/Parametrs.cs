@@ -76,6 +76,33 @@ namespace AutoPlan
         public int RoomDistRight { get; set; }
 
 
+
+        /// <summary>
+        /// Сохраняет секции в XML файл
+        /// </summary>
+        /// <param name="FileName">Имя файла</param>
+        public static void SaveSections(string FileName, List<Section> SectionData)
+        {
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.IndentChars = ("  ");
+            // создаем
+            XmlWriter xmlOut = XmlWriter.Create(FileName, settings);
+            xmlOut.WriteStartDocument();
+            xmlOut.WriteStartElement("Sections");
+            foreach (Section Item in SectionData)
+            {
+                xmlOut.WriteStartElement("Section");
+                xmlOut.WriteElementString(XMLParName.Name,Item.Name);
+                xmlOut.WriteElementString(XMLParName.ShelfLength, Item.FakeLength.ToString());
+                xmlOut.WriteEndElement();
+            }
+            xmlOut.WriteEndElement();
+            xmlOut.Close();
+        }
+
+
+
         /// <summary>
         /// Загружает данные о геометрии секций из файла
         /// </summary>
@@ -151,9 +178,12 @@ namespace AutoPlan
                         // Двухсторонняя
                         if (cnode.Name == XMLParName.DoubleSided)
                             DoubleSided = ParseToBool(cnode.InnerText);
+                        // Фальшпол
+                        if (cnode.Name == XMLParName.FalseFloor)
+                            falseFloor = ParseToBool(cnode.InnerText);
                     }
                     // добавляем секцию в список
-                    retValue.Add(new Section(StellarName, realLength, RealWidth, FormalLength, ShelfWidth, Height, DoubleSided, MainSection, Stationary));
+                    retValue.Add(new Section(StellarName, realLength, RealWidth, FormalLength, ShelfWidth, Height, DoubleSided, MainSection, Stationary, falseFloor));
                 }
             }
             return retValue;
