@@ -77,29 +77,6 @@ namespace AutoPlan
 
 
 
-        /// <summary>
-        /// Сохраняет секции в XML файл
-        /// </summary>
-        /// <param name="FileName">Имя файла</param>
-        public static void SaveSections(string FileName, List<Section> SectionData)
-        {
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Indent = true;
-            settings.IndentChars = ("  ");
-            // создаем
-            XmlWriter xmlOut = XmlWriter.Create(FileName, settings);
-            xmlOut.WriteStartDocument();
-            xmlOut.WriteStartElement("Sections");
-            foreach (Section Item in SectionData)
-            {
-                xmlOut.WriteStartElement("Section");
-                xmlOut.WriteElementString(XMLParName.Name,Item.Name);
-                xmlOut.WriteElementString(XMLParName.ShelfLength, Item.FakeLength.ToString());
-                xmlOut.WriteEndElement();
-            }
-            xmlOut.WriteEndElement();
-            xmlOut.Close();
-        }
 
 
 

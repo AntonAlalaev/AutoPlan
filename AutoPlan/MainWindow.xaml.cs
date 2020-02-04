@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Globalization;
 using OfficeOpenXml;
 using System.IO;
+using System.Xml;
 
 namespace AutoPlan
 {
@@ -213,7 +214,45 @@ namespace AutoPlan
             // загружаем файл
             // StellarToExportXML.xlsx
             List<Section> Resultat = LoadFromExcel("StellarToExportXML.xlsx", 2);
+            SaveSections("Output.xml", Resultat);
+        }
 
+
+
+        /// <summary>
+        /// Сохраняет секции в XML файл
+        /// </summary>
+        /// <param name="FileName">Имя файла</param>
+        public static void SaveSections(string FileName, List<Section> SectionData)
+        {
+            if (SectionData == null)
+                return;
+            if (SectionData.Count == 0)
+                return;
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.IndentChars = ("  ");
+            // создаем
+            XmlWriter xmlOut = XmlWriter.Create(FileName, settings);
+            xmlOut.WriteStartDocument();
+            xmlOut.WriteStartElement("Sections");
+            foreach (Section Item in SectionData)
+            {
+                xmlOut.WriteStartElement("Section");
+                xmlOut.WriteElementString(XMLParName.Name, Item.Name);
+                xmlOut.WriteElementString(XMLParName.ShelfLength, Item.FakeLength.ToString());
+                xmlOut.WriteElementString(XMLParName.ShelfWidth, Item.FakeWidth.ToString());
+                xmlOut.WriteElementString(XMLParName.SectionRealLength, Item.Height.ToString());
+                xmlOut.WriteElementString(XMLParName.SectionRealWidth, Item.Length.ToString());
+                xmlOut.WriteElementString(XMLParName.SectionHeigh, Item.SecHeight.ToString());
+                xmlOut.WriteElementString(XMLParName.FalseFloor, Item.FalseFloor.ToString());
+                xmlOut.WriteElementString(XMLParName.MainSection, Item.Main.ToString());
+                xmlOut.WriteElementString(XMLParName.DoubleSided, Item.Double.ToString());
+                xmlOut.WriteElementString(XMLParName.Stationary, Item.Stationary.ToString());
+                xmlOut.WriteEndElement();
+            }
+            xmlOut.WriteEndElement();
+            xmlOut.Close();
         }
 
         /// <summary>
