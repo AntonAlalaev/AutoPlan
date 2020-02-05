@@ -319,5 +319,10 @@ namespace AutoPlan
             }
             return retValue;
         }
+
+        private void ConnectdbBut_Click(object sender, RoutedEventArgs e)
+        {
+            StellarEnvironment envir = new StellarEnvironment();            
+        }
     }
 }

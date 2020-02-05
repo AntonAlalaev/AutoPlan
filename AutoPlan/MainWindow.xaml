@@ -34,6 +34,7 @@
             <Label HorizontalAlignment="Center">Генерация XML файлов из XLST</Label>
             <Button x:Name="GenerateXLS" Click="GenerateXLS_Click">Сгенерировать данные</Button>
             <Label>Файл с данными</Label>
+            <Button x:Name="ConnectdbBut" Click="ConnectdbBut_Click">Связь с базой</Button>
         </StackPanel>
     </Grid>
     <Window.Resources>

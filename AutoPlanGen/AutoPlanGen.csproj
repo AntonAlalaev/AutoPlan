@@ -102,6 +102,7 @@
     </Compile>
     <Compile Include="RoomRectangle.cs" />
     <Compile Include="Section.cs" />
+    <Compile Include="StellarDataLink.cs" />
     <Compile Include="StellarEnvironment.cs" />
     <Compile Include="XMLParName.cs" />
   </ItemGroup>

@@ -178,11 +178,11 @@ namespace AutoPlan
                 return;
             }
         }
-        public void CreatePropSetDefs(string propSetDefName, StringCollection RowNames)
+        public void CreatePropSetDefs(string propSetDefName, StringCollection RowNames, Document doc)
         {
             // Here we are creating a propertysetdefinition with PropsetDefsName
             // It must contain RowNames and Row Count
-            Document doc = Application.DocumentManager.MdiActiveDocument;
+            
             Database db = doc.Database;
             Editor ed = doc.Editor;
             // The name of the property set def.
@@ -278,6 +278,7 @@ namespace AutoPlan
                     {
                         ed.WriteMessage("error - the property set defintion already exists: " + propSetDefName + "\n");
                         // try to delete?
+                        tr.Abort();
                         return;
                     }
                     using (DocumentLock acLckDoc = doc.LockDocument())
@@ -285,6 +286,7 @@ namespace AutoPlan
                         dictPropSetDef.AddNewRecord(propSetDefName, propSetDef);
                         tr.AddNewlyCreatedDBObject(propSetDef, true);
                         tr.Commit();
+                        tr.Dispose();
                     }
                 }
             }
@@ -296,6 +298,11 @@ namespace AutoPlan
             ed.WriteMessage("property set definition " + propSetDefName + " is successfully created." + "\n");
         }
         // Attach a property set to an object.
+        /// <summary>
+        /// Attach a property set to an object.
+        /// </summary>
+        /// <param name="ObjID">ObjectId Элемента</param>
+        /// <param name="propSetDefName">Имя PropertySet'а</param>
         public void AttachPropSetDef(ObjectId ObjID, string propSetDefName)
         {
             // MsgBox(ObjID.ToString)
@@ -330,6 +337,7 @@ namespace AutoPlan
                         Autodesk.AutoCAD.DatabaseServices.DBObject obj = tr.GetObject(ObjID, OpenMode.ForWrite, false, true);
                         PropertyDataServices.AddPropertySet(obj, idPropSetDef);
                         tr.Commit();
+                        tr.Dispose();
                     }
                 }
             }
@@ -421,6 +429,7 @@ namespace AutoPlan
                         bolres = SetValueFromPropertySetByName(psetname, pname, obj, NewValue);
                         ed.WriteMessage("\nResult of setvalue from OBJ ID is " + bolres + "\n");
                         tr.Commit();
+                        tr.Dispose();
                     }
                 }
             }
@@ -431,6 +440,11 @@ namespace AutoPlan
             }
             ed.WriteMessage("\nDBObject Successfuly founded" + ObjID.ToString() + " ObjectType is " + ObjID.ObjectClass.Name + "\n");
         }
+        /// <summary>
+        /// ПРисваивает значение Property
+        /// </summary>
+        /// <param name="ObjID"></param>
+        /// <param name="Props"></param>
         public void setProperties(ObjectId ObjID, BlockAttributes Props)
         {
             if (Props.Count == 0)

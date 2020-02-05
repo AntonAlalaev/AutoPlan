@@ -40,7 +40,7 @@ namespace AutoPlan
         public StellarEnvironment()
         {
             // Пути по умолчанию, если нет ini файла
-            dbPath = @"C:\Stellar\client_new.mdb";
+            dbPath = @"C:\Stellar\client_G.mdb";
             srcPath = @"C:\Stellar\shapes\";
             // Пробуем открыть файл для того чтобы получить пути
             try
@@ -50,7 +50,8 @@ namespace AutoPlan
                 string sourceString;
                 sourceString = fReader.ReadToEnd();
                 fReader.Close();
-                var srcArr = sourceString.Split('\n');
+                string[] srcArr = sourceString.Split('\n', '\r');
+                srcArr = srcArr.Where(n => n != "").ToArray();
                 if (srcArr.GetUpperBound(0) == 1)
                 {
                     dbPath = srcArr[0];
@@ -91,6 +92,9 @@ namespace AutoPlan
         }
     }
 
+    /// <summary>
+    /// Таблица с параметрами
+    /// </summary>
     public partial class ParTable
     {
         private System.Collections.Specialized.StringCollection ParList = new System.Collections.Specialized.StringCollection();

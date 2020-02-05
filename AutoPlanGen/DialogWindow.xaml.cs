@@ -33,6 +33,8 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Globalization;
 using AutoPlan;
+using Autodesk.AutoCAD;
+using System.Data;
 
 namespace AutoPlanGen
 {
@@ -274,15 +276,53 @@ namespace AutoPlanGen
                 Scales.Add(Name, Scale);
             }
 
+            // теперь создаем список параметров блоков
+
+            Dictionary<string, ParTable> ParametrsTable = new Dictionary<string, ParTable>();
+            StellarDataLink dbs = new StellarDataLink();
+            foreach (string StellarName in UniqueName)
+            {
+                ParTable toAdd = new ParTable();
+                dbs.FillParameters(StellarName, ref toAdd);
+                ParametrsTable.Add(StellarName, toAdd);
+            }
+
+            MvBlockOps MVBObject = new MvBlockOps();
+
+            // создаем PropertySetDefinition для МВ блоков
+            foreach (string StellarName in UniqueName)
+            {
+                MVBObject.CreatePropSetDefs(StellarName, ParametrsTable[StellarName].ParameterList, doc);
+            }
+
+            // вставляем блоки
+            Dictionary<Autodesk.AutoCAD.DatabaseServices.ObjectId, string> ObjIDItems = new Dictionary<Autodesk.AutoCAD.DatabaseServices.ObjectId, string>();
             foreach (Section Item in SectionToPlace)
             {
                 //Autodesk.AutoCAD.Geometry.Scale3d Scale = new Autodesk.AutoCAD.Geometry.Scale3d();
                 //MvBlockOps.CloneMvBlock(Item.Name, PathToShapeFolder, Item.Name + ".DWG", ref Scale, doc);
                 Autodesk.AutoCAD.Geometry.Scale3d Scale = Scales[Item.Name];
-                MvBlockPlacer.MvBlockRefInsert(doc, Item.Name, new Autodesk.AutoCAD.Geometry.Point3d(Item.BottomLeft.X, Item.BottomLeft.Y, 0), Scale, 0);
-
+                Autodesk.AutoCAD.DatabaseServices.ObjectId ItemObjId =
+                    MvBlockPlacer.MvBlockRefInsert(doc, Item.Name, new Autodesk.AutoCAD.Geometry.Point3d(Item.BottomLeft.X, Item.BottomLeft.Y, 0), Scale, 0);
+                ObjIDItems.Add(ItemObjId, Item.Name);
             }
 
+            // присваиваем блокам propertySetdef
+            foreach (Autodesk.AutoCAD.DatabaseServices.ObjectId Items in ObjIDItems.Keys)
+            {
+                // Приаттачиваем propertysetdefinition к вставленному блоку
+                MVBObject.AttachPropSetDef(Items, ObjIDItems[Items]);
+                // танцы с бубном из старой программы на VB для записи параметров
+                // создаем таблицу
+                DataTable DTGridView = ParametrsTable[ObjIDItems[Items]].GetGrid();
+                BlockAttributes SaveAttribute = MVBObject.getBlockAttributes(DTGridView, ParametrsTable[ObjIDItems[Items]]);
+                SaveAttribute.Name = ObjIDItems[Items];
+                MVBObject.setProperties(Items, SaveAttribute);
+                // 
+                //        dbs.FillParameters(StName, Param)
+                //Dim DTGridView As New Data.DataTable
+                //DTGridView = Param.GetGrid
+            }
         }
     }
 }
