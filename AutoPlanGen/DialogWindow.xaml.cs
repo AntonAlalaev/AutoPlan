@@ -53,9 +53,9 @@ namespace AutoPlanGen
         public DialogWindow()
         {
             InitializeComponent();
-
+            StellarEnvironment envir = new StellarEnvironment();
             // загрузка данных секций
-            string FileName = "LoadedSections.xml";
+            string FileName = "C:\\stellar\\" + "LoadedSections.xml";
             TotalSectionList = Parametrs.LoadSection(FileName);
 
             // длины полок
@@ -102,7 +102,7 @@ namespace AutoPlanGen
 
             AskStationary(out bool LeftStat, out bool RightStat, out bool DoubleSidedStat);
 
-
+            Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView();
             // параметры помещения
             Rectangle RoomData = EntryPoint.SelectRoomArea(Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument);
 
@@ -318,10 +318,7 @@ namespace AutoPlanGen
                 BlockAttributes SaveAttribute = MVBObject.getBlockAttributes(DTGridView, ParametrsTable[ObjIDItems[Items]]);
                 SaveAttribute.Name = ObjIDItems[Items];
                 MVBObject.setProperties(Items, SaveAttribute);
-                // 
-                //        dbs.FillParameters(StName, Param)
-                //Dim DTGridView As New Data.DataTable
-                //DTGridView = Param.GetGrid
+
             }
         }
     }

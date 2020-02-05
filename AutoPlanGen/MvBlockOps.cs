@@ -7,31 +7,12 @@
 
 // From JigSaw
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
-using System.Collections;
-using System.Runtime.InteropServices;
-using Autodesk.AutoCAD.GraphicsInterface;
 using Autodesk.AutoCAD.DatabaseServices;
-using Autodesk.AutoCAD.Runtime;
 using Autodesk.AutoCAD.Geometry;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.EditorInput;
-using Autodesk.AutoCAD.GraphicsSystem;
 using Autodesk.Aec.DatabaseServices;
-using Autodesk.Aec.ApplicationServices;
-using Autodesk.Aec.Arch.DatabaseServices;
-using Autodesk.Aec.Arch.ApplicationServices;
-using Autodesk.Aec.PropertyData;
 using Autodesk.Aec.PropertyData.DatabaseServices;
 using Application = Autodesk.AutoCAD.ApplicationServices.Application;
 using System.Collections.Specialized;
@@ -59,8 +40,7 @@ namespace AutoPlan
         public void PlaceMvBlock(string MvBlockName, string SourceFileName, Document doc)
         {
             Scale3d Scale = new Scale3d();
-            CloneMvBlock(MvBlockName, SourceDirectoryDWGPath, SourceFileName, ref Scale, doc);
-            // MsgBox(MvBlockName & " " & " " & SourceFileName & " " & Scale.X & " " & Scale.Y & " " & Scale.Z)
+            CloneMvBlock(MvBlockName, SourceDirectoryDWGPath, SourceFileName, ref Scale, doc);           
             // Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView()
             MvBlockPlacer Placer1 = new MvBlockPlacer();
             Placer1.StartJig(MvBlockName, Scale.X, Scale.Y, Scale.Z);
@@ -409,6 +389,13 @@ namespace AutoPlan
             }
             return findany;
         }
+        /// <summary>
+        /// Установка значений PropertySet по ObjectId
+        /// </summary>
+        /// <param name="psetname">Наименование propertySet</param>
+        /// <param name="pname">Наименование property</param>
+        /// <param name="ObjID">ObjectId</param>
+        /// <param name="NewValue">Значение property</param>
         public void setValueFromOBJID(string psetname, string pname, ObjectId ObjID, object NewValue)
         {
             Document doc = Application.DocumentManager.MdiActiveDocument;
