@@ -25,8 +25,8 @@
             <ComboBox Name="StellarHeight"></ComboBox>
             <Label>Стационарные по краям</Label>
             <ComboBox Name="Stationary"></ComboBox>
-            <Label>Фальшпол</Label>
-            <ComboBox Name ="FalseFloor"></ComboBox>
+            <Label>Положение штурвалов</Label>
+            <ComboBox Name ="SteeringWheelPos"></ComboBox>
             <Rectangle Width="10" Height="20"></Rectangle>
             <Button Name="testpress" Click="testpress_Click" Height="24">Выбрать область</Button>
         </StackPanel>

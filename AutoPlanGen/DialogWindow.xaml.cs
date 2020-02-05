@@ -71,12 +71,19 @@ namespace AutoPlanGen
 
             Stationary.SelectedIndex = 0;
 
+            SteeringWheelPos.Items.Add("Снизу");
+            SteeringWheelPos.Items.Add("Слева");
+            SteeringWheelPos.Items.Add("Сверху");
+            SteeringWheelPos.Items.Add("Справа");
+
+            SteeringWheelPos.SelectedIndex = 0;
+
             foreach (double Item in ShelfLength)
             {
                 ShelfLengthMin.Items.Add(Item);
                 ShelfLengthMax.Items.Add(Item);
             }
-
+           
             // глубины полок
             List<double> ShelfWidth = TotalSectionList.Select(n => n.FakeWidth).Distinct().OrderBy(n => n).ToList();
             foreach (double Item in ShelfWidth)
@@ -91,8 +98,20 @@ namespace AutoPlanGen
                 StellarHeight.Items.Add(Item);
             }
         }
-
-
+        /// <summary>
+        /// Возвращает параметр положения штурвала
+        /// </summary>
+        /// <returns></returns>
+        private Calculation.Transform getRotation()
+        {                           
+            if (SteeringWheelPos.SelectedIndex == 1)
+                return Calculation.Transform.Left;
+            if (SteeringWheelPos.SelectedIndex == 2)
+                return Calculation.Transform.Top;
+            if (SteeringWheelPos.SelectedIndex == 3)
+                return Calculation.Transform.Right;
+            return Calculation.Transform.Bottom;
+        }
 
         public void testc()
         {
@@ -102,10 +121,18 @@ namespace AutoPlanGen
 
             AskStationary(out bool LeftStat, out bool RightStat, out bool DoubleSidedStat);
 
+
+            Calculation.Transform ShturvalPosition = getRotation();
+
             Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView();
             // параметры помещения
             Rectangle RoomData = EntryPoint.SelectRoomArea(Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument);
 
+            // трансформация помещения по параметрам помещения
+
+            RoomData = Calculation.TransformForward(RoomData, ShturvalPosition);
+            // необходимо сделать обратную трансформацию
+            //SectionToPlace = Calculation.TransforSection(SectionToPlace, Calculation.Transform.Bottom);
 
 
             // если выбраны стационары
@@ -113,9 +140,14 @@ namespace AutoPlanGen
             double WorkPassLength = Convert.ToDouble(WorkPass.Text, CultureInfo.CurrentCulture);
 
             List<Section> ReturnSection = Calculation.GetStellar(TotalSectionList, RoomData, SelectedShelfLengthMin, SelectedShelfLengthMax, SelectedHeight, SelectedShelfWidth, WorkPassLength, LeftStat, RightStat, DoubleSidedStat);
+
+            // обратная трансформация
+            ReturnSection = Calculation.TransforSection(ReturnSection, ShturvalPosition);
             try
             {
-                GenerateDrawing(ReturnSection, Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument, "C:\\stellar\\Shapes");
+                StellarEnvironment envir = new StellarEnvironment();
+                // "C:\\stellar\\Shapes"
+                GenerateDrawing(ReturnSection, Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument, envir.getSourcePath);
             }
             catch (Exception ex)
             {
@@ -297,13 +329,14 @@ namespace AutoPlanGen
 
             // вставляем блоки
             Dictionary<Autodesk.AutoCAD.DatabaseServices.ObjectId, string> ObjIDItems = new Dictionary<Autodesk.AutoCAD.DatabaseServices.ObjectId, string>();
+
             foreach (Section Item in SectionToPlace)
             {
                 //Autodesk.AutoCAD.Geometry.Scale3d Scale = new Autodesk.AutoCAD.Geometry.Scale3d();
                 //MvBlockOps.CloneMvBlock(Item.Name, PathToShapeFolder, Item.Name + ".DWG", ref Scale, doc);
                 Autodesk.AutoCAD.Geometry.Scale3d Scale = Scales[Item.Name];
                 Autodesk.AutoCAD.DatabaseServices.ObjectId ItemObjId =
-                    MvBlockPlacer.MvBlockRefInsert(doc, Item.Name, new Autodesk.AutoCAD.Geometry.Point3d(Item.BottomLeft.X, Item.BottomLeft.Y, 0), Scale, 0);
+                    MvBlockPlacer.MvBlockRefInsert(doc, Item.Name, new Autodesk.AutoCAD.Geometry.Point3d(Item.BottomLeft.X, Item.BottomLeft.Y, 0), Scale, Item.Rotation);
                 ObjIDItems.Add(ItemObjId, Item.Name);
             }
 

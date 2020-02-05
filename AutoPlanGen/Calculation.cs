@@ -125,15 +125,123 @@ namespace AutoPlan
 
 
 
+        /// <summary>
+        /// Положение штурвалов
+        /// </summary>
+        public enum Transform
+        {
+            Bottom = 0,
+            Left = 1,
+            Top = 2,
+            Right = 3
+        }
+
+        /// <summary>
+        /// Возвращает трансформированный прямоугольник до расстановки стеллажей
+        /// </summary>
+        /// <param name="BaseRectangle"></param>
+        /// <param name="Position"></param>
+        /// <returns></returns>
+        public static Rectangle TransformForward(Rectangle BaseRectangle, Transform Position)
+        {
+            if (Position == Transform.Bottom)
+                return BaseRectangle;
+            // точка поворота
+            Point pointRot = new Point(0, 0);
+            if (Position == Transform.Left)
+            {
+                //Point pointRot = new Point(0, 0);
+                double Angle = Math.PI / 2;
+                Point NewBottomLeft = RotatePoint(pointRot, BaseRectangle.BottomLeft, Angle);
+                Point NewTopRight = RotatePoint(pointRot, BaseRectangle.TopRight, Angle);
+                return new Rectangle(NewBottomLeft, NewTopRight);
+            }
+            if (Position == Transform.Top)
+            {
+                double Angle = Math.PI / 2;
+                Point NewBottomLeft = RotatePoint(pointRot, BaseRectangle.BottomLeft, Angle);
+                Point NewTopRight = RotatePoint(pointRot, BaseRectangle.TopRight, Angle);
+                Rectangle midpoint = new Rectangle(NewBottomLeft, NewTopRight);
+
+                NewBottomLeft = RotatePoint(pointRot, midpoint.BottomLeft, Angle);
+                NewTopRight = RotatePoint(pointRot, midpoint.TopRight, Angle);
+
+                return new Rectangle(NewBottomLeft, NewTopRight);
+            }
+            if (Position == Transform.Right)
+            {
+                double Angle = Math.PI * 3 / 2;
+                Point NewBottomLeft = RotatePoint(pointRot, BaseRectangle.BottomLeft, Angle);
+                Point NewTopRight = RotatePoint(pointRot, BaseRectangle.TopRight, Angle);
+                return new Rectangle(NewBottomLeft, NewTopRight);
+            }
+            return BaseRectangle;
+        }
 
 
+        /// <summary>
+        /// Поворачивает точку вокруг заданной точки на заданный угол
+        /// </summary>
+        /// <param name="pointRot">Точка вокруг которой вращаем</param>
+        /// <param name="PointBase">Точка, которую надо повернуть</param>
+        /// <param name="Angle">Угол поворота (радианы)</param>
+        /// <returns></returns>
+        public static Point RotatePoint(Point pointRot, Point PointBase, double Angle)
+        {
+            double cos = Math.Cos(Angle);
+            double sin = Math.Sin(Angle);
+            //X =(pointRot.X + (point.X - pointRot.X) * cos - (point.Y - pointRot.Y) * sin)
+            //Y = (pointRot.Y + (point.X - pointRot.X) * sin + (point.Y - pointRot.Y) * cos)
+            double BX = pointRot.X + (PointBase.X - pointRot.X) * cos - (PointBase.Y - pointRot.Y) * sin;
+            double BY = pointRot.Y + (PointBase.X - pointRot.X) * sin - (PointBase.Y - pointRot.Y) * cos;            
+            return new Point(BX, BY);
 
+         
+        }
 
+        public static List<Section> TransforSection(List<Section> Unrotated, Transform Position)
+        {
+            if (Position == Transform.Bottom)
+                return Unrotated;
+            double Angle = 0;
+            List<Section> Rotated = new List<Section>();
+            if (Position == Transform.Top)
+            {
+                //throw new NotImplementedException();
 
+                Angle = -Math.PI / 2;
 
+                Point pointRot = new Point(0, 0);
+                foreach (Section Item in Unrotated)
+                {
+                    Point NewBottomLeft = RotatePoint(pointRot, Item.BottomLeft, Angle);
+                    NewBottomLeft = RotatePoint(pointRot, NewBottomLeft, Angle);
+                    Section toAdd = new Section(Item, NewBottomLeft);
+                    toAdd.Rotation = -Math.PI;
+                    Rotated.Add(toAdd);
+                }
+            }
+            else
+            {
+                if (Position == Transform.Left)
+                    Angle = -Math.PI / 2;
+                if (Position == Transform.Right)
+                    Angle = -Math.PI * 3 / 2;
 
+                
+                Point pointRot = new Point(0, 0);
+                foreach (Section Item in Unrotated)
+                {
+                    Point NewBottomLeft = RotatePoint(pointRot, Item.BottomLeft, Angle);
+                    Section toAdd = new Section(Item, NewBottomLeft);
+                    toAdd.Rotation = Angle;
+                    Rotated.Add(toAdd);
+                }
+            }
 
+            return Rotated;
 
+        }
 
         /// <summary>
         /// Возвращает линейный раскрой из элементов

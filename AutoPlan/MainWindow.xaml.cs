@@ -324,5 +324,19 @@ namespace AutoPlan
         {
             StellarEnvironment envir = new StellarEnvironment();            
         }
+
+        private void Rot_Click(object sender, RoutedEventArgs e)
+        {
+            Rectangle t1 = new Rectangle(new Point(4, 4), new Point(9, 15));
+
+
+            // act
+            Rectangle t2 = Calculation.TransformForward(t1, Calculation.Transform.Left);
+
+
+            Rectangle p1 = new Rectangle(new Point(4, 4), new Point(9, 15));
+
+            Rectangle p2 = Calculation.TransformForward(p1, Calculation.Transform.Top);
+        }
     }
 }

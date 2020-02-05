@@ -107,6 +107,8 @@ namespace AutoPlan
         /// </summary>
         public bool Main { get; set; }
 
+        public double Rotation { get; set; }
+
         /// <summary>
         /// Текстовое представление
         /// </summary>

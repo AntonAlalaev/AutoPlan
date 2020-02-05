@@ -35,6 +35,9 @@
             <Button x:Name="GenerateXLS" Click="GenerateXLS_Click">Сгенерировать данные</Button>
             <Label>Файл с данными</Label>
             <Button x:Name="ConnectdbBut" Click="ConnectdbBut_Click">Связь с базой</Button>
+            <Label>Тест поворота</Label>
+            <Button x:Name="Rot" Click="Rot_Click">Проверка поворота</Button>
+            
         </StackPanel>
     </Grid>
     <Window.Resources>
