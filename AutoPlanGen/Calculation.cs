@@ -198,7 +198,12 @@ namespace AutoPlan
 
          
         }
-
+        /// <summary>
+        /// Трансформирует обратно расставленные секции
+        /// </summary>
+        /// <param name="Unrotated"></param>
+        /// <param name="Position"></param>
+        /// <returns></returns>
         public static List<Section> TransforSection(List<Section> Unrotated, Transform Position)
         {
             if (Position == Transform.Bottom)
@@ -295,6 +300,7 @@ namespace AutoPlan
                 retVal.AddRange(res1);
             }
 
+            retVal = retVal.OrderByDescending(n=>n).ToList();
             return retVal;
         }
 
