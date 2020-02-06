@@ -78,7 +78,7 @@ namespace AutoPlan
             AskStationary(out bool LeftStat, out bool RightStat, out bool DoubleSidedStat);
 
             // параметры помещения
-            RoomRectangle RoomData = new RoomRectangle(new Point(0, 0), new Point(12000, 6000));
+            Rectangle RoomData = new Rectangle(new Point(0, 0), new Point(12000, 6000));
 
             // если выбраны стационары
 
