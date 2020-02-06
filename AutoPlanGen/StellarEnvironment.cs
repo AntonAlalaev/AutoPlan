@@ -1,23 +1,5 @@
-﻿// 
-// Copyright (c) 2014 by Anton Alalaev
-// 
-// Permission to use, copy, modify, and distribute this software
-// for any purpose and without fee is hereby granted, provided
-// that the above copyright notice appears in all copies and
-// that both that copyright notice and the limited warranty and
-// restricted rights notice below appear in all supporting
-// documentation.
-// 
-// ANTON ALALAEV PROVIDES THIS PROGRAM "AS IS" AND WITH ALL FAULTS.
-// ANTON ALALAEV SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF
-// MERCHANTABILITY OR FITNESS FOR A PARTICULAR USE.  ANTON ALALAEV
-// DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
-// UNINTERRUPTED OR ERROR FREE.
-// 
-// Use, duplication, or disclosure by the U.S. Government is subject to
-// restrictions set forth in FAR 52.227-19 (Commercial Computer
-// Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
-// (Rights in Technical Data and Computer Software), as applicable.
+﻿// Лохматый класс, который был сконвертирован из VB, написанного 7 лет назад
+// требует рефакторинга возможно, не разбирался с классом 
 // 
 
 
@@ -25,18 +7,26 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualBasic;
 using System.Windows.Forms;
-//using Microsoft.VisualBasic.CompilerServices;
 
 namespace AutoPlan
 {
+    /// <summary>
+    /// Окружение стеллажей
+    /// </summary>
     public partial class StellarEnvironment
     {
-        // Путь к базе
+        /// <summary>
+        /// Путь к базе
+        /// </summary>
         private string dbPath { get; set; }
-        // Путь к шейпам со стеллажами
+        /// <summary>
+        /// Путь к шейпам со стеллажами
+        /// </summary>
         private string srcPath { get; set; }
+        /// <summary>
+        /// Конструктор класса базовый
+        /// </summary>
         public StellarEnvironment()
         {
             // Пути по умолчанию, если нет ini файла
@@ -69,6 +59,9 @@ namespace AutoPlan
                 return;
             }
         }
+        /// <summary>
+        /// Возвращает путь к базе
+        /// </summary>
         public string getDBPath
         {
             get
@@ -76,6 +69,9 @@ namespace AutoPlan
                 return dbPath;
             }
         }
+        /// <summary>
+        /// Возвращает путь к каталогу с шэйпами
+        /// </summary>
         public string getSourcePath
         {
             get
@@ -83,6 +79,9 @@ namespace AutoPlan
                 return srcPath;
             }
         }
+        /// <summary>
+        /// Возвращает строку соединения с БД
+        /// </summary>
         public string getConnectionString
         {
             get
@@ -298,7 +297,6 @@ namespace AutoPlan
             }
             if (Value > MaxValuePar[Position])
             {
-                //                if (MsgBox["Введенное вами число больше допустимого значения! " + Constants.vbCrLf + "Значение должно находиться в пределах от " + Conversions.ToString(MinValuePar[Conversions.ToInteger(Position)]) + " до " + Conversions.ToString(MaxValuePar[Conversions.ToInteger(Position)]) + "." + Constants.vbCrLf + "Вы уверенны, что хотите продолжить?", Constants.vbYesNo, "Предупреждение"] == Constants.vbYes)
                 if (MessageBox.Show("Введенное вами число больше допустимого значения! \n" +
                     "Значение должно находиться в пределах от " + MinValuePar[Position].ToString() +
                     " до " + MaxValuePar[Position].ToString() + " .\n" + "Вы уверенны, что хотите продолжить?", "Вопрос", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
@@ -434,43 +432,37 @@ namespace AutoPlan
     {
         private BlockAttributes[] StAttrList;
         private long[] Amnt;
-        private long Cnt;
+
         public StellarAttributesList()
         {
             StAttrList = new BlockAttributes[1];
             Amnt = new long[1];
-            Cnt = 0;
+            count = 0;
         }
         public void Clear()
         {
             StAttrList = new BlockAttributes[1];
             Amnt = new long[1];
-            Cnt = 0;
+            count = 0;
         }
-        public long count
-        {
-            get
-            {
-                return Cnt;
-            }
-        }
+        public long count { get; private set; }
         public void Add(BlockAttributes Stellar, long Amount)
         {
-            Cnt = Cnt + 1;
+            count = count + 1;
             var oldStAttrList = StAttrList;
-            StAttrList = new BlockAttributes[Cnt + 1];
+            StAttrList = new BlockAttributes[count + 1];
             if (oldStAttrList != null)
-                Array.Copy(oldStAttrList, StAttrList, Math.Min(Cnt + 1, oldStAttrList.Length));
+                Array.Copy(oldStAttrList, StAttrList, Math.Min(count + 1, oldStAttrList.Length));
             var oldAmnt = Amnt;
-            Amnt = new long[Cnt + 1];
+            Amnt = new long[count + 1];
             if (oldAmnt != null)
-                Array.Copy(oldAmnt, Amnt, Math.Min(Cnt + 1, oldAmnt.Length));
-            StAttrList[(Cnt - 1)] = Stellar;
-            Amnt[(Cnt - 1)] = Amount;
+                Array.Copy(oldAmnt, Amnt, Math.Min(count + 1, oldAmnt.Length));
+            StAttrList[(count - 1)] = Stellar;
+            Amnt[(count - 1)] = Amount;
         }
         public BlockAttributes GetStellar(int i)
         {
-            if (i > Cnt - 1)
+            if (i > count - 1)
             {
                 MessageBox.Show("Ошибка!!! Нет объекта с таким номером!!!");
                 //MsgBox["Ошибка!!! Нет объекта с таким номером!!!"];
@@ -480,7 +472,7 @@ namespace AutoPlan
         }
         public long getAmount(int i)
         {
-            if (i > Cnt - 1)
+            if (i > count - 1)
             {
                 MessageBox.Show("Ошибка!!! Нет объекта с таким номером!!!");
                 //MsgBox["Ошибка!!! Нет объекта с таким номером!!!"];
@@ -490,7 +482,7 @@ namespace AutoPlan
         }
         public void editAmount(int i, long NewValue)
         {
-            if (i > Cnt - 1)
+            if (i > count - 1)
             {
                 MessageBox.Show("Ошибка!!! Нет объекта с таким номером!!!");
                 //MsgBox["Ошибка!!! Нет объекта с таким номером!!!"];
@@ -500,7 +492,7 @@ namespace AutoPlan
         }
         public void incAmount(int i)
         {
-            if (i > Cnt - 1)
+            if (i > count - 1)
             {
                 MessageBox.Show("Ошибка!!! Нет объекта с таким номером!!!");
                 //MsgBox["Ошибка!!! Нет объекта с таким номером!!!"];
@@ -515,12 +507,12 @@ namespace AutoPlan
             DT.Columns.Add("Количество");
             DT.Columns.Add("Параметр");
             DT.Columns.Add("Значение");
-            if (Cnt == 0)
+            if (count == 0)
                 return DT;
-            for (long i = 0; i < Cnt; i++)
+            for (long i = 0; i < count; i++)
             {
                 //for (int j = 0, loopTo1 = Conversions.ToInteger(this.GetStellar(Conversions.ToInteger(i)).Count - 1); j <= loopTo1; j++)
-                for (int j = 0; j <= this.GetStellar(Convert.ToInt32(i)).Count; j++)
+                for (int j = 0; j <= GetStellar(Convert.ToInt32(i)).Count; j++)
                     DT.Rows.Add(new string[] { GetStellar(Convert.ToInt32(i)).Name, getAmount(Convert.ToInt32(i)).ToString(), GetStellar(Convert.ToInt32(i)).ParNames[j], GetStellar(Convert.ToInt32(i)).ParValues[j] });
             }
             return DT;

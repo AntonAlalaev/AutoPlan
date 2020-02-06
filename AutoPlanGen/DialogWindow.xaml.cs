@@ -98,6 +98,7 @@ namespace AutoPlanGen
                 StellarHeight.Items.Add(Item);
             }
         }
+
         /// <summary>
         /// Возвращает параметр положения штурвала
         /// </summary>
@@ -145,8 +146,7 @@ namespace AutoPlanGen
             ReturnSection = Calculation.TransforSection(ReturnSection, ShturvalPosition);
             try
             {
-                StellarEnvironment envir = new StellarEnvironment();
-                // "C:\\stellar\\Shapes"
+                StellarEnvironment envir = new StellarEnvironment();               
                 GenerateDrawing(ReturnSection, Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument, envir.getSourcePath);
             }
             catch (Exception ex)
@@ -283,8 +283,7 @@ namespace AutoPlanGen
 
         private void InsertSimple()
         {
-            Autodesk.AutoCAD.Geometry.Scale3d Scale = new Autodesk.AutoCAD.Geometry.Scale3d();
-            // MvBlockOps.CloneMvBlock("ПО 2065х1250х300", "C:\\stellar\\Shapes", "ПО 2065х1250х300.dwg", ref Scale);
+            Autodesk.AutoCAD.Geometry.Scale3d Scale = new Autodesk.AutoCAD.Geometry.Scale3d();            
             var activeDocument = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
             MvBlockPlacer.MvBlockRefInsert(activeDocument, "ПО 2065х1250х250", new Autodesk.AutoCAD.Geometry.Point3d(0, 0, 0), Scale, 0);
         }
@@ -330,10 +329,9 @@ namespace AutoPlanGen
             // вставляем блоки
             Dictionary<Autodesk.AutoCAD.DatabaseServices.ObjectId, string> ObjIDItems = new Dictionary<Autodesk.AutoCAD.DatabaseServices.ObjectId, string>();
 
+            // созраняем список objectId
             foreach (Section Item in SectionToPlace)
             {
-                //Autodesk.AutoCAD.Geometry.Scale3d Scale = new Autodesk.AutoCAD.Geometry.Scale3d();
-                //MvBlockOps.CloneMvBlock(Item.Name, PathToShapeFolder, Item.Name + ".DWG", ref Scale, doc);
                 Autodesk.AutoCAD.Geometry.Scale3d Scale = Scales[Item.Name];
                 Autodesk.AutoCAD.DatabaseServices.ObjectId ItemObjId =
                     MvBlockPlacer.MvBlockRefInsert(doc, Item.Name, new Autodesk.AutoCAD.Geometry.Point3d(Item.BottomLeft.X, Item.BottomLeft.Y, 0), Scale, Item.Rotation);

@@ -40,7 +40,7 @@ namespace AutoPlan
         public void PlaceMvBlock(string MvBlockName, string SourceFileName, Document doc)
         {
             Scale3d Scale = new Scale3d();
-            CloneMvBlock(MvBlockName, SourceDirectoryDWGPath, SourceFileName, ref Scale, doc);           
+            CloneMvBlock(MvBlockName, SourceDirectoryDWGPath, SourceFileName, ref Scale, doc);
             // Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView()
             MvBlockPlacer Placer1 = new MvBlockPlacer();
             Placer1.StartJig(MvBlockName, Scale.X, Scale.Y, Scale.Z);
@@ -70,18 +70,6 @@ namespace AutoPlan
                 string SourcePath = SourceDirectoryDWGPath + @"\" + SourceFileName;
                 Autodesk.AutoCAD.DatabaseServices.Database dbSource = new Database(false, true);
                 ed.WriteMessage("\n Открываю файл с заданным блоком");
-                // MsgBox(SourcePath)
-
-                // Dim fWriter As New IO.StreamWriter("c:\stellar\txtpath.txt", False)
-                // fWriter.Write(SourcePath)
-                // fWriter.Close()
-                // MsgBox("Saved!!")
-                // Dim fReader As New IO.StreamReader(SourcePath, True)
-                // Dim sourceString As String
-                // sourceString = fReader.ReadToEnd
-                // fReader.Close()
-
-                // MsgBox(SourcePath)
                 try
                 {
                     dbSource.ReadDwgFile(SourcePath, System.IO.FileShare.Read, true, "");
@@ -97,8 +85,6 @@ namespace AutoPlan
                     using (Transaction t = dbSource.TransactionManager.StartTransaction())
                     {
                         BlockTable bt = t.GetObject(dbSource.BlockTableId, OpenMode.ForRead) as BlockTable;
-                        //(BlockTable)dbSource.BlockTableId.GetObject(OpenMode.ForRead);
-                        //BlockTableRecord btr = bt(BlockTableRecord.ModelSpace).GetObject(OpenMode.ForRead, false);
                         BlockTableRecord btr = t.GetObject(bt[BlockTableRecord.ModelSpace], OpenMode.ForRead, false) as BlockTableRecord;
 
                         foreach (ObjectId id in btr)
@@ -124,7 +110,6 @@ namespace AutoPlan
                     }
                     // get the source dictionary
                     DictionaryMultiViewBlockDefinition dictStyle = new DictionaryMultiViewBlockDefinition(dbSource);
-                    // MsgBox("Пока все нормуль")
                     // get the list of style ids that you want to import
                     // (1) if you want to import everything, use this.
                     // the list of ids in the style dictionary.
@@ -132,7 +117,7 @@ namespace AutoPlan
                     // (2) if you want to import a specific style, use this.
                     // we assume you know the name of style you want to import. 
 
-                    Autodesk.AutoCAD.DatabaseServices.ObjectIdCollection objCollectionSrc = new Autodesk.AutoCAD.DatabaseServices.ObjectIdCollection();                    
+                    Autodesk.AutoCAD.DatabaseServices.ObjectIdCollection objCollectionSrc = new Autodesk.AutoCAD.DatabaseServices.ObjectIdCollection();
                     objCollectionSrc.Add(dictStyle.GetAt(MVBlockName));
 
                     //Autodesk.AutoCAD.DatabaseServices.ObjectIdCollection objCollectionSrc = dictStyle.Records;
@@ -153,7 +138,6 @@ namespace AutoPlan
             catch (Autodesk.AutoCAD.Runtime.Exception ex)
             {
                 MessageBox.Show("Не могу открыть файл со стеллажами!!!");
-                //Interaction.MsgBox("Не могу открыть файл со стеллажами!!!");
                 ed.WriteMessage("Error in CloneHelper " + ex.Message + "\n");
                 return;
             }
@@ -162,7 +146,7 @@ namespace AutoPlan
         {
             // Here we are creating a propertysetdefinition with PropsetDefsName
             // It must contain RowNames and Row Count
-            
+
             Database db = doc.Database;
             Editor ed = doc.Editor;
             // The name of the property set def.
@@ -174,7 +158,6 @@ namespace AutoPlan
             {
                 // There are empty rows
                 MessageBox.Show("Error! Cannot create a empty propertysetdef!!");
-                //Interaction.MsgBox("Error! Cannot create a empty propertysetdef!!");
                 return;
             }
             try

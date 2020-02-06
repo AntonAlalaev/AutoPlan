@@ -107,6 +107,9 @@ namespace AutoPlan
         /// </summary>
         public bool Main { get; set; }
 
+        /// <summary>
+        /// Угол поворота секции относительно точки вставки
+        /// </summary>
         public double Rotation { get; set; }
 
         /// <summary>

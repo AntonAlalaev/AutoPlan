@@ -1,32 +1,10 @@
 ﻿// 
-// 
-// Permission to use, copy, modify, and distribute this software
-// for any purpose and without fee is hereby granted, provided
-// that the above copyright notice appears in all copies and
-// that both that copyright notice and the limited warranty and
-// restricted rights notice below appear in all supporting
-// documentation.
-// '      
-// 
-// Use, duplication, or disclosure by the U.S. Government is subject to
-// restrictions set forth in FAR 52.227-19 (Commercial Computer
-// Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
-// (Rights in Technical Data and Computer Software), as applicable.
+// Лохматый класс, конвертирован из VB, котрый был написан почти 7 лет назад
+// С ним особо не разбирался, возможно требует рефакторинга
 // 
 
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
 using System.Collections.Specialized;
 using AutoPlan;
 using System.Data.OleDb;
@@ -47,7 +25,6 @@ namespace AutoPlanGen
         {
             StringCollection stlist = new StringCollection();
             return stlist;
-            //getStellarList = stlist;
         }
 
         /// <summary>
@@ -58,7 +35,6 @@ namespace AutoPlanGen
         public void FillParameters(string StellarName, ref ParTable StellarParTable)
         {
             // Очищаем таблицу
-            // If Not nu (StellarParTable) Then StellarParTable.Clear()
             // Создаем соединение
             if (StellarParTable.RecordCount > 0)
                 StellarParTable.Clear();
@@ -460,6 +436,11 @@ namespace AutoPlanGen
             dbs.Close();
             return true;
         }
+        /// <summary>
+        /// Возвращает таблицу с существующими в проекте стеллажами
+        /// </summary>
+        /// <param name="ProjectID"></param>
+        /// <returns></returns>
         public System.Data.DataTable getExistPrjStList(string ProjectID)
         {
             System.Data.DataTable resTable = new DataTable();

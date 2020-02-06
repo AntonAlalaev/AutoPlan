@@ -8,10 +8,6 @@ namespace AutoPlan
 {
     public class Calculation
     {
-
-
-
-
         /// <summary>
         /// Возвращает прямоугольник за вычетом рабочего прохода
         /// </summary>
@@ -121,9 +117,6 @@ namespace AutoPlan
             } while (RemainedWidth >= RealWidth);
             return VerticalLine;
         }
-
-
-
 
         /// <summary>
         /// Положение штурвалов

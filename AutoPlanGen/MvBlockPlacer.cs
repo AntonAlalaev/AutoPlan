@@ -1,59 +1,17 @@
 ﻿// 
-// Copyright (c) 2014 by Anton Alalaev
+// Лохматый класс из VB написанный 7 лет назад
 // 
-// Permission to use, copy, modify, and distribute this software
-// for any purpose and without fee is hereby granted, provided
-// that the above copyright notice appears in all copies and
-// that both that copyright notice and the limited warranty and
-// restricted rights notice below appear in all supporting
-// documentation.
-// 
-// ANTON ALALAEV PROVIDES THIS PROGRAM "AS IS" AND WITH ALL FAULTS.
-// ANTON ALALAEV SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTY OF
-// MERCHANTABILITY OR FITNESS FOR A PARTICULAR USE.  ANTON ALALAEV
-// DOES NOT WARRANT THAT THE OPERATION OF THE PROGRAM WILL BE
-// UNINTERRUPTED OR ERROR FREE.
-// 
-// Use, duplication, or disclosure by the U.S. Government is subject to
-// restrictions set forth in FAR 52.227-19 (Commercial Computer
-// Software - Restricted Rights) and DFAR 252.227-7013(c)(1)(ii)
-// (Rights in Technical Data and Computer Software), as applicable.
-// 
+//
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
-using System.Collections;
-using System.Runtime.InteropServices;
+
 using Autodesk.AutoCAD.GraphicsInterface;
 using Autodesk.AutoCAD.DatabaseServices;
-using Autodesk.AutoCAD.Runtime;
 using Autodesk.AutoCAD.Geometry;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.EditorInput;
-using Autodesk.AutoCAD.GraphicsSystem;
-using Autodesk.Aec.DatabaseServices;
-using Autodesk.Aec.ApplicationServices;
-using Autodesk.Aec.Arch.DatabaseServices;
-using Autodesk.Aec.Arch.ApplicationServices;
-using Autodesk.Aec.PropertyData;
-using Autodesk.Aec.PropertyData.DatabaseServices;
 using Application = Autodesk.AutoCAD.ApplicationServices.Application;
-using System.Collections.Specialized;
 using ObjectId = Autodesk.AutoCAD.DatabaseServices.ObjectId;
-using ObjectIdCollection = Autodesk.AutoCAD.DatabaseServices.ObjectIdCollection;
-using AcadApplication = Autodesk.AutoCAD.ApplicationServices.Application;
 using Entity = Autodesk.AutoCAD.DatabaseServices.Entity;
-using AecDb = Autodesk.Aec.DatabaseServices;
 
 namespace AutoPlan
 {
