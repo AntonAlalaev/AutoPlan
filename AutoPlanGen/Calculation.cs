@@ -494,7 +494,7 @@ namespace AutoPlan
 
                     // здесь надо придумать методологию деления на секции и проходы, учитывая что последний проход рабочий уже есть
                     //Complete.AddRange(Calculation.SectionPack(roomForDoubleSided, AllowedItems));
-                    if (roomForDoubleSided.Length / SectionLength > LengthLimitNumber && roomForDoubleSided.Length / SectionLength <= LengthLimitNumber * 2)
+                    if ((roomForDoubleSided.Length) / SectionLength > LengthLimitNumber && (roomForDoubleSided.Length - WorkPassLength) / SectionLength <= LengthLimitNumber * 2 + 1)
                     {
                         // если больше заданного количества секций но меньше чем два подряд
 
@@ -524,13 +524,13 @@ namespace AutoPlan
                             RemainedLength -= FirstLength + WorkPassLength + StatWidth;
 
                         }
-                        while (RemainedLength> LengthLimitNumber * 2);
+                        while ((RemainedLength - WorkPassLength) / SectionLength > LengthLimitNumber * 2 + 1);
                         Rectangle RemainedRoom = new Rectangle(
                                 new Point(roomForDoubleSided.BottomLeft.X + (roomForDoubleSided.Length - RemainedLength), roomForDoubleSided.BottomLeft.Y),
                                 roomForDoubleSided.TopRight
                                 );
-                        if (RemainedLength > LengthLimitNumber * SectionLength && RemainedLength <= LengthLimitNumber * SectionLength * 2)
-                        {                            
+                        if (RemainedLength > LengthLimitNumber * SectionLength && (RemainedLength - WorkPassLength) <= (LengthLimitNumber * 2 + 1) * SectionLength)
+                        {
                             LessThanTwo(Complete, AllowedStat, RemainedRoom, WorkPassLength, AllowedItems, SectionLength, StatWidth);
                         }
                         else
