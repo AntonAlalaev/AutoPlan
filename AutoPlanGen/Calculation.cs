@@ -332,7 +332,7 @@ namespace AutoPlan
         /// <param name="DoubleSidedStat">Стационары двухсторонние или односторонние</param>
         /// <returns></returns>
         public static List<Section> GetStellar(List<Section> FullSectionList, Rectangle RoomArea, double ShelfLengthMin, double ShelfLengthMax, int StellarHeight,
-    double ShelfWidth, double WorkPass, bool LeftStat, bool RightStat, bool DoubleSidedStat)
+    double ShelfWidth, double WorkPass, bool LeftStat, bool RightStat, bool DoubleSidedStat, bool FalseFloor = false)
         {
             // финальный перечень стеллажей
             List<Section> Complete = new List<Section>();
@@ -426,8 +426,15 @@ namespace AutoPlan
             }
 
             // Основные передвижные стеллажи
-            List<Section> AllowedItems = FullSectionList.Where(t => t.FakeLength >= ShelfLengthMin
-                && t.FakeLength <= ShelfLengthMax && t.SecHeight == StellarHeight && t.FakeWidth == ShelfWidth && t.Double && !t.Stationary).ToList();
+            List<Section> AllowedItems = new List<Section>();
+            if (!FalseFloor)
+                AllowedItems = 
+                FullSectionList.Where(t => t.FakeLength >= ShelfLengthMin
+                && t.FakeLength <= ShelfLengthMax && t.SecHeight == StellarHeight && t.FakeWidth == ShelfWidth && t.Double && !t.Stationary && !t.FalseFloor).ToList();
+            else
+                AllowedItems =
+               FullSectionList.Where(t => t.FakeLength >= ShelfLengthMin
+               && t.FakeLength <= ShelfLengthMax && t.SecHeight == StellarHeight && t.FakeWidth == ShelfWidth && t.Double && !t.Stationary && t.FalseFloor).ToList();
 
             Complete.AddRange(Calculation.SectionPack(roomForDoubleSided, AllowedItems));
             return Complete;

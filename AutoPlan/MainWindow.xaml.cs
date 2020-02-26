@@ -33,6 +33,9 @@ namespace AutoPlan
             string FileName = "LoadedSections.xml";
             TotalSectionList = Parametrs.LoadSection(FileName);
 
+            FalseFloorRB.IsChecked = true;
+
+
             // длины полок
             List<double> ShelfLength = TotalSectionList.Select(n => n.FakeLength).Distinct().OrderBy(n => n).ToList();
 

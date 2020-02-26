@@ -6,12 +6,13 @@
         xmlns:local="clr-namespace:AutoPlan"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="АвтоРасстановка СТ" Height="410" Width="225">
+        Title="АвтоРасстановка СТ" Height="430" Width="240">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <!--Левая сторона параметры стеллажей-->
+        
         <StackPanel Grid.Column="0">
             <Label>Рабочий проход</Label>
             <TextBox Name="WorkPass">750</TextBox>
@@ -27,7 +28,24 @@
             <ComboBox Name="Stationary"></ComboBox>
             <Label>Положение штурвалов</Label>
             <ComboBox Name ="SteeringWheelPos"></ComboBox>
-            <Rectangle Width="10" Height="20"></Rectangle>
+            <Grid Margin="2,2,0,0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="9*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <RadioButton x:Name="FalseFloorRB">Без фальшпола</RadioButton>
+                    <RadioButton x:Name="FalseFloorR">С фальшполом</RadioButton>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <RadioButton  x:Name="SturwalOutside">Шутрвал снаружи</RadioButton>
+                    <RadioButton x:Name="SturwalInside">Шутрвал внутри</RadioButton>
+                </StackPanel>
+            </Grid>
+
+            
+
+            <Rectangle Width="10" Height="10"></Rectangle>
             <Button Name="testpress" Click="testpress_Click" Height="24">Выбрать область</Button>
         </StackPanel>
         <!--Правая сторона параметры помещения-->

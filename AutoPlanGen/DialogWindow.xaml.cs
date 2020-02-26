@@ -58,6 +58,10 @@ namespace AutoPlanGen
             string FileName = "C:\\stellar\\" + "LoadedSections.xml";
             TotalSectionList = Parametrs.LoadSection(FileName);
 
+            //FalseFl.Items.Add("Без фальшпола");
+            //FalseFl.Items.Add("C фальшполом");
+            FalseFloorRB.IsChecked = true;
+            SturwalOutside.IsChecked = true;
             // длины полок
             List<double> ShelfLength = TotalSectionList.Select(n => n.FakeLength).Distinct().OrderBy(n => n).ToList();
 
@@ -114,6 +118,20 @@ namespace AutoPlanGen
             return Calculation.Transform.Bottom;
         }
 
+        /// <summary>
+        /// Возвращает переменную по состоянию выбранного фальшпола
+        /// </summary>
+        /// <param name="FalseFloor">Фальшпол выбран или нет</param>
+        private void AskFalseFloor(out bool FalseFloor)
+        {
+            FalseFloor = false;
+            if (FalseFloorR.IsChecked == true)
+                FalseFloor = true;
+        }
+        
+        /// <summary>
+        /// Выполняет основную последовательность генерации стеллажей по заданным параметрам
+        /// </summary>
         public void testc()
         {
             GetAllowedSelection(out double SelectedShelfLengthMin, out double SelectedShelfLengthMax, out int SelectedHeight, out double SelectedShelfWidth, out bool OK);
@@ -122,6 +140,7 @@ namespace AutoPlanGen
 
             AskStationary(out bool LeftStat, out bool RightStat, out bool DoubleSidedStat);
 
+            AskFalseFloor(out bool FalseFloor);
 
             Calculation.Transform ShturvalPosition = getRotation();
 
@@ -140,7 +159,7 @@ namespace AutoPlanGen
 
             double WorkPassLength = Convert.ToDouble(WorkPass.Text, CultureInfo.CurrentCulture);
 
-            List<Section> ReturnSection = Calculation.GetStellar(TotalSectionList, RoomData, SelectedShelfLengthMin, SelectedShelfLengthMax, SelectedHeight, SelectedShelfWidth, WorkPassLength, LeftStat, RightStat, DoubleSidedStat);
+            List<Section> ReturnSection = Calculation.GetStellar(TotalSectionList, RoomData, SelectedShelfLengthMin, SelectedShelfLengthMax, SelectedHeight, SelectedShelfWidth, WorkPassLength, LeftStat, RightStat, DoubleSidedStat, FalseFloor);
 
             // обратная трансформация
             ReturnSection = Calculation.TransforSection(ReturnSection, ShturvalPosition);

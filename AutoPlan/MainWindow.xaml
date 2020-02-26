@@ -13,7 +13,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <!--Левая сторона параметры стеллажей-->
-            <StackPanel Grid.Column="0">
+        <StackPanel Grid.Column="0">
             <Label>Рабочий проход</Label>
             <TextBox Name="WorkPass">750</TextBox>
             <Label>Глубина стеллажа</Label>
@@ -26,6 +26,21 @@
             <ComboBox Name="StellarHeight"></ComboBox>
             <Label>Стационарные по краям</Label>
             <ComboBox Name="Stationary"></ComboBox>
+            <Grid Margin="5,3,0,0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <RadioButton x:Name="FalseFloorRB">Без фальшпола</RadioButton>
+                    <RadioButton x:Name="FalseFloorR">С фальшполом</RadioButton>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <RadioButton  x:Name="SturwalOutside">Шутрвал снаружи</RadioButton>
+                    <RadioButton x:Name="SturwalInside">Шутрвал внутри</RadioButton>
+                </StackPanel>
+            </Grid>
+
             <Rectangle Width="10" Height="10"></Rectangle>
             <Button Name="testpress" Click="testpress_Click">Расставить стеллажи</Button>
         </StackPanel>
@@ -37,7 +52,7 @@
             <Button x:Name="ConnectdbBut" Click="ConnectdbBut_Click">Связь с базой</Button>
             <Label>Тест поворота</Label>
             <Button x:Name="Rot" Click="Rot_Click">Проверка поворота</Button>
-            
+
         </StackPanel>
     </Grid>
     <Window.Resources>
