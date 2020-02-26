@@ -87,7 +87,8 @@ namespace AutoPlan
 
             double WorkPassLength = Convert.ToDouble(WorkPass.Text, CultureInfo.CurrentCulture);
 
-            List<Section> ReturnSection = Calculation.GetStellar(TotalSectionList, RoomData, SelectedShelfLengthMin, SelectedShelfLengthMax, SelectedHeight, SelectedShelfWidth, WorkPassLength, LeftStat, RightStat, DoubleSidedStat);
+            //List<Section> ReturnSection = Calculation.GetStellar(TotalSectionList, RoomData, 
+            //    SelectedShelfLengthMin, SelectedShelfLengthMax, SelectedHeight, SelectedShelfWidth, WorkPassLength, LeftStat, RightStat, DoubleSidedStat);
 
 
         }

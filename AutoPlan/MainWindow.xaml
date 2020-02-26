@@ -37,7 +37,23 @@
                 </StackPanel>
                 <StackPanel Grid.Column="1">
                     <RadioButton  x:Name="SturwalOutside">Шутрвал снаружи</RadioButton>
-                    <RadioButton x:Name="SturwalInside">Шутрвал внутри</RadioButton>
+                    <RadioButton x:Name="Sturwalside">Шутрвал внутри</RadioButton>
+                </StackPanel>
+            </Grid>
+
+            <Rectangle Height="1" Fill="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <Label HorizontalAlignment="Center">При длине ></Label>
+                    <TextBox>15</TextBox>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <Label HorizontalAlignment="Center">2 Ст. Стац. каждые</Label>
+                    <TextBox>6</TextBox>
                 </StackPanel>
             </Grid>
 

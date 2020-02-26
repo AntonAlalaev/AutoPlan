@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AutoPlan"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="АвтоРасстановка СТ" Height="430" Width="240">
+        Title="АвтоРасстановка СТ" Height="490" Width="240">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -28,6 +28,21 @@
             <ComboBox Name="Stationary"></ComboBox>
             <Label>Положение штурвалов</Label>
             <ComboBox Name ="SteeringWheelPos"></ComboBox>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <Label>Длина</Label>
+                    <CheckBox x:Name="LengthFactor" IsChecked="False">Ограничена</CheckBox>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <Label HorizontalAlignment="Center">2 Ст. Стац. каждые</Label>
+                    <TextBox>6</TextBox>
+                </StackPanel>
+            </Grid>
+
             <Grid Margin="2,2,0,0" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="8*"/>
@@ -42,9 +57,6 @@
                     <RadioButton x:Name="SturwalInside">Шутрвал внутри</RadioButton>
                 </StackPanel>
             </Grid>
-
-            
-
             <Rectangle Width="10" Height="10"></Rectangle>
             <Button Name="testpress" Click="testpress_Click" Height="24">Выбрать область</Button>
         </StackPanel>
