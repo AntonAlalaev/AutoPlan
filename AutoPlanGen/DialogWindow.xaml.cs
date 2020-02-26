@@ -128,7 +128,17 @@ namespace AutoPlanGen
             if (FalseFloorR.IsChecked == true)
                 FalseFloor = true;
         }
-        
+        /// <summary>
+        /// Возвращает переменную по состоянию штурвала (внутри или снаружи помещения)
+        /// </summary>
+        /// <param name="ShturvalOut">Штурвал внутри или снаружи помещения</param>
+        private void AskShturvalOut(out bool ShturvalOut)
+        {
+            ShturvalOut = true;
+            if (SturwalInside.IsChecked == true)
+                ShturvalOut = false;
+        }
+
         /// <summary>
         /// Выполняет основную последовательность генерации стеллажей по заданным параметрам
         /// </summary>
@@ -142,6 +152,8 @@ namespace AutoPlanGen
 
             AskFalseFloor(out bool FalseFloor);
 
+            AskShturvalOut(out bool ShturvalOut);
+
             Calculation.Transform ShturvalPosition = getRotation();
 
             Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView();
@@ -150,7 +162,7 @@ namespace AutoPlanGen
 
             // трансформация помещения по параметрам помещения
 
-            RoomData = Calculation.TransformForward(RoomData, ShturvalPosition);
+            RoomData = Calculation.TransformForward(RoomData, ShturvalPosition, ShturvalOut);
             // необходимо сделать обратную трансформацию
             //SectionToPlace = Calculation.TransforSection(SectionToPlace, Calculation.Transform.Bottom);
 

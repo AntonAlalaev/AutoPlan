@@ -135,22 +135,46 @@ namespace AutoPlan
         /// <param name="BaseRectangle"></param>
         /// <param name="Position"></param>
         /// <returns></returns>
-        public static Rectangle TransformForward(Rectangle BaseRectangle, Transform Position)
+        public static Rectangle TransformForward(Rectangle BaseRectanglePos, Transform Position, bool ShturvalOut = true)
         {
+            // длина штурвала
+            int ShturvalLength = 165;
+            Rectangle BaseRectangle;
+            if (ShturvalOut)
+            {
+                BaseRectangle = new Rectangle(BaseRectanglePos.BottomLeft, BaseRectanglePos.TopRight);
+            }
+            else
+            {
+                BaseRectangle = new Rectangle(
+                        new Point(BaseRectanglePos.BottomLeft.X, BaseRectanglePos.BottomLeft.Y + ShturvalLength), BaseRectanglePos.TopRight);
+            }
+
             if (Position == Transform.Bottom)
+            {
                 return BaseRectangle;
+            }
+
             // точка поворота
             Point pointRot = new Point(0, 0);
             if (Position == Transform.Left)
             {
+                if (!ShturvalOut)
+                    BaseRectangle = new Rectangle(
+                        new Point(BaseRectanglePos.BottomLeft.X + ShturvalLength, BaseRectanglePos.BottomLeft.Y), BaseRectanglePos.TopRight);
                 //Point pointRot = new Point(0, 0);
                 double Angle = Math.PI / 2;
                 Point NewBottomLeft = RotatePoint(pointRot, BaseRectangle.BottomLeft, Angle);
                 Point NewTopRight = RotatePoint(pointRot, BaseRectangle.TopRight, Angle);
                 return new Rectangle(NewBottomLeft, NewTopRight);
             }
+
             if (Position == Transform.Top)
             {
+                if (!ShturvalOut)
+                    BaseRectangle = new Rectangle(
+                        BaseRectanglePos.BottomLeft, new Point(BaseRectanglePos.TopRight.X, BaseRectanglePos.TopRight.Y - ShturvalLength));
+
                 double Angle = Math.PI / 2;
                 Point NewBottomLeft = RotatePoint(pointRot, BaseRectangle.BottomLeft, Angle);
                 Point NewTopRight = RotatePoint(pointRot, BaseRectangle.TopRight, Angle);
@@ -161,8 +185,13 @@ namespace AutoPlan
 
                 return new Rectangle(NewBottomLeft, NewTopRight);
             }
+
             if (Position == Transform.Right)
             {
+                if (!ShturvalOut)
+                    BaseRectangle = new Rectangle(
+                        BaseRectanglePos.BottomLeft, new Point(BaseRectanglePos.TopRight.X - ShturvalLength, BaseRectanglePos.TopRight.Y));
+
                 double Angle = Math.PI * 3 / 2;
                 Point NewBottomLeft = RotatePoint(pointRot, BaseRectangle.BottomLeft, Angle);
                 Point NewTopRight = RotatePoint(pointRot, BaseRectangle.TopRight, Angle);
@@ -186,10 +215,10 @@ namespace AutoPlan
             //X =(pointRot.X + (point.X - pointRot.X) * cos - (point.Y - pointRot.Y) * sin)
             //Y = (pointRot.Y + (point.X - pointRot.X) * sin + (point.Y - pointRot.Y) * cos)
             double BX = pointRot.X + (PointBase.X - pointRot.X) * cos - (PointBase.Y - pointRot.Y) * sin;
-            double BY = pointRot.Y + (PointBase.X - pointRot.X) * sin - (PointBase.Y - pointRot.Y) * cos;            
+            double BY = pointRot.Y + (PointBase.X - pointRot.X) * sin - (PointBase.Y - pointRot.Y) * cos;
             return new Point(BX, BY);
 
-         
+
         }
         /// <summary>
         /// Трансформирует обратно расставленные секции
@@ -226,7 +255,7 @@ namespace AutoPlan
                 if (Position == Transform.Right)
                     Angle = -Math.PI * 3 / 2;
 
-                
+
                 Point pointRot = new Point(0, 0);
                 foreach (Section Item in Unrotated)
                 {
@@ -293,7 +322,7 @@ namespace AutoPlan
                 retVal.AddRange(res1);
             }
 
-            retVal = retVal.OrderByDescending(n=>n).ToList();
+            retVal = retVal.OrderByDescending(n => n).ToList();
             return retVal;
         }
 
@@ -428,7 +457,7 @@ namespace AutoPlan
             // Основные передвижные стеллажи
             List<Section> AllowedItems = new List<Section>();
             if (!FalseFloor)
-                AllowedItems = 
+                AllowedItems =
                 FullSectionList.Where(t => t.FakeLength >= ShelfLengthMin
                 && t.FakeLength <= ShelfLengthMax && t.SecHeight == StellarHeight && t.FakeWidth == ShelfWidth && t.Double && !t.Stationary && !t.FalseFloor).ToList();
             else
