@@ -39,7 +39,7 @@
                 </StackPanel>
                 <StackPanel Grid.Column="1">
                     <Label HorizontalAlignment="Center">2 Ст. Стац. каждые</Label>
-                    <TextBox>6</TextBox>
+                    <TextBox Name="EveryStat">6</TextBox>
                 </StackPanel>
             </Grid>
 

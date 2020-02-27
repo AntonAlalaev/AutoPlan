@@ -183,7 +183,10 @@ namespace AutoPlanGen
             // необходимо сделать обратную трансформацию
             //SectionToPlace = Calculation.TransforSection(SectionToPlace, Calculation.Transform.Bottom);
 
-            int LengthLimitNumber = 6;
+            AskEveryStatNumber(out int LengthLimitNumber);
+            if (LengthLimitNumber == 0)
+                LengthLimit = false;
+            //int LengthLimitNumber = 6;
             // если выбраны стационары
 
             double WorkPassLength = Convert.ToDouble(WorkPass.Text, CultureInfo.CurrentCulture);
@@ -204,6 +207,19 @@ namespace AutoPlanGen
                 MessageBox.Show("Error " + ex.Message);
             }
 
+        }
+
+        /// <summary>
+        /// Возвращает корректное количество стеллажей при организации лимита
+        /// </summary>
+        /// <param name="LengthLimitNumber">Максимальное количество стеллажей в линейке до разделения стационаром</param>
+        private void AskEveryStatNumber(out int LengthLimitNumber)
+        {
+            bool success = Int32.TryParse(EveryStat.Text.ToString(), out int number);
+            if (success)
+                LengthLimitNumber = number;
+            else
+                LengthLimitNumber = 0;
         }
 
         /// <summary>
