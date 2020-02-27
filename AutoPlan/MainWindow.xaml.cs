@@ -1,20 +1,10 @@
-﻿using System;
+﻿using OfficeOpenXml;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Globalization;
-using OfficeOpenXml;
 using System.IO;
+using System.Linq;
+using System.Windows;
 using System.Xml;
 
 namespace AutoPlan
@@ -25,7 +15,8 @@ namespace AutoPlan
     public partial class MainWindow : Window
     {
         //#pragma warning disable CA1303 // Не передавать литералы в качестве локализованных параметров
-        List<Section> TotalSectionList;
+        private List<Section> TotalSectionList;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -34,7 +25,6 @@ namespace AutoPlan
             TotalSectionList = Parametrs.LoadSection(FileName);
 
             FalseFloorRB.IsChecked = true;
-
 
             // длины полок
             List<double> ShelfLength = TotalSectionList.Select(n => n.FakeLength).Distinct().OrderBy(n => n).ToList();
@@ -70,8 +60,6 @@ namespace AutoPlan
             }
         }
 
-
-
         public void testc()
         {
             GetAllowedSelection(out double SelectedShelfLengthMin, out double SelectedShelfLengthMax, out int SelectedHeight, out double SelectedShelfWidth, out bool OK);
@@ -87,10 +75,8 @@ namespace AutoPlan
 
             double WorkPassLength = Convert.ToDouble(WorkPass.Text, CultureInfo.CurrentCulture);
 
-            //List<Section> ReturnSection = Calculation.GetStellar(TotalSectionList, RoomData, 
+            //List<Section> ReturnSection = Calculation.GetStellar(TotalSectionList, RoomData,
             //    SelectedShelfLengthMin, SelectedShelfLengthMax, SelectedHeight, SelectedShelfWidth, WorkPassLength, LeftStat, RightStat, DoubleSidedStat);
-
-
         }
 
         /// <summary>
@@ -105,7 +91,6 @@ namespace AutoPlan
             // проверим на выбор глубины полки
             if (StellarWidth.SelectedItem == null)
             {
-
                 MessageBoxResult result = MessageBox.Show(FindResource("SelectStellarDepth").ToString(), FindResource("ErrorCaption").ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
                 OK = false;
                 SelectedShelfLengthMin = 0;
@@ -205,7 +190,6 @@ namespace AutoPlan
             Right = false;
             DoubleSided = false;
             return;
-
         }
 
         private void testpress_Click(object sender, RoutedEventArgs e)
@@ -220,8 +204,6 @@ namespace AutoPlan
             List<Section> Resultat = LoadFromExcel("StellarToExportXML.xlsx", 2);
             SaveSections("Output.xml", Resultat);
         }
-
-
 
         /// <summary>
         /// Сохраняет секции в XML файл
@@ -313,7 +295,7 @@ namespace AutoPlan
                     Section toAdd = new Section(Name.Value.ToString(), Convert.ToInt32(SectionLength.Value.ToString()),
                         Convert.ToInt32(SectionWidth.Value.ToString()), Convert.ToInt32(ShelfLength.Value.ToString()),
                         Convert.ToInt32(ShelfWidth.Value.ToString()), Convert.ToInt32(SectionHeight.Value.ToString()),
-                        Convert.ToBoolean(DoubleSec.Value.ToString()), Convert.ToBoolean(MainSec.Value.ToString()), 
+                        Convert.ToBoolean(DoubleSec.Value.ToString()), Convert.ToBoolean(MainSec.Value.ToString()),
                         Convert.ToBoolean(Stationary.Value.ToString()), Convert.ToBoolean(Floor.Value.ToString()));
 #pragma warning restore CA1305 // Укажите IFormatProvider
                     retValue.Add(toAdd);
@@ -326,17 +308,15 @@ namespace AutoPlan
 
         private void ConnectdbBut_Click(object sender, RoutedEventArgs e)
         {
-            StellarEnvironment envir = new StellarEnvironment();            
+            StellarEnvironment envir = new StellarEnvironment();
         }
 
         private void Rot_Click(object sender, RoutedEventArgs e)
         {
             Rectangle t1 = new Rectangle(new Point(4, 4), new Point(9, 15));
 
-
             // act
             Rectangle t2 = Calculation.TransformForward(t1, Calculation.Transform.Left);
-
 
             Rectangle p1 = new Rectangle(new Point(4, 4), new Point(9, 15));
 

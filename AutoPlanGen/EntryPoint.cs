@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autodesk.AutoCAD.Runtime;
-using Autodesk.AutoCAD.ApplicationServices;
-using System.Globalization;
+﻿using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
-using Autodesk.AutoCAD.Geometry;
-using Rt = Autodesk.AutoCAD.Runtime;
-using cad = Autodesk.AutoCAD.ApplicationServices.Application;
+using Autodesk.AutoCAD.Runtime;
 using AutoPlan;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using cad = Autodesk.AutoCAD.ApplicationServices.Application;
+
+using Rt = Autodesk.AutoCAD.Runtime;
 
 namespace AutoPlanGen
 {
@@ -76,7 +73,7 @@ namespace AutoPlanGen
 
                             if (lwp.GetPoint2dAt(i).Y < MinY)
                                 MinY = lwp.GetPoint2dAt(i).Y;
-                            
+
                             if (lwp.GetPoint2dAt(i).Y > MaxY)
                                 MaxY = lwp.GetPoint2dAt(i).Y;
                         }
@@ -122,15 +119,14 @@ namespace AutoPlanGen
                                 MaxY = Point2D.Max(n => n.Y);
                                 tr.Commit();
                                 return new Rectangle(new Point(MinX, MinY), new Point(MaxX, MaxY));
-
                             }
                             tr.Commit();
                             return new Rectangle(new Point(0, 0), new Point(0, 0));
                         }
-                    }                    
+                    }
                 }
             }
-            return new Rectangle(new Point(0,0), new Point(0,0));
+            return new Rectangle(new Point(0, 0), new Point(0, 0));
         }
     }
 }

@@ -1,17 +1,16 @@
-﻿// 
+﻿//
 // Лохматый класс из VB написанный 7 лет назад
-// 
+//
 //
 
-
-using Autodesk.AutoCAD.GraphicsInterface;
-using Autodesk.AutoCAD.DatabaseServices;
-using Autodesk.AutoCAD.Geometry;
 using Autodesk.AutoCAD.ApplicationServices;
+using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
+using Autodesk.AutoCAD.Geometry;
+using Autodesk.AutoCAD.GraphicsInterface;
 using Application = Autodesk.AutoCAD.ApplicationServices.Application;
-using ObjectId = Autodesk.AutoCAD.DatabaseServices.ObjectId;
 using Entity = Autodesk.AutoCAD.DatabaseServices.Entity;
+using ObjectId = Autodesk.AutoCAD.DatabaseServices.ObjectId;
 
 namespace AutoPlan
 {
@@ -283,6 +282,7 @@ namespace AutoPlan
                 return SamplerStatus.NoChange;
             }
         }
+
         protected override bool WorldDraw(WorldDraw draw)
         {
             if (mPromptCounter == 1)
@@ -302,6 +302,7 @@ namespace AutoPlan
 
             return true;
         }
+
         public ObjectId returnObjID()
         {
             return retObjID;

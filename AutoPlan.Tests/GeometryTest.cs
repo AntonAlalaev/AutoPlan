@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace AutoPlan.Tests
 {
@@ -23,9 +19,8 @@ namespace AutoPlan.Tests
             double Vector = Geometry.CrossProductLength(One, Two, Three);
             double Angle = Geometry.getAngle(One, Two, Three);
             // assert
-            Assert.IsTrue(Math.Abs(Angle + Math.PI/2) < 0.1);
+            Assert.IsTrue(Math.Abs(Angle + Math.PI / 2) < 0.1);
             Assert.IsTrue(Vector < 0);
-
         }
     }
 }

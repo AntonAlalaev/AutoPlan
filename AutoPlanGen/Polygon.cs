@@ -1,11 +1,7 @@
-﻿using System;
-using System.Windows;
-using System.Numerics;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Windows;
 
 namespace AutoPlan
 {
@@ -142,7 +138,7 @@ namespace AutoPlan
         }
 
         /// <summary>
-        /// Площадь многоугольника 
+        /// Площадь многоугольника
         /// </summary>
         public double Area
         {
@@ -160,7 +156,6 @@ namespace AutoPlan
                 return result / 2;
             }
         }
-
 
         /// <summary>
         /// Возвращает описанный прямоугольник вокруг заданного многоугольника
@@ -208,12 +203,10 @@ namespace AutoPlan
         /// <returns></returns>
         public static Polygon GetOffsetPolygon(Polygon Source, double Offset)
         {
-
             List<Point> old_points = Source.VertexList;
             List<Point> new_points = GetEnlargedPolygon(old_points, Offset);
             Polygon result = new Polygon(new_points);
             return result;
-
         }
 
         /// <summary>
@@ -305,13 +298,14 @@ namespace AutoPlan
             Polygon Item = (Polygon)obj;
             if (VertexList.Count != Item.VertexList.Count)
                 return false;
-            for (int i=0; i<VertexList.Count; i++)
+            for (int i = 0; i < VertexList.Count; i++)
             {
                 if (VertexList[i] != Item.VertexList[i])
                     return false;
             }
             return true;
         }
+
         /// <summary>
         /// Hash Code
         /// </summary>
@@ -326,8 +320,5 @@ namespace AutoPlan
             }
             return hashCode;
         }
-
-
-
     }
 }

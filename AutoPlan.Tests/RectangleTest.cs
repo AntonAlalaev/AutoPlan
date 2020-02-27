@@ -1,6 +1,5 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using AutoPlan;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 
 namespace AutoPlan.Tests
@@ -90,8 +89,6 @@ namespace AutoPlan.Tests
             Rectangle SmallInternal = new Rectangle(new Point(-2, -23), new Point(14, -37));
             Rectangle SmallestOne = new Rectangle(new Point(-5, -45), new Point(7, -59));
 
-
-
             // assert
 
             // Большой прямоугольник
@@ -124,7 +121,6 @@ namespace AutoPlan.Tests
             Assert.IsFalse(SmallestOne.IntersectWith(MiddleIntersect));
             Assert.IsFalse(SmallestOne.IntersectWith(SmallInternal));
 
-
             // Проверка прямоугольников по границам
             Assert.IsTrue(BigOne.IntersectWith(MiddleIntersect, 3));
             Assert.IsTrue(BigOne.IntersectWith(MiddleIntersect, 2));
@@ -151,8 +147,6 @@ namespace AutoPlan.Tests
                 }
             }
 
-
-
             // assert
             Assert.IsTrue(test.Count > 0);
             Assert.IsTrue(testLength == 1250);
@@ -165,21 +159,16 @@ namespace AutoPlan.Tests
             // arrange
 
             Rectangle t1 = new Rectangle(new Point(4, 4), new Point(9, 15));
-            Rectangle p1 = new Rectangle(new Point(27,-3), new Point(32,8));
+            Rectangle p1 = new Rectangle(new Point(27, -3), new Point(32, 8));
 
             // act
             Rectangle t2 = Calculation.TransformForward(t1, Calculation.Transform.Left);
             Rectangle p2 = Calculation.TransformForward(p1, Calculation.Transform.Top);
 
-
             // assert
             // нижняя точка прямоугольника t2
             Assert.IsTrue(Math.Abs(t2.BottomLeft.X + 15) < 0.1);
             Assert.IsTrue(Math.Abs(t2.BottomLeft.Y - 4) < 0.1);
-
-
-
         }
-
     }
 }

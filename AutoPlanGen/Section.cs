@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AutoPlan
+﻿namespace AutoPlan
 {
     public class Section : Rectangle
     {
@@ -17,9 +11,8 @@ namespace AutoPlan
         {
         }
 
-
         /// <summary>
-        /// Добавление секции по точке вставки, 
+        /// Добавление секции по точке вставки,
         /// глубине и длине
         /// </summary>
         /// <param name="BottomLeft"></param>
@@ -55,7 +48,7 @@ namespace AutoPlan
         /// </summary>
         /// <param name="BaseSection">Исходная секция</param>
         /// <param name="BottomLeft">Нижняя левая точка привязки новой секции</param>
-        public Section(Section BaseSection, Point BottomLeft): base (BottomLeft, BaseSection.Length, BaseSection.Height)
+        public Section(Section BaseSection, Point BottomLeft) : base(BottomLeft, BaseSection.Length, BaseSection.Height)
         {
             Name = BaseSection.Name;
             Main = BaseSection.Main;
@@ -81,12 +74,11 @@ namespace AutoPlan
         /// </summary>
         public double FakeLength { get; set; }
 
-
         /// <summary>
         /// Геометрическая глубина секции
         /// </summary>
         public double FakeWidth { get; set; }
-        
+
         /// <summary>
         /// Высота секции
         /// </summary>
@@ -120,8 +112,5 @@ namespace AutoPlan
         {
             return Name + " (" + BottomLeft.ToString() + ")";
         }
-
-
-
     }
 }

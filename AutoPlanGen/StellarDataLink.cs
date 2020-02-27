@@ -1,26 +1,27 @@
-﻿// 
+﻿//
 // Лохматый класс, конвертирован из VB, котрый был написан почти 7 лет назад
 // С ним особо не разбирался, возможно требует рефакторинга
-// 
+//
 
-
+using AutoPlan;
 using System;
 using System.Collections.Specialized;
-using AutoPlan;
+using System.Data;
 using System.Data.OleDb;
 using System.Windows;
-using System.Data;
 
 namespace AutoPlanGen
 {
     public class StellarDataLink
     {
         private string ConnectionString;
+
         public StellarDataLink()
         {
             StellarEnvironment Environment = new StellarEnvironment();
             ConnectionString = Environment.getConnectionString;
         }
+
         public StringCollection getStellarList(string Parameters = "")
         {
             StringCollection stlist = new StringCollection();
@@ -162,6 +163,7 @@ namespace AutoPlanGen
             //Res[i] = CustomerDataTable.Rows(i).Item(1).ToString;
             return Res;
         }
+
         /// <summary>
         /// Получает имя заказчика по ID
         /// </summary>
@@ -181,6 +183,7 @@ namespace AutoPlanGen
             }
             return Res;
         }
+
         /// <summary>
         /// Получает ID заказчика по имени
         /// </summary>
@@ -200,6 +203,7 @@ namespace AutoPlanGen
             }
             return Res;
         }
+
         /// <summary>
         /// ПОлучает список проектов
         /// </summary>
@@ -216,6 +220,7 @@ namespace AutoPlanGen
                 res[i] = dt.Rows[i].ItemArray[1].ToString();
             return res;
         }
+
         /// <summary>
         /// ПОлучает ID стеллажа по имени
         /// </summary>
@@ -245,7 +250,7 @@ namespace AutoPlanGen
             if (DT.Rows.Count == 0)
                 return null;
             return DT.Rows[0].ItemArray[0].ToString();
-            //DT.Rows[0].Item[0];       
+            //DT.Rows[0].Item[0];
         }
 
         /// <summary>
@@ -396,7 +401,7 @@ namespace AutoPlanGen
                 string StID = getStellarID(stList.GetStellar(i).Name);
                 ed.WriteMessage("\n StID " + StID + " \n");
                 DT.Clear();
-                // Пишем стеллажи            
+                // Пишем стеллажи
                 // Таблица Комплектация проекта
                 // Поля ПроектID, СтеллажID, Количество
                 ed.WriteMessage("\n ПроектID " + ProjectID + " СтеллажID " + StID + " Количество " + stList.getAmount(i) + "\n");
@@ -436,6 +441,7 @@ namespace AutoPlanGen
             dbs.Close();
             return true;
         }
+
         /// <summary>
         /// Возвращает таблицу с существующими в проекте стеллажами
         /// </summary>

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoPlan
 {
@@ -59,7 +57,6 @@ namespace AutoPlan
             // допустимая длина дополнительных секций
             List<double> AllowedSecondLength = AllowedItems.Where(n => !n.Main).Select(n => n.Height).Distinct().ToList();
 
-
             // распределение по длинам секций
             List<double> finalLength = new List<double>();
             foreach (double MainLen in AllowedMainLength)
@@ -75,7 +72,6 @@ namespace AutoPlan
             // проверка на существование секций в заданную длину помещения
             if (finalLength.Count == 0)
                 return VerticalLine;
-
 
             //Point Yposition = RoomData.BottomLeft;
             double Yposition = freeSpace.BottomLeft.Y;
@@ -113,7 +109,6 @@ namespace AutoPlan
                 Yposition = freeSpace.BottomLeft.Y;
                 Xposition += RealWidth;
                 RemainedWidth -= RealWidth;
-
             } while (RemainedWidth >= RealWidth);
             return VerticalLine;
         }
@@ -200,7 +195,6 @@ namespace AutoPlan
             return BaseRectangle;
         }
 
-
         /// <summary>
         /// Поворачивает точку вокруг заданной точки на заданный угол
         /// </summary>
@@ -217,9 +211,8 @@ namespace AutoPlan
             double BX = pointRot.X + (PointBase.X - pointRot.X) * cos - (PointBase.Y - pointRot.Y) * sin;
             double BY = pointRot.Y + (PointBase.X - pointRot.X) * sin - (PointBase.Y - pointRot.Y) * cos;
             return new Point(BX, BY);
-
-
         }
+
         /// <summary>
         /// Трансформирует обратно расставленные секции
         /// </summary>
@@ -255,7 +248,6 @@ namespace AutoPlan
                 if (Position == Transform.Right)
                     Angle = -Math.PI * 3 / 2;
 
-
                 Point pointRot = new Point(0, 0);
                 foreach (Section Item in Unrotated)
                 {
@@ -267,7 +259,6 @@ namespace AutoPlan
             }
 
             return Rotated;
-
         }
 
         /// <summary>
@@ -344,7 +335,6 @@ namespace AutoPlan
             }
             return resultat;
         }
-
 
         /// <summary>
         /// Формирует список секций на основе перечня стеллажей и выбранных данных
@@ -458,7 +448,6 @@ namespace AutoPlan
                 }
             }
 
-
             // Основные передвижные стеллажи
             List<Section> AllowedItems = new List<Section>();
             if (!FalseFloor)
@@ -522,7 +511,6 @@ namespace AutoPlan
                                 );
                             Complete.AddRange(Calculation.SectionPack(StatStellar, AllowedStat));
                             RemainedLength -= FirstLength + WorkPassLength + StatWidth;
-
                         }
                         while ((RemainedLength - WorkPassLength) / SectionLength > LengthLimitNumber * 2 + 1);
                         Rectangle RemainedRoom = new Rectangle(
@@ -543,13 +531,12 @@ namespace AutoPlan
                 {
                     Complete.AddRange(Calculation.SectionPack(roomForDoubleSided, AllowedItems));
                 }
-
             }
             return Complete;
             //List<Section> Vert = Calculation.SectionPack(roomForDoubleSided, AllowedItems);
         }
 
-        // Уменьшение 
+        // Уменьшение
         private static void LessThanTwo(List<Section> Complete, List<Section> AllowedStat, Rectangle roomForDoubleSided, double WorkPassLength, List<Section> AllowedItems, double SectionLength, double StatWidth)
         {
             // делим ряд на два

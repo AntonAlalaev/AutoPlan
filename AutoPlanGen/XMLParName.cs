@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AutoPlan
+﻿namespace AutoPlan
 {
     public class XMLParName
     {
-        
         public static string SectionRealLength = "SectionLength";
         public static string SectionRealWidth = "SectionWidth";
         public static string SectionHeigh = "SectionHeight";

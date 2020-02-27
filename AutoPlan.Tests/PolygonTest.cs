@@ -1,10 +1,8 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+
 //using System.Numerics;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AutoPlan.Tests
 {
@@ -44,7 +42,7 @@ namespace AutoPlan.Tests
         {
             // arrange
             Point One = new Point(-6, 5); // no
-            Point Two = new Point(1, -5); // yes 
+            Point Two = new Point(1, -5); // yes
             Point Three = new Point(0, 0); // yes
             Point Four = new Point(9.28, 1.525); // yes edge
 
@@ -62,7 +60,6 @@ namespace AutoPlan.Tests
             Assert.IsTrue(poly1.isPointIn(Three));
             Assert.IsTrue(poly1.isPointIn(Four));
         }
-
 
         /// <summary>
         /// Проверка определения площади многоугольника
@@ -119,7 +116,6 @@ namespace AutoPlan.Tests
                 new Point(-2.95, -1.97), new Point(-11,0), new Point(-5,5), new Point(-8,12), new Point(-2.95,9.08)
             });
 
-
             // act
             poly1 = poly1.GetOffsetPolygon(5);
             Rectangle OuterR = poly1.OuterRectangle;
@@ -127,7 +123,6 @@ namespace AutoPlan.Tests
             // assert
 
             Assert.IsTrue(OuterR == Predicted);
-
         }
 
         [TestMethod]
@@ -149,16 +144,12 @@ namespace AutoPlan.Tests
             Rectangle OuterR = poly2.OuterRectangle;
             Polygon poly3 = Polygon.GetOffsetPolygon(poly1, 5);
 
-
             // assert
 
             Assert.IsTrue(OuterR == Predicted);
-            Assert.IsTrue(Math.Abs(poly1.Area - PredictedArea)/ poly1.Area < 0.01);
-            Assert.IsTrue(Math.Abs(poly1.Perimetr - PredictedPerimetr)/ poly1.Perimetr < 0.01);
+            Assert.IsTrue(Math.Abs(poly1.Area - PredictedArea) / poly1.Area < 0.01);
+            Assert.IsTrue(Math.Abs(poly1.Perimetr - PredictedPerimetr) / poly1.Perimetr < 0.01);
             Assert.IsTrue(poly2.Equals(poly3));
-
         }
-
-
     }
 }

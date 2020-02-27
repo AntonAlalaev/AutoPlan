@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AutoPlan
+﻿namespace AutoPlan
 {
     /// <summary>
     /// Геометрия секции
     /// </summary>
-    class Coordinates
-    {        
+    internal class Coordinates
+    {
         /// <summary>
-        /// точка вставки  
+        /// точка вставки
         /// </summary>
         public Point XY { get; set; }
 
@@ -35,6 +29,5 @@ namespace AutoPlan
         /// Нижний правый угол
         /// </summary>
         public Point BottomRight { get; set; }
-
     }
 }

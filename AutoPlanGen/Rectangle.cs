@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoPlan
 {
@@ -28,7 +25,6 @@ namespace AutoPlan
         /// </summary>
         public Point TopRight { get; }
 
-
         /// <summary>
         /// Базовый конструктор 2 точки
         /// </summary>
@@ -36,7 +32,7 @@ namespace AutoPlan
         /// <param name="TopRight">Верхний правый угол</param>
         public Rectangle(Point BottomLeft, Point TopRight)
         {
-            // необходимо сначала понять где самые крайние точки            
+            // необходимо сначала понять где самые крайние точки
             // минимальная по X
             double MinX;
             if (BottomLeft.X < TopRight.X)
@@ -153,7 +149,6 @@ namespace AutoPlan
             return IntersectWith(modified);
         }
 
-
         /// <summary>
         /// Сортировка списка прямоугольников по координатам
         /// </summary>
@@ -230,7 +225,6 @@ namespace AutoPlan
             double MaxX = Points.Max(n => n.X);
             double MaxY = Points.Max(n => n.Y);
 
-
             // создаем прямоугольник для возврата по заданным граничным координатам
             return new Rectangle(new Point(MinX, MinY), new Point(MaxX, MaxY));
         }
@@ -299,6 +293,5 @@ namespace AutoPlan
             hashCode = hashCode * -1521134295 + BottomLeft.GetHashCode();
             return hashCode;
         }
-
     }
 }

@@ -1,40 +1,10 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using System.Windows;
-//using System.Windows.Controls;
-//using System.Windows.Data;
-//using System.Windows.Documents;
-//using System.Windows.Input;
-//using System.Windows.Media;
-//using System.Windows.Media.Imaging;
-//using System.Windows.Navigation;
-//using System.Windows.Shapes;
-
-//namespace AutoPlanGen
-//{
-//    /// <summary>
-//    /// Логика взаимодействия для DialogWindow.xaml
-//    /// </summary>
-//    public partial class DialogWindow : Window
-//    {
-//        public DialogWindow()
-//        {
-//            InitializeComponent();
-//        }
-//    }
-//}
-
+﻿using AutoPlan;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
-using System.Globalization;
-using AutoPlan;
-using Autodesk.AutoCAD;
-using System.Data;
 
 namespace AutoPlanGen
 {
@@ -43,17 +13,13 @@ namespace AutoPlanGen
     /// </summary>
     public partial class DialogWindow : System.Windows.Window
     {
-
-
         //#pragma warning disable CA1303 // Не передавать литералы в качестве локализованных параметров
-        List<Section> TotalSectionList;
+        private List<Section> TotalSectionList;
 
         public static DialogWindow Current;
 
         public DialogWindow()
         {
-           
-
             InitializeComponent();
             StellarEnvironment envir = new StellarEnvironment();
             // загрузка данных секций
@@ -92,7 +58,7 @@ namespace AutoPlanGen
                 ShelfLengthMin.Items.Add(Item);
                 ShelfLengthMax.Items.Add(Item);
             }
-           
+
             // глубины полок
             List<double> ShelfWidth = TotalSectionList.Select(n => n.FakeWidth).Distinct().OrderBy(n => n).ToList();
             foreach (double Item in ShelfWidth)
@@ -113,7 +79,7 @@ namespace AutoPlanGen
         /// </summary>
         /// <returns></returns>
         private Calculation.Transform getRotation()
-        {                           
+        {
             if (SteeringWheelPos.SelectedIndex == 1)
                 return Calculation.Transform.Left;
             if (SteeringWheelPos.SelectedIndex == 2)
@@ -144,6 +110,7 @@ namespace AutoPlanGen
             if (FalseFloorR.IsChecked == true)
                 FalseFloor = true;
         }
+
         /// <summary>
         /// Возвращает переменную по состоянию штурвала (внутри или снаружи помещения)
         /// </summary>
@@ -192,21 +159,20 @@ namespace AutoPlanGen
             double WorkPassLength = Convert.ToDouble(WorkPass.Text, CultureInfo.CurrentCulture);
 
             List<Section> ReturnSection = Calculation.GetStellar(
-                TotalSectionList, RoomData, SelectedShelfLengthMin, SelectedShelfLengthMax, 
-                SelectedHeight, SelectedShelfWidth, WorkPassLength, LeftStat, RightStat, DoubleSidedStat, FalseFloor,LengthLimit, LengthLimitNumber);
+                TotalSectionList, RoomData, SelectedShelfLengthMin, SelectedShelfLengthMax,
+                SelectedHeight, SelectedShelfWidth, WorkPassLength, LeftStat, RightStat, DoubleSidedStat, FalseFloor, LengthLimit, LengthLimitNumber);
 
             // обратная трансформация
             ReturnSection = Calculation.TransforSection(ReturnSection, ShturvalPosition);
             try
             {
-                StellarEnvironment envir = new StellarEnvironment();               
+                StellarEnvironment envir = new StellarEnvironment();
                 GenerateDrawing(ReturnSection, Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument, envir.getSourcePath);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error " + ex.Message);
             }
-
         }
 
         /// <summary>
@@ -234,7 +200,6 @@ namespace AutoPlanGen
             // проверим на выбор глубины полки
             if (StellarWidth.SelectedItem == null)
             {
-
                 MessageBox.Show(FindResource("SelectStellarDepth").ToString(), FindResource("ErrorCaption").ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 OK = false;
                 SelectedShelfLengthMin = 0;
@@ -334,7 +299,6 @@ namespace AutoPlanGen
             Right = false;
             DoubleSided = false;
             return;
-
         }
 
         private void testpress_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -349,7 +313,7 @@ namespace AutoPlanGen
 
         private void InsertSimple()
         {
-            Autodesk.AutoCAD.Geometry.Scale3d Scale = new Autodesk.AutoCAD.Geometry.Scale3d();            
+            Autodesk.AutoCAD.Geometry.Scale3d Scale = new Autodesk.AutoCAD.Geometry.Scale3d();
             var activeDocument = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
             MvBlockPlacer.MvBlockRefInsert(activeDocument, "ПО 2065х1250х250", new Autodesk.AutoCAD.Geometry.Point3d(0, 0, 0), Scale, 0);
         }
@@ -415,7 +379,6 @@ namespace AutoPlanGen
                 BlockAttributes SaveAttribute = MVBObject.getBlockAttributes(DTGridView, ParametrsTable[ObjIDItems[Items]]);
                 SaveAttribute.Name = ObjIDItems[Items];
                 MVBObject.setProperties(Items, SaveAttribute);
-
             }
         }
     }

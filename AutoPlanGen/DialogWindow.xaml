@@ -9,10 +9,10 @@
         Title="АвтоРасстановка СТ" Height="490" Width="240">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <!--Левая сторона параметры стеллажей-->
-        
+
         <StackPanel Grid.Column="0">
             <Label>Рабочий проход</Label>
             <TextBox Name="WorkPass">750</TextBox>
@@ -30,8 +30,8 @@
             <ComboBox Name ="SteeringWheelPos"></ComboBox>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
                     <Label>Длина</Label>
@@ -43,10 +43,10 @@
                 </StackPanel>
             </Grid>
 
-            <Grid Margin="2,2,0,0" >
+            <Grid Margin="2,2,0,0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="8*"/>
-                    <ColumnDefinition Width="9*"/>
+                    <ColumnDefinition Width="8*" />
+                    <ColumnDefinition Width="9*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
                     <RadioButton x:Name="FalseFloorRB">Без фальшпола</RadioButton>
@@ -61,7 +61,6 @@
             <Button Name="testpress" Click="testpress_Click" Height="24">Выбрать область</Button>
         </StackPanel>
         <!--Правая сторона параметры помещения-->
-        
     </Grid>
     <Window.Resources>
         <sys:String x:Key="ErrorCaption">Ошибка</sys:String>

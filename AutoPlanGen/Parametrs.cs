@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Xml;
 using System.Globalization;
-
+using System.Xml;
 
 namespace AutoPlan
 {
@@ -11,7 +10,6 @@ namespace AutoPlan
     /// </summary>
     public class Parametrs
     {
-
         /// <summary>
         /// Глубина полки стеллажа
         /// </summary>
@@ -71,11 +69,6 @@ namespace AutoPlan
         /// Расстояние до границы помещения справа
         /// </summary>
         public int RoomDistRight { get; set; }
-
-
-
-
-
 
         /// <summary>
         /// Загружает данные о геометрии секций из файла
@@ -176,9 +169,10 @@ namespace AutoPlan
             int.TryParse(Value, NumberStyles.Any, CultureInfo.GetCultureInfo("ru-RU"), out result);
             return result;
         }
+
         /// <summary>
-        /// Разбирает строку в bool, 
-        /// если число меньше или 0 то false, если больше 0 то true, 
+        /// Разбирает строку в bool,
+        /// если число меньше или 0 то false, если больше 0 то true,
         /// также разбирает совпадение с "true", без учета регистра,
         /// если не число если нет совпадения то false
         /// </summary>
@@ -204,5 +198,4 @@ namespace AutoPlan
             }
         }
     }
-
 }

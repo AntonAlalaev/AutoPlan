@@ -1,7 +1,6 @@
 ﻿// Лохматый класс, который был сконвертирован из VB, написанного 7 лет назад
-// требует рефакторинга возможно, не разбирался с классом 
-// 
-
+// требует рефакторинга возможно, не разбирался с классом
+//
 
 using System;
 using System.IO;
@@ -20,10 +19,12 @@ namespace AutoPlan
         /// Путь к базе
         /// </summary>
         private string dbPath { get; set; }
+
         /// <summary>
         /// Путь к шейпам со стеллажами
         /// </summary>
         private string srcPath { get; set; }
+
         /// <summary>
         /// Конструктор класса базовый
         /// </summary>
@@ -59,6 +60,7 @@ namespace AutoPlan
                 return;
             }
         }
+
         /// <summary>
         /// Возвращает путь к базе
         /// </summary>
@@ -69,6 +71,7 @@ namespace AutoPlan
                 return dbPath;
             }
         }
+
         /// <summary>
         /// Возвращает путь к каталогу с шэйпами
         /// </summary>
@@ -79,6 +82,7 @@ namespace AutoPlan
                 return srcPath;
             }
         }
+
         /// <summary>
         /// Возвращает строку соединения с БД
         /// </summary>
@@ -110,6 +114,7 @@ namespace AutoPlan
         private int[] DefValuePar;
         private int[] MaxValuePar;
         private int[] MinValuePar;
+
         public long RecordCount
         {
             get
@@ -125,6 +130,7 @@ namespace AutoPlan
                 return ParList;
             }
         }
+
         public ParTable()
         {
             CurPosition = 0;
@@ -136,12 +142,14 @@ namespace AutoPlan
             MaxValue = 0;
             MinValue = 0;
         }
+
         public int DefaultVal(long i)
         {
             int DefaultValRet = default(int);
             DefaultValRet = DefValuePar[Convert.ToInt32(i)];
             return DefaultValRet;
         }
+
         public void Clear()
         {
             ParList.Clear();
@@ -154,9 +162,10 @@ namespace AutoPlan
             MaxValuePar = new int[1];
             MinValuePar = new int[1];
         }
+
         public void AddRow(long IDParam, string ParameterName, int DefaultValue, int MinValue, int MaxValue)
         {
-            // Increase recordcount    
+            // Increase recordcount
             RecCount = RecCount + 1;
             var oldIDPar = IDPar;
             IDPar = new long[(RecCount - 1) + 1];
@@ -179,7 +188,7 @@ namespace AutoPlan
             // redim array
             if (oldMinValuePar != null)
                 Array.Copy(oldMinValuePar, MinValuePar, Math.Min((RecCount - 1) + 1, oldMinValuePar.Length));
-            // Fill the array     
+            // Fill the array
             IDPar[(RecCount - 1)] = IDParam;
             NamePar[(RecCount - 1)] = ParameterName;
             DefValuePar[(RecCount - 1)] = DefaultValue;
@@ -188,8 +197,9 @@ namespace AutoPlan
             // Add ParameterList
             ParList.Add(ParameterName);
         }
+
         // Comment upper
-        public void LoadTable(System.Data.DataTable DT) // Comment on 
+        public void LoadTable(System.Data.DataTable DT) // Comment on
         {
             // Comment under
             if (RecCount > 0)
@@ -212,17 +222,20 @@ namespace AutoPlan
                 ParList.Add(DT.Rows[i][1].ToString());
             }
         }
+
         public void MoveFirst()
         {
             CurPosition = 0;
             checkEof();
         }
+
         public void MoveLast()
         {
             if (RecCount > 0)
                 CurPosition = RecCount - 1;
             checkEof();
         }
+
         public void MoveNext()
         {
             if (CurPosition < RecCount)
@@ -233,6 +246,7 @@ namespace AutoPlan
             else
                 MessageBox.Show("Ошибка!!! Количеств записей закончилось!", "Ошибка");
         }
+
         private void checkEof()
         {
             if (CurPosition >= RecCount)
@@ -245,6 +259,7 @@ namespace AutoPlan
             MaxValue = MaxValuePar[CurPosition];
             MinValue = MinValuePar[CurPosition];
         }
+
         public bool CheckMaxLimit(int Value, long Position)
         {
             bool CheckMaxLimitRet = default(bool);
@@ -260,6 +275,7 @@ namespace AutoPlan
                 CheckMaxLimitRet = false;
             return CheckMaxLimitRet;
         }
+
         public bool CheckMinLimit(int Value, long Position)
         {
             bool CheckMinLimitRet = default(bool);
@@ -275,6 +291,7 @@ namespace AutoPlan
                 CheckMinLimitRet = false;
             return CheckMinLimitRet;
         }
+
         public int CheckParValue(int Value, long Position)
         {
             int CheckParValueRet = default(int);
@@ -308,6 +325,7 @@ namespace AutoPlan
             CheckParValueRet = Value;
             return CheckParValueRet;
         }
+
         public System.Data.DataTable GetGrid(BlockAttributes attr = null)
         {
             var NewGrid = new System.Data.DataTable();
@@ -323,6 +341,7 @@ namespace AutoPlan
                 NewGrid.Rows.Add(new string[] { NamePar[i], attr.getValueByName(NamePar[i]) });
             return NewGrid;
         }
+
         public string getNameFromID(long ID)
         {
             string retValue = "Error";
@@ -352,6 +371,7 @@ namespace AutoPlan
             }
             return retValue;
         }
+
         public int getIDParfromName(string Name)
         {
             int retValue;
@@ -390,16 +410,19 @@ namespace AutoPlan
         public System.Collections.Specialized.StringCollection ParValues = new System.Collections.Specialized.StringCollection();
 
         public string Name { get; set; }
+
         public void Clear()
         {
             ParNames.Clear();
             ParValues.Clear();
         }
+
         public void Add(string ParameterName, string ParameterValue)
         {
             ParNames.Add(ParameterName);
             ParValues.Add(ParameterValue);
         }
+
         public long Count
         {
             get
@@ -407,6 +430,7 @@ namespace AutoPlan
                 return ParNames.Count;
             }
         }
+
         public string getValueByName(string Nme)
         {
             if (ParNames.Count == 0)
@@ -439,13 +463,16 @@ namespace AutoPlan
             Amnt = new long[1];
             count = 0;
         }
+
         public void Clear()
         {
             StAttrList = new BlockAttributes[1];
             Amnt = new long[1];
             count = 0;
         }
+
         public long count { get; private set; }
+
         public void Add(BlockAttributes Stellar, long Amount)
         {
             count = count + 1;
@@ -460,6 +487,7 @@ namespace AutoPlan
             StAttrList[(count - 1)] = Stellar;
             Amnt[(count - 1)] = Amount;
         }
+
         public BlockAttributes GetStellar(int i)
         {
             if (i > count - 1)
@@ -470,6 +498,7 @@ namespace AutoPlan
             }
             return StAttrList[i];
         }
+
         public long getAmount(int i)
         {
             if (i > count - 1)
@@ -480,6 +509,7 @@ namespace AutoPlan
             }
             return Amnt[i];
         }
+
         public void editAmount(int i, long NewValue)
         {
             if (i > count - 1)
@@ -490,6 +520,7 @@ namespace AutoPlan
             }
             Amnt[i] = NewValue;
         }
+
         public void incAmount(int i)
         {
             if (i > count - 1)
@@ -500,6 +531,7 @@ namespace AutoPlan
             }
             Amnt[i] = Amnt[i] + 1;
         }
+
         public System.Data.DataTable getTable()
         {
             var DT = new System.Data.DataTable();

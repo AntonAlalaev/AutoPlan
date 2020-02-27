@@ -1,35 +1,36 @@
-﻿// 
+﻿//
 // Лохматый код, преобразованный из VB написанный 7 лет назад
 // требует конкретного такого рефакторинга
-// 
-// 
-
+//
+//
 
 // From JigSaw
-using System;
-using System.Linq;
-using Autodesk.AutoCAD.DatabaseServices;
-using Autodesk.AutoCAD.Geometry;
-using Autodesk.AutoCAD.ApplicationServices;
-using Autodesk.AutoCAD.EditorInput;
 using Autodesk.Aec.DatabaseServices;
 using Autodesk.Aec.PropertyData.DatabaseServices;
-using Application = Autodesk.AutoCAD.ApplicationServices.Application;
+using Autodesk.AutoCAD.ApplicationServices;
+using Autodesk.AutoCAD.DatabaseServices;
+using Autodesk.AutoCAD.EditorInput;
+using Autodesk.AutoCAD.Geometry;
+using System;
 using System.Collections.Specialized;
+using System.Linq;
+using System.Windows.Forms;
+using AcadApplication = Autodesk.AutoCAD.ApplicationServices.Application;
+
+using AecDb = Autodesk.Aec.DatabaseServices;
+using Application = Autodesk.AutoCAD.ApplicationServices.Application;
+
+using Entity = Autodesk.AutoCAD.DatabaseServices.Entity;
 using ObjectId = Autodesk.AutoCAD.DatabaseServices.ObjectId;
 using ObjectIdCollection = Autodesk.AutoCAD.DatabaseServices.ObjectIdCollection;
-using AcadApplication = Autodesk.AutoCAD.ApplicationServices.Application;
-using Entity = Autodesk.AutoCAD.DatabaseServices.Entity;
-using AecDb = Autodesk.Aec.DatabaseServices;
-using System.Windows.Forms;
 
 namespace AutoPlan
 {
-
     public class MvBlockOps
     {
         // By me
         private ObjectId PlacedBlockObjID;
+
         private string SourceDirectoryDWGPath;
 
         public void DefineSourcePath(string SourceDirectoryPath)
@@ -51,6 +52,7 @@ namespace AutoPlan
         {
             return PlacedBlockObjID;
         }
+
         public static void CloneMvBlock(string MVBlockName, string SourceDirectoryDWGPath, string SourceFileName, ref Scale3d scale, Document doc)
         {
             Editor ed = Application.DocumentManager.MdiActiveDocument.Editor;
@@ -62,7 +64,6 @@ namespace AutoPlan
                 return;
             }
             // сначала надо проверить есть ли такой блок уже или нет
-
 
             try
             {
@@ -80,7 +81,6 @@ namespace AutoPlan
                 }
                 using (DocumentLock acLocDoc = doc.LockDocument())
                 {
-
                     // Dim MvBlockRef As MultiViewBlockReference
                     using (Transaction t = dbSource.TransactionManager.StartTransaction())
                     {
@@ -115,14 +115,14 @@ namespace AutoPlan
                     // the list of ids in the style dictionary.
                     // ObjectIdCollection objCollectionSrc = dictStyle.Records
                     // (2) if you want to import a specific style, use this.
-                    // we assume you know the name of style you want to import. 
+                    // we assume you know the name of style you want to import.
 
                     Autodesk.AutoCAD.DatabaseServices.ObjectIdCollection objCollectionSrc = new Autodesk.AutoCAD.DatabaseServices.ObjectIdCollection();
                     objCollectionSrc.Add(dictStyle.GetAt(MVBlockName));
 
                     //Autodesk.AutoCAD.DatabaseServices.ObjectIdCollection objCollectionSrc = dictStyle.Records;
 
-                    // now use CloningHelper class to import styles.  
+                    // now use CloningHelper class to import styles.
                     // there are four options for merge type:
                     // Normal     = 0, // no overwrite
                     // Overwrite  = 1, // this is default.
@@ -142,6 +142,7 @@ namespace AutoPlan
                 return;
             }
         }
+
         public void CreatePropSetDefs(string propSetDefName, StringCollection RowNames, Document doc)
         {
             // Here we are creating a propertysetdefinition with PropsetDefsName
@@ -178,14 +179,14 @@ namespace AutoPlan
                 var appliedTo = new StringCollection();
                 appliedTo.Add("AecDbMvBlockRef"); // apply to a MVBlock Reference
                                                   // appliedTo.Add("AecDBMVBlockRef") ' apply to a MVBlock Reference
-                                                  // appliedTo.Add("AecDbDoor")       ' apply to a door object 
+                                                  // appliedTo.Add("AecDbDoor")       ' apply to a door object
                                                   // appliedTo.Add("AecDbDoorStyle") ' apply to a door style
                                                   // apply to more than one object type, add more here.
-                                                  // appliedTo.Add("AecDbWindow")   
+                                                  // appliedTo.Add("AecDbWindow")
                 propSetDef.SetAppliesToFilter(appliedTo, isStyle);
                 // propSetDef.AppliesToAll = True
                 // Definition tab
-                // (2) we can add a set of property definitions. 
+                // (2) we can add a set of property definitions.
                 // We first make a container to hold them.
                 // This is the main part. A property set definition can contain
                 // a set of property definition.
@@ -260,6 +261,7 @@ namespace AutoPlan
             }
             ed.WriteMessage("property set definition " + propSetDefName + " is successfully created." + "\n");
         }
+
         // Attach a property set to an object.
         /// <summary>
         /// Attach a property set to an object.
@@ -286,7 +288,7 @@ namespace AutoPlan
                 ed.WriteMessage("\n" + "Property Set " + propSetDefName + " ObjectID: " + idPropSetDef.ToString() + "\n");
                 ed.WriteMessage("target object " + ObjID.ToString() + "\n");
             }
-            // If we come here, we have a prop set def id and an object id. 
+            // If we come here, we have a prop set def id and an object id.
             // (3) Attach the given property set to the given object.
             try
             {
@@ -331,6 +333,7 @@ namespace AutoPlan
             }
             return resEnt.ObjectId;
         }
+
         public bool SetValueFromPropertySetByName(string psetname, string pname, Autodesk.AutoCAD.DatabaseServices.DBObject dbobj, object NewValue)
         {
             Document doc = Application.DocumentManager.MdiActiveDocument;
@@ -353,7 +356,7 @@ namespace AutoPlan
                             int pid; // have to create this object to place the PropertyNameToId somewhere
                             pid = pset.PropertyNameToId(pname); // propertynametoid gives the id for the psetdef
                             ed.WriteMessage("\n Property ID " + pid + " Property Name " + pset.PropertyIdToName(pid) + "\n");
-                            using (DocumentLock acLckDoc = doc.LockDocument()) // 
+                            using (DocumentLock acLckDoc = doc.LockDocument()) //
                             {
                                 // pset.PropertySetData.
                                 pset.SetAt(pid, NewValue);
@@ -372,6 +375,7 @@ namespace AutoPlan
             }
             return findany;
         }
+
         /// <summary>
         /// Установка значений PropertySet по ObjectId
         /// </summary>
@@ -410,6 +414,7 @@ namespace AutoPlan
             }
             ed.WriteMessage("\nDBObject Successfuly founded" + ObjID.ToString() + " ObjectType is " + ObjID.ObjectClass.Name + "\n");
         }
+
         /// <summary>
         /// ПРисваивает значение Property
         /// </summary>
@@ -440,10 +445,11 @@ namespace AutoPlan
             for (int i = 0; i < Tbl.Rows.Count; i++)
                 // Поиск кода параметра по имени
                 // ParID = Pars.getIDParfromName(Tbl.Rows(i).Item(0).ToString)
-                // retVal.Add(ParID, Tbl.Rows(i).Item(1).ToString)                
+                // retVal.Add(ParID, Tbl.Rows(i).Item(1).ToString)
                 retVal.Add(Tbl.Rows[i].ItemArray[0].ToString(), Tbl.Rows[i].ItemArray[1].ToString());
             return retVal;
         }
+
         public string getMVBNameByObjID(ObjectId objID)
         {
             string retValue = "";
@@ -480,6 +486,7 @@ namespace AutoPlan
             }
             return retValue;
         }
+
         public BlockAttributes GetAttributes(ObjectId MvbObjID)
         {
             BlockAttributes attr = null/* TODO Change to default(_) if this is not a reference type */;
@@ -491,6 +498,7 @@ namespace AutoPlan
                 attr = null/* TODO Change to default(_) if this is not a reference type */;
             return attr;
         }
+
         public BlockAttributes[] getChekedAttributesList(ObjectId[] ObjIDArr)
         {
             BlockAttributes[] Res = null;
@@ -522,14 +530,13 @@ namespace AutoPlan
             return Res;
         }
 
-
         public StellarAttributesList GroupAttributesList(BlockAttributes[] UngroupedList)
         {
             StellarAttributesList Res = new StellarAttributesList();
             if (UngroupedList.Count() == 0 | UngroupedList == null)
                 return null/* TODO Change to default(_) if this is not a reference type */;
             int ResCount = 0;
-            // Заполняем первую запись массива       
+            // Заполняем первую запись массива
             Res.Add(UngroupedList[0], 1);
             ResCount = ResCount + 1;
             if (UngroupedList.Count() > 1)
@@ -562,6 +569,7 @@ namespace AutoPlan
             }
             return Res;
         }
+
         public bool compareAttributes(BlockAttributes Attr1, BlockAttributes Attr2)
         {
             // Сравниваем имена
@@ -584,6 +592,7 @@ namespace AutoPlan
             }
             return true;
         }
+
         public BlockAttributes sortAttributes(BlockAttributes Attr)
         {
             BlockAttributes sorted = Attr;
@@ -609,6 +618,7 @@ namespace AutoPlan
             }
             return sorted;
         }
+
         public BlockAttributes GetAttributesFromObject(ObjectId MvBlockObjID, string PropSetDefName)
         {
             BlockAttributes attr = new BlockAttributes();
@@ -689,6 +699,7 @@ namespace AutoPlan
             attr.Name = PropSetDefName;
             return attr;
         }
+
         public Autodesk.AutoCAD.DatabaseServices.ObjectId[] GetObjectsFromSelection(string PromptString = "Select AEC Objects", string ObjTypeDXFName = "AEC_MVBLOCK_REF")
         {
             Editor ed = AcadApplication.DocumentManager.MdiActiveDocument.Editor;
@@ -714,13 +725,13 @@ namespace AutoPlan
         }
     }
 
-    // And here is the helper functions, Utils.findStyle() I used in the above code: 
+    // And here is the helper functions, Utils.findStyle() I used in the above code:
 
     public class Utils
     {
         // Helper function: findStyle().
         // Find a style (or dictionary record) with the given name
-        // from the given dictionary, and return its object id. 
+        // from the given dictionary, and return its object id.
         public static ObjectId findStyle(AecDb.Dictionary dict, string key)
         {
             Document doc = Application.DocumentManager.MdiActiveDocument;
@@ -732,7 +743,7 @@ namespace AutoPlan
             {
                 using (Transaction tr = db.TransactionManager.StartTransaction())
                 {
-                    // Do we have a property set definition with the given name? 
+                    // Do we have a property set definition with the given name?
                     if (!dict.Has(key, tr))
                     {
                         // If not, return
@@ -751,5 +762,4 @@ namespace AutoPlan
             return id;
         }
     }
-
 }

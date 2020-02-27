@@ -28,7 +28,6 @@ namespace AutoPlan
             this.Y = Y;
         }
 
-
         /// <summary>
         /// проверка на одинаковость точек
         /// </summary>
@@ -68,7 +67,6 @@ namespace AutoPlan
             return true;
         }
 
-
         /// <summary>
         /// Переопределенный метод соответствия
         /// </summary>
@@ -95,6 +93,5 @@ namespace AutoPlan
         {
             return X.ToString() + ", " + Y.ToString();
         }
-
     }
 }
