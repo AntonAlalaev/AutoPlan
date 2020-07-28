@@ -61,7 +61,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="EPPlus">
-      <HintPath>..\..\..\AutoPlan\AutoPlanGen\EPPlus.dll</HintPath>
+      <HintPath>.\EPPlus.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
