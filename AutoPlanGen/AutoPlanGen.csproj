@@ -8,8 +8,8 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AutoPlanGen</RootNamespace>
-    <AssemblyName>AutoPlanGen</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <AssemblyName>AutoPlanGen2020</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -33,43 +33,49 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="accoremgd">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2013\accoremgd.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files\Autodesk\AutoCAD 2020\accoremgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="acdbmgd">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2013\acdbmgd.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files\Autodesk\AutoCAD 2020\acdbmgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="acmgd">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2013\acmgd.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files\Autodesk\AutoCAD 2020\acmgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="AecArchMgd">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2013\ACA\AecArchMgd.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files\Autodesk\AutoCAD 2020\ACA\AecArchMgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="AecBaseMgd">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2013\ACA\AecBaseMgd.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files\Autodesk\AutoCAD 2020\ACA\AecBaseMgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AecCoreMgd">
+      <HintPath>..\..\..\..\Program Files\Autodesk\AutoCAD 2020\ACA\AecCoreMgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="AecPropDataMgd">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2013\ACA\AecPropDataMgd.dll</HintPath>
+      <HintPath>..\..\..\..\Program Files\Autodesk\AutoCAD 2020\ACA\AecPropDataMgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="AecUIBaseMgd">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2013\ACA\AecUIBaseMgd.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Autodesk.AEC.Interop.UIBase">
+      <HintPath>..\..\..\..\Program Files\Autodesk\AutoCAD 2020\ACA\Autodesk.AEC.Interop.UIBase.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="EPPlus">
-      <HintPath>.\EPPlus.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="EPPlus, Version=5.2.1.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.5.2.1\lib\net45\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Threading.Tasks" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -124,6 +130,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="StellarToExportXML.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
