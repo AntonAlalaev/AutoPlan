@@ -201,7 +201,7 @@ namespace AutoPlan
         {
             // загружаем файл
             // StellarToExportXML.xlsx
-            List<Section> Resultat = LoadFromExcel("StellarToExportXML.xlsx", 2);
+            List<Section> Resultat = LoadFromExcel("StellarToExportXML_.xlsx", 2);
             SaveSections("Output.xml", Resultat);
         }
 
@@ -248,15 +248,25 @@ namespace AutoPlan
         /// <returns></returns>
         public static List<Section> LoadFromExcel(string FileName, int FirstRow = 1)
         {
+            // If you use EPPlus in a noncommercial context
+            // according to the Polyform Noncommercial license:
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
             List<Section> retValue = new List<Section>();
-            using (ExcelPackage p = new ExcelPackage())
+
+            //using (var package = new ExcelPackage(new FileInfo("MyWorkbook.xlsx")))
+            //{
+
+            //}
+
+            using (var  p = new ExcelPackage(new FileInfo(FileName)))
             {
-                using (FileStream fstream = File.OpenRead(FileName))
-                {
-                    p.Load(fstream);
-                }
+                //using (FileStream fstream = File.OpenRead(FileName))
+                //{
+                //    p.Load(fstream);
+                //}
                 int Sheets = p.Workbook.Worksheets.Count;
-                ExcelWorksheet fsh = p.Workbook.Worksheets[1];
+                ExcelWorksheet fsh = p.Workbook.Worksheets[0];
                 int row = FirstRow;
                 do
                 {

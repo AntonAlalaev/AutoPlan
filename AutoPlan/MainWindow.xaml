@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AutoPlan"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="380" Width="525">
+        Title="MainWindow" Height="444.933" Width="525">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
