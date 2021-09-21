@@ -211,7 +211,6 @@ namespace AutoPlan
         /// <param name="FileName">Имя файла</param>
         public static void SaveSections(string FileName, List<Section> SectionData)
         {
-
             if (SectionData == null)
                 return;
             if (SectionData.Count == 0)
