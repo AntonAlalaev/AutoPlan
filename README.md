@@ -7,7 +7,7 @@
 ## Getting Started
 Сделайте клон, а затем в AutoCAD вызовите команду netload
 ### Prerequisites
-Необходим AutoCAD Architectural 2013-2016, а также библиотека с соответсвующими блоками стеллажей
+Необходим AutoCAD Architectural 2016-2020, а также библиотека с соответсвующими блоками стеллажей
 
 ## Authors
 Me
